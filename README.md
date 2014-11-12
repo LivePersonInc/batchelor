@@ -177,7 +177,7 @@ ws.onmessage = function (event) {
 };
 ```
 
-## Response from previoius reqquest
+## Response from previoius request
 ```json
     {
         item1:{
