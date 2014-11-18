@@ -1,6 +1,6 @@
 #IDEA
-.idea
-.iml
+*.idea
+*.iml
 
 # Logs
 logs
