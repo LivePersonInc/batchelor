@@ -26,6 +26,7 @@ function _prepareTasks(job, invalidTasks) {
     for (var i=0; i<len; i++) {
         cTask = job[i];
         if (validator.isValidTask(cTask)) {
+            cTask = validator.cleanTask(cTask);
             validTasks.push(cTask);
         }
         else {
@@ -44,6 +45,12 @@ function merge(source, target) {
     return target;
 }
 
+function _convert2Array(_job) {
+    var job = [];
+    job = (_job.constructor === Array) ? _job : job.push(_job);
+    return job;
+}
+
 exports.configure = function (cfg) {
     config = util.configure(cfg);
     _configure(processor, cfg);
@@ -51,15 +58,22 @@ exports.configure = function (cfg) {
     _configure(validator, cfg);
 };
 
-exports.process = function (job, callback) {
+exports.execute = function (job, callback) {
     var invalidTasks = {};
-    var jobId = jobHolder.addJob(job);
+    job = _convert2Array(job);
+
     config["logger"].info("Processing Job # " + jobId)
     var validTasks = _prepareTasks(job, invalidTasks);
+    var jobId = jobHolder.addJob(validTasks);
 
     processor.run(validTasks, function (err, result) {
-        result = merge(invalidTasks, result);
-        callback(null, result);
+        if (err) {
+            callback(err);
+        }
+        else {
+            result = merge(invalidTasks, result);
+            callback(null, result);
+        }
     });
     return jobId;
 };
