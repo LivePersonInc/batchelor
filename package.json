@@ -1,0 +1,36 @@
+{
+    "name": "Bachelor",
+    "description": "Proxy utility to bundle a batch of calls in one request",
+    "author": {
+        "name": "Omer Herera",
+        "email": "omerh@liveperson.com"
+    },
+    "version": "0.0.0",
+    "dependencies": {
+        "async": "0.7.x",
+        "request": "2.34.x"
+    },
+    "repository": {
+        "type": "svn",
+        "url": "http://tlvsvn1.tlv.lpnet.com:18080/svn/lp-nodejs/lp_batchelor/trunk/lp_batchelor"
+    },
+    "keywords": [
+        "Batchelor"
+    ],
+    "readme": "README.md",
+    "devDependencies": {},
+    "licenses": [
+        {
+            "type": "LP",
+            "url": ""
+        }
+    ],
+    "private": true,
+    "main": "./lp_batchelor.js",
+    "scripts": {
+        "start": "node ./lp_batchelor"
+    },
+    "engines": {
+        "node": ">= 0.10.x"
+    }
+}

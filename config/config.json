@@ -1,0 +1,9 @@
+{
+    "maxConcurrentJobs": 10,
+    "maxRequestsPerJob": 10,
+    "log" : true,
+    "logger": "console",
+    "timeout": 10000,
+    "whiteList": ["lprnd.net", "lprnd.net:5050", "github.com"],
+    "requestValidationType": 0
+}
