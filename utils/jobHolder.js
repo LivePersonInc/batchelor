@@ -1,11 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: omerh
- * Date: 11/18/14
- * Time: 10:52
- * To change this template use File | Settings | File Templates.
- */
-
 var helper = require('./../lib/helper');
 var idCounter = 0;
 var jobs = {};

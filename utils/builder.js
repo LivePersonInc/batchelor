@@ -1,11 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: omerh
- * Date: 11/18/14
- * Time: 14:17
- * To change this template use File | Settings | File Templates.
- */
-
 var config;
 var helper = require('./../lib/helper');
 var CONST = require('./../lib/const');
