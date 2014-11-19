@@ -6,15 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var CONST = require('./const');
-var util = require('./util');
+var CONST  = require('./../lib/const');
+var helper = require('./../lib/helper');
 var config;
 
 exports.configure = function (cfg) {
-    config = util.configure(cfg);
+    config = helper.configure(cfg);
+    config = helper.configure(cfg);
 };
 
-exports.isValidTask = function (task) {
+exports.isValidRequest = function (task) {
     var validTask = false;
     if ((task.name && typeof task.name === "string") &&
         (task.url && typeof task.url === "string") &&
@@ -24,7 +25,7 @@ exports.isValidTask = function (task) {
     config["logger"].info("isValidTask: " + validTask)
     return validTask
 };
-exports.cleanTask = function (task) {
+exports.cleanRequest = function (task) {
     /**
      * we are deleting the headers:
      * 1. content-length - don't limit the size of the content

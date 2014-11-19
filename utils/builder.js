@@ -5,9 +5,10 @@
  * Time: 14:17
  * To change this template use File | Settings | File Templates.
  */
-var util = require('./util');
+
 var config;
-var CONST = require('./const');
+var helper = require('./../lib/helper');
+var CONST = require('./../lib/const');
 
 var RESPONSE_TYPE = {
     INVALID_TASK: {
@@ -42,10 +43,10 @@ var RESPONSE_TYPE = {
 };
 
 exports.configure = function (cfg) {
-    config = util.configure(cfg);
+    config = helper.configure(cfg);
 };
 
 
 exports.buildResponse = function (type) {
-    return RESPONSE_TYPE[type] || RESPONSE_TYPE.DEFAULT;
+    return RESPONSE_TYPE[type];
 };

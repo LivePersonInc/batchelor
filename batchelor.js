@@ -5,76 +5,84 @@
  * Time: 9:49
  * To change this template use File | Settings | File Templates.
  */
-var config = require('./config/config.json');
-var util = require('./lib/util');
+var config    = require('./config/config.json');
+var helper    = require('./lib/helper');
+var CONST     = require('./lib/const');
+var UTILS     = require('./utils/utils');
 var processor = require('./lib/processor');
-var jobHolder = require('./lib/jobHolder');
-var validator = require('./lib/validator');
-var builder = require('./lib/builder');
-var CONST = require('./lib/const');
 
-
-
+/**
+ * helper method that configure the given object
+ * @param obj - target object
+ * @param cfg - source object
+ * @private
+ */
 function _configure(obj, cfg) {
     obj.configure(cfg);
 }
 
-function _prepareTasks(job, invalidTasks) {
-    var validTasks = [];
-    var cTask;
+/**
+ * method building the request for the running process
+ * @param job - single request or multiple request
+ * @returns {{supported: Array, unsupported: {}}}
+ * @private
+ */
+function _prepareRequests(job) {
+    var requests = {
+        supported: [],
+        unsupported: {}
+    };
+    var cReq;
     var len = job.length;
     for (var i=0; i<len; i++) {
-        cTask = job[i];
-        if (validator.isValidTask(cTask)) {
-            cTask = validator.cleanTask(cTask);
-            validTasks.push(cTask);
+        cReq = job[i];
+        cReq = helper.setAdditionalProps(config.request, cReq);
+        if (UTILS.validator.isValidRequest(cReq)) {
+            cReq = UTILS.validator.cleanRequest(cReq);
+            requests.supported.push(cReq);
         }
         else {
-            invalidTasks[cTask.name || "missingName"] = builder.buildResponse(CONST.RESPONSE_TYPE.INVALID_TASK);
+            requests.unsupported[cReq.name || "missingName"] = UTILS.builder.buildResponse(CONST.RESPONSE_TYPE.INVALID_TASK);
         }
     }
 
-    return validTasks;
+    return requests;
 }
 
-function merge(source, target) {
-    for (var cur in source) {
-        target[cur] = source[cur];
-    }
-
-    return target;
-}
-
-function _convert2Array(_job) {
-    var job = [];
-    job = (_job.constructor === Array) ? _job : job.push(_job);
-    return job;
-}
-
+/**
+ * configure the batchelor object and utils library
+ * @param cfg
+ */
 exports.configure = function (cfg) {
-    config = util.configure(cfg);
-    _configure(processor, cfg);
-    _configure(jobHolder, cfg);
-    _configure(validator, cfg);
+    config = helper.configure(cfg);
+    _configure(UTILS.processor, config);
+    _configure(UTILS.jobHolder, config);
+    _configure(UTILS.validator, config);
 };
 
+/**
+ * this is the entry point for the batchelor utility
+ * @param job - a object containing a single requests or multiple request to be fetch
+ * @param callback - callback  method to be called once the request are performed
+ * @returns {jobId}
+ */
 exports.execute = function (job, callback) {
-    var invalidTasks = {};
-    job = _convert2Array(job);
+    job = helper.convert2Array(job);
+    var reqs = _prepareRequests(job);
+    var jobId = UTILS.jobHolder.addJob(reqs.supported);
 
-    config["logger"].info("Processing Job # " + jobId)
-    var validTasks = _prepareTasks(job, invalidTasks);
-    var jobId = jobHolder.addJob(validTasks);
+    config["logger"].info("Processing Job # " + jobId);
 
-    processor.run(validTasks, function (err, result) {
+    processor.run(reqs.supported, function (err, result) {
         if (err) {
             callback(err);
         }
         else {
-            result = merge(invalidTasks, result);
+            result = helper.merge(reqs.unsupported, result);
             callback(null, result);
         }
     });
+
     return jobId;
 };
 

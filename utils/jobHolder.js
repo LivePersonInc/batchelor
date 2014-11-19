@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var util = require('./util');
-var idCounter= 0;
+var helper = require('./../lib/helper');
+var idCounter = 0;
 var jobs = {};
 var config;
 
@@ -18,19 +18,15 @@ function _getUniqueId (prefix) {
 
 
 exports.configure = function (cfg) {
-    config = util.configure(cfg);
+    config = helper.configure(cfg);
 };
 
 
-exports.addJob = function (job) {
+exports.addJob = function (reqs) {
     var jobId = _getUniqueId("job");
-    var len = job.length;
     jobs[jobId] = {}
-    jobs[jobId].tasks = [];
+    jobs[jobId].reqs = reqs;
 
-    for (var i=0; i<len; i++) {
-        jobs[jobId].tasks.push(job[i])
-    }
     return jobId;
 };
 
