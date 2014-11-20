@@ -23,8 +23,9 @@ exports.addJob = function (reqs) {
 };
 
 exports.getJob = function (jobId) {
-    return jobs[jobId];
+    return jobs[jobId] || null;
 };
 
-exports.clean = function () {
+exports.clean = function (jobId) {
+    delete jobs[jobId];
 };

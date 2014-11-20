@@ -3,22 +3,25 @@
     "description": "Proxy utility to bundle a batch of calls in one request",
     "author": {
         "name": "Omer Herera",
-        "email": "omerh@liveperson.com"
+        "email": "omer.herera@gmail.com"
     },
-    "version": "0.0.0",
+    "version": "0.0.1",
+    "devDependencies": {
+        "chai": "*",
+        "mocha": "*"
+    },
     "dependencies": {
         "async": "0.7.x",
         "request": "2.34.x"
     },
     "repository": {
-        "type": "svn",
-        "url": "http://tlvsvn1.tlv.lpnet.com:18080/svn/lp-nodejs/lp_batchelor/trunk/lp_batchelor"
+        "type": "git",
+        "url": "https://github.com/LivePersonInc/batchelor/"
     },
     "keywords": [
         "Batchelor"
     ],
     "readme": "README.md",
-    "devDependencies": {},
     "licenses": [
         {
             "type": "LP",

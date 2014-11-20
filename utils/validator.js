@@ -6,6 +6,7 @@ exports.configure = function (cfg) {
 };
 
 exports.isValidRequest = function (task) {
+    task = task || {};
     var validTask = false;
     if ((task.name && typeof task.name === "string") &&
         (task.url && typeof task.url === "string") &&
@@ -16,6 +17,7 @@ exports.isValidRequest = function (task) {
     return validTask
 };
 exports.cleanRequest = function (task) {
+    task = task || {};
     /**
      * we are deleting the headers:
      * 1. content-length - don't limit the size of the content

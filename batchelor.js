@@ -49,6 +49,7 @@ exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
     _configure(utils, config);
     _configure(processor, config);
+    return config;
 };
 
 /**

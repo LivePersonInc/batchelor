@@ -25,6 +25,12 @@ exports.setAdditionalProps = function (source, target) {
 
 exports.convert2Array = function(obj) {
     var arr = [];
-    arr = (obj.constructor === Array) ? obj : arr.push(obj);
+    if (obj.constructor === Array) {
+        arr = obj.slice(0);
+    }
+    else {
+        arr.push(obj);
+    }
+
     return arr;
 }
