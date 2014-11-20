@@ -1,10 +1,8 @@
-var CONST  = require('./../lib/const');
-var helper = require('./../lib/helper');
+var commons = require('./../commons/index');
 var config;
 
 exports.configure = function (cfg) {
-    config = helper.configure(cfg);
-    config = helper.configure(cfg);
+    config = commons.helper.configure(cfg);
 };
 
 exports.isValidRequest = function (task) {
@@ -25,8 +23,8 @@ exports.cleanRequest = function (task) {
      * 3. connection - deleted when requesting https
      * 4. host - deleted when requesting https
      */
-    for (var header in CONST.NOT_VALID_HEADERS) {
-        var currentHeader = CONST.NOT_VALID_HEADERS[header];
+    for (var header in commons.CONST.INVALID_HEADERS) {
+        var currentHeader = commons.CONST.INVALID_HEADERS[header];
         // try to delete it only if were passed
         if (task.headers && task.headers[currentHeader]) {
             delete task.headers[currentHeader];

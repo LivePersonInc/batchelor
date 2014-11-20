@@ -98,9 +98,9 @@ module.exports = {
         BAD_GATEWAY: 502,
         SERVICE_UNAVAILABLE: 503,
         GATEWAY_TIMEOUT: 504,
-        HTTP_VERSION_NOT_SUPPORTED: 505
+        HTTP_VERSION_NOTSUPPORTED: 505
     },
-    NOT_VALID_HEADERS: {
+    INVALID_HEADERS: {
         CONTENT_LENGTH: "content-length",
         ACCEPT_ENCODING: "accept-encoding",
         CONNECTION: "connection",

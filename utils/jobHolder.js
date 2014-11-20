@@ -1,4 +1,4 @@
-var helper = require('./../lib/helper');
+var commons = require('./../commons/index');
 var idCounter = 0;
 var jobs = {};
 var config;
@@ -10,7 +10,7 @@ function _getUniqueId (prefix) {
 
 
 exports.configure = function (cfg) {
-    config = helper.configure(cfg);
+    config = commons.helper.configure(cfg);
 };
 
 

@@ -1,8 +1,7 @@
-var config    = require('./config/config.json');
-var helper    = require('./lib/helper');
-var CONST     = require('./lib/const');
-var UTILS     = require('./utils/utils');
-var processor = require('./lib/processor');
+var config     = require('./config/config.json');
+var processor  = require('./lib/processor');
+var commons    = require('./commons/index');
+var utils      = require('./utils/index');
 
 /**
  * helper method that configure the given object
@@ -29,13 +28,13 @@ function _prepareRequests(job) {
     var len = job.length;
     for (var i=0; i<len; i++) {
         cReq = job[i];
-        cReq = helper.setAdditionalProps(config.request, cReq);
-        if (UTILS.validator.isValidRequest(cReq)) {
-            cReq = UTILS.validator.cleanRequest(cReq);
+        cReq = commons.helper.setAdditionalProps(config.request, cReq);
+        if (utils.validator.isValidRequest(cReq)) {
+            cReq = utils.validator.cleanRequest(cReq);
             requests.supported.push(cReq);
         }
         else {
-            requests.unsupported[cReq.name || "missingName"] = UTILS.builder.buildResponse(CONST.RESPONSE_TYPE.INVALID_TASK);
+            requests.unsupported[cReq.name || "missingName"] = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK);
         }
     }
 
@@ -47,10 +46,9 @@ function _prepareRequests(job) {
  * @param cfg
  */
 exports.configure = function (cfg) {
-    config = helper.configure(cfg);
-    _configure(UTILS.processor, config);
-    _configure(UTILS.jobHolder, config);
-    _configure(UTILS.validator, config);
+    config = commons.helper.configure(cfg);
+    _configure(utils, config);
+    _configure(processor, config);
 };
 
 /**
@@ -60,9 +58,9 @@ exports.configure = function (cfg) {
  * @returns {jobId}
  */
 exports.execute = function (job, callback) {
-    job = helper.convert2Array(job);
+    job = commons.helper.convert2Array(job);
     var reqs = _prepareRequests(job);
-    var jobId = UTILS.jobHolder.addJob(reqs.supported);
+    var jobId = utils.jobHolder.addJob(reqs.supported);
 
     config["logger"].info("Processing Job # " + jobId);
 
@@ -71,7 +69,7 @@ exports.execute = function (job, callback) {
             callback(err);
         }
         else {
-            result = helper.merge(reqs.unsupported, result);
+            result = commons.helper.merge(reqs.unsupported, result);
             callback(null, result);
         }
     });
