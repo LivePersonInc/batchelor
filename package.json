@@ -1,5 +1,5 @@
 {
-    "name": "Bachelor",
+    "name": "bachelor",
     "description": "Proxy utility to bundle a batch of calls in one request",
     "author": {
         "name": "Omer Herera",

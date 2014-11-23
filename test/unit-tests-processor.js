@@ -1,6 +1,6 @@
-var should  = require('chai').should();
-var expect = require('chai').expect;
-var assert = require('chai').assert;
+var should    = require('chai').should();
+var expect    = require('chai').expect;
+var assert    = require('chai').assert;
 var processor = require('./../lib/processor');
 var cfg = {
     "maxConcurrentJobs": 10,
