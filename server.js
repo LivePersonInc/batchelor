@@ -182,19 +182,21 @@ var arrayReqs =
 //    ]
 //    ;
 
-//var reqSingle = [{
-//    name: "single",
-//    url: "https://jsonresponser.herokuapp.com/api/json/users",
-////    method: "GET",
-//    encoding: "UTF8",
-//    retries: 3,
-//    headers: {},
-//    doNotMergeHeaders: false,
-//    query: "/user1",
-//    mimeType: "application/json",
-//    body: "body",
-//    timeout: 10000
-//}];
+var reqSingle =
+{
+    name: "INVALID_TASK",
+    url: "htp://www.kojo.com",
+    encoding: "UTF8",
+    method: "GET",
+    retries: 3,
+    headers: {},
+    doNotMergeHeaders: false,
+    query: "/user1",
+    mimeType: "application/json",
+    body: "body",
+    timeout: 10000
+};
+
 //
 //var reqRepeat = [{
 //    name: "single",
@@ -223,15 +225,21 @@ batchelor.configure(config);
 //});
 
 function repeat () {
-    var jobId2 = batchelor.execute(arrayReqs, function (err, results) {
+    var jobId2 = batchelor.execute(reqSingle, function (err, results) {
 //    console.log("Last Callback: "+ results);
         console.log("CallbackSingle Response: "+ JSON.stringify(results));
     });
 }
 
-setInterval(function () {
-    repeat();
-}, 5000);
+
+var jobId2 = batchelor.execute(reqSingle, function (err, results) {
+//    console.log("Last Callback: "+ results);
+    console.log("CallbackSingle Response: "+ JSON.stringify(results));
+});
+
+//setInterval(function () {
+//    repeat();
+//}, 5000);
 
 //console.log("JOBID1: " + jobId);
 //console.log("JOBID2: " + jobId2);

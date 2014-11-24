@@ -39,5 +39,6 @@ exports.configure = function (cfg) {
 
 
 exports.buildResponse = function (type) {
+    type = type || "DEFAULT"
     return RESPONSE_TYPE[type];
 };

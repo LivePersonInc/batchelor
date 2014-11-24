@@ -1,6 +1,13 @@
 module.exports = {
     RESPONSE_TYPE: {
-        INVALID_TASK: "INVALID_TASK"
+        INVALID_TASK: "INVALID_TASK",
+        ETIMEDOUT: "ETIMEDOUT",
+        ECONNREFUSED: "ECONNREFUSED",
+        ENOTFOUND: "ENOTFOUND",
+        URL_NOT_VALID: "URL_NOT_VALID",
+        NO_JSON_OBJECT: "NO_JSON_OBJECT",
+        ERROR_API_URL: "ERROR_API_URL",
+        DEFAULT: "DEFAULT"
     },
     BODY_RESPONSE: 
     {

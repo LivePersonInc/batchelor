@@ -105,6 +105,51 @@ describe('utils', function () {
             utils.jobHolder.clean.should.be.a('function');
         });
 
+        it('addJob method', function () {
+            var job = [{
+                name: "single",
+                url: "https://jsonresponser.herokuapp.com/api/json/users",
+                method: "GET",
+                encoding: "UTF8",
+                retries: 3,
+                headers: {},
+                query: "/user1",
+                mimeType: "application/json",
+                body: "body",
+                timeout: 10000
+            }];
+
+            var jobId = utils.jobHolder.addJob(job);
+            jobId.should.be.a('string');
+
+        });
+
+        it('addJob/getJob methods', function () {
+            var job = [{
+                name: "single",
+                url: "https://jsonresponser.herokuapp.com/api/json/users",
+                method: "GET",
+                encoding: "UTF8",
+                retries: 3,
+                headers: {},
+                query: "/user1",
+                mimeType: "application/json",
+                body: "body",
+                timeout: 10000
+            }];
+
+            var jobId = utils.jobHolder.addJob(job);
+            jobId.should.be.a('string');
+
+            var jobObj = utils.jobHolder.getJob(jobId);
+            jobObj.should.be.an('object');
+
+//            utils.jobHolder.clean(jobId);
+//            var jobObj = utils.jobHolder.getJob(jobId);
+//            expect(jobObj).to.be.a('null');
+
+        });
+
         it('addJob/getJob/clean methods', function () {
             var job = [{
                 name: "single",

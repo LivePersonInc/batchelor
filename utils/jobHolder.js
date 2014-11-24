@@ -42,7 +42,7 @@ exports.getJob = function (jobId) {
 exports.clean = function (jobId) {
     var job = this.getJob(jobId);
 
-    _decrementCounters(job[jobId].reqs.length || 0);
+    _decrementCounters(job.reqs.length || 0);
 
     delete jobs[jobId];
 };
