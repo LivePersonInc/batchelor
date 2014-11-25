@@ -6,20 +6,26 @@
         "email": "omer.herera@gmail.com"
     },
     "version": "0.0.1",
-    "devDependencies": {
-        "chai": "*",
-        "mocha": "*"
-    },
     "dependencies": {
         "async": "0.7.x",
         "request": "2.34.x"
+    },
+    "devDependencies": {
+        "grunt": "0.4.x",
+        "grunt-cli": "0.1.x",
+        "grunt-contrib-jshint": "0.8.x",
+        "time-grunt": "0.2.x",
+        "load-grunt-config": "0.7.x",
+        "grunt-mocha-cli": "1.6.x",
+        "chai": "1.9.x",
+        "should": "4.3.x"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/LivePersonInc/batchelor/"
     },
     "keywords": [
-        "Batchelor"
+        "batchelor"
     ],
     "readme": "README.md",
     "licenses": [
@@ -29,9 +35,9 @@
         }
     ],
     "private": true,
-    "main": "./lp_batchelor.js",
+    "main": "./batchelor.js",
     "scripts": {
-        "start": "node ./lp_batchelor"
+        "start": "node ./batchelor"
     },
     "engines": {
         "node": ">= 0.10.x"

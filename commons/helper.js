@@ -12,7 +12,7 @@ exports.merge = function (source, target) {
     }
 
     return target;
-}
+};
 
 exports.setAdditionalProps = function (source, target) {
     for(var key in source) {
@@ -21,7 +21,7 @@ exports.setAdditionalProps = function (source, target) {
         }
     }
     return target;
-}
+};
 
 exports.convert2Array = function(obj) {
     var arr = [];
@@ -33,4 +33,4 @@ exports.convert2Array = function(obj) {
     }
 
     return arr;
-}
+};

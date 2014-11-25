@@ -13,7 +13,7 @@ exports.isValidRequest = function (task) {
         (task.method && typeof task.method === "string")) {
         validTask = true;
     }
-    config["logger"].info("isValidTask: " + validTask)
+    config.logger.info("isValidTask: " + validTask)
     return validTask
 };
 exports.cleanRequest = function (task) {

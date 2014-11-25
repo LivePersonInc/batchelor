@@ -63,7 +63,7 @@ exports.execute = function (job, callback) {
     var reqs = _prepareRequests(job);
     var jobId = utils.jobHolder.addJob(reqs.supported);
 
-    config["logger"].info("Processing Job # " + jobId);
+    config.logger.info("Processing Job # " + jobId);
 
     processor.run(reqs.supported, function (err, result) {
         if (err) {

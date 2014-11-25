@@ -1,0 +1,3 @@
+default:
+  - 'jshint'
+  - 'mochacli'

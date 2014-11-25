@@ -237,9 +237,9 @@ var jobId2 = batchelor.execute(reqSingle, function (err, results) {
     console.log("CallbackSingle Response: "+ JSON.stringify(results));
 });
 
-//setInterval(function () {
-//    repeat();
-//}, 5000);
+setInterval(function () {
+    repeat();
+}, 5000);
 
 //console.log("JOBID1: " + jobId);
 //console.log("JOBID2: " + jobId2);
