@@ -1,8 +1,8 @@
 var should  = require('chai').should();
 var expect  = require('chai').expect;
 var assert  = require('chai').assert;
-var utils   = require('./../utils/index');
-var commons = require('./../commons/index');
+var utils   = require('./../utils/utils');
+var commons = require('./../commons/commons');
 
 describe('commons', function () {
 

@@ -1,7 +1,7 @@
 var config     = require('./config/config.json');
 var processor  = require('./lib/processor');
-var commons    = require('./commons/index');
-var utils      = require('./utils/index');
+var commons    = require('./commons/commons');
+var utils      = require('./utils/utils');
 
 /**
  * helper method that configure the given object

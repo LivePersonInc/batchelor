@@ -1,7 +1,7 @@
 var utils = {
-    jobHolder: require('./jobHolder'),
-    validator: require('./validator'),
-    builder: require('./builder')
+    jobHolder : require('./jobHolder'),
+    validator : require('./validator'),
+    builder   : require('./builder')
 };
 exports.configure = function (cfg) {
     for (var cur in utils) {

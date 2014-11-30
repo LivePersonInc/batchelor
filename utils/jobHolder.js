@@ -1,4 +1,4 @@
-var commons = require('./../commons/index');
+var commons = require('./../commons/commons');
 var idCounter = 0;
 var jobs = {};
 var config;

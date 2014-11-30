@@ -1,4 +1,4 @@
-var commons = require('./../commons/index');
+var commons = require('./../commons/commons');
 var config;
 
 exports.configure = function (cfg) {

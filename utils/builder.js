@@ -1,5 +1,5 @@
 var config;
-var commons = require('./../commons/index');
+var commons = require('./../commons/commons');
 
 var RESPONSE_TYPE = {
     INVALID_TASK: {
