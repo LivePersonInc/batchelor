@@ -119,7 +119,7 @@ module.exports = function(grunt) {
                 files: [{
                     data: "./coverage/coverage.json",
                     template: "./README.mustache",
-                    dest: ".README.md"
+                    dest: "./README.md"
                 }]
             }
         }
