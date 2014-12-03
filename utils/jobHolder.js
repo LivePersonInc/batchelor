@@ -22,6 +22,7 @@ function _decrementCounters(_reqsLength) {
 
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
+    return config;
 };
 
 

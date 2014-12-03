@@ -43,8 +43,23 @@ describe('utils', function () {
     describe('builder', function () {
 
         it('test builder functionality', function () {
+            var cfg = {
+                num: 8080,
+                str: "str",
+                obj: {
+                    num: 8080,
+                    str: "str"
+                }
+            };
+
+            var result = utils.builder.configure(cfg);
+            result.should.have.ownProperty("num");
+            result.should.have.ownProperty("str");
+            result.should.have.ownProperty("obj");
+
             utils.builder.configure.should.be.a('function');
             utils.builder.buildResponse.should.be.a('function');
+
 
             utils.builder.buildResponse("INVALID_TASK").body.should.equal(commons.CONST.BODY_RESPONSE.INVALID_TASK);
             utils.builder.buildResponse("INVALID_TASK").statusCode.should.equal(commons.CONST.HTTP_STATUS.BAD_REQUEST);
@@ -66,6 +81,9 @@ describe('utils', function () {
 
             utils.builder.buildResponse("DEFAULT").body.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
             utils.builder.buildResponse("DEFAULT").statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
+
+            utils.builder.buildResponse().body.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
+            utils.builder.buildResponse().statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
         });
     });
 
@@ -103,6 +121,7 @@ describe('utils', function () {
             utils.jobHolder.addJob.should.be.a('function');
             utils.jobHolder.getJob.should.be.a('function');
             utils.jobHolder.clean.should.be.a('function');
+            utils.jobHolder.getActiveJobs.should.be.a('function');
         });
 
         it('addJob method', function () {
@@ -144,10 +163,6 @@ describe('utils', function () {
             var jobObj = utils.jobHolder.getJob(jobId);
             jobObj.should.be.an('object');
 
-//            utils.jobHolder.clean(jobId);
-//            var jobObj = utils.jobHolder.getJob(jobId);
-//            expect(jobObj).to.be.a('null');
-
         });
 
         it('addJob/getJob/clean methods', function () {
@@ -174,6 +189,15 @@ describe('utils', function () {
             var jobObj = utils.jobHolder.getJob(jobId);
             expect(jobObj).to.be.a('null');
 
+        });
+
+        it('getActiveJobs method', function () {
+            var activeJobs = utils.jobHolder.getActiveJobs();
+            activeJobs.should.have.ownProperty("activeJobs");
+            activeJobs.should.have.ownProperty("activeRequests");
+
+            activeJobs.activeJobs.should.be.a('number');
+            activeJobs.activeRequests.should.be.a('number');
         });
     });
 });

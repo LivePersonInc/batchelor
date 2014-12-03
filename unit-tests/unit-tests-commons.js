@@ -19,7 +19,21 @@ describe('commons', function () {
         commons.helper.setAdditionalProps.should.be.a('function');
         commons.helper.convert2Array.should.be.a('function');
     });
+    it('helper configure method', function () {
+        var cfg = {
+            num: 8080,
+            str: "str",
+            obj: {
+                num: 8080,
+                str: "str"
+            }
+        };
 
+        var result = commons.helper.configure(cfg);
+        result.should.have.ownProperty("num");
+        result.should.have.ownProperty("str");
+        result.should.have.ownProperty("obj");
+    });
     it('helper merge method', function () {
         var source = {
             a: "a"
@@ -46,9 +60,12 @@ describe('commons', function () {
 
     it('helper convert2Array method', function () {
         var arr = [0, 1, 2];
+        var obj = {};
         arr = commons.helper.convert2Array(arr);
         arr.should.be.a('array');
         arr.should.have.length(3);
+        obj = commons.helper.convert2Array(obj);
+        obj.should.be.a('array');
     });
 
 

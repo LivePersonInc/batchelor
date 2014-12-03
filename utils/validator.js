@@ -3,6 +3,7 @@ var config;
 
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
+    return config;
 };
 
 exports.isValidRequest = function (task) {

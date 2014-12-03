@@ -35,6 +35,7 @@ var RESPONSE_TYPE = {
 
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
+    return config;
 };
 
 

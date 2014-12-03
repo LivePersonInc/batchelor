@@ -213,6 +213,19 @@ var reqSingle =
 //}];
 
 
+var batch = require("persistentBatchelor").service;
+
+var adaptor = {
+    execute: function(requets, cb) {
+        if(requests[0].persist === true){
+            this.persist = {}
+        }
+    },
+    persist: function(requests, cb) {
+    }
+};
+
+
 
 var config = require('./config/config.json');
 config.logger = console;
