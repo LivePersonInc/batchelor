@@ -115,7 +115,5 @@ module.exports = function(grunt) {
             }
         }
     });
-///Code coverage below threshold: 92 < 98
     grunt.registerTask('default', ['clean', 'copy:batchelor', 'blanket', 'copy:coverage', 'mochaTest', 'string-replace']);
-    grunt.registerTask('replace', ['string-replace']);
 };
