@@ -113,7 +113,16 @@ module.exports = function(grunt) {
                     }]
                 }
             }
+        },
+        mustache_render: {
+            README: {
+                files: [{
+                    data: "./coverage/coverage.json",
+                    template: "./README.mustache",
+                    dest: ".README.md"
+                }]
+            }
         }
     });
-    grunt.registerTask('default', ['clean', 'copy:batchelor', 'blanket', 'copy:coverage', 'mochaTest', 'string-replace']);
+    grunt.registerTask("default", ["clean", "copy:batchelor", "blanket", "copy:coverage", "mochaTest", "string-replace", "mustache_render:README"]);
 };

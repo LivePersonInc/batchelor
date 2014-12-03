@@ -1,5 +1,8 @@
 Batchelor
 ===================
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![coverage status](http://img.shields.io/badge/local%20coverage-{{coverage}}%25-green.svg)](http://img.shields.io/badge/local%20coverage-{{coverage}}%25-green.svg)
+
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
 Server side parallel request processing.
@@ -63,7 +66,7 @@ An object holding single or array of items, to be batch in the request
 
 <a name="item" />
 ## item
-An object representing a single batch of request. The item must have the following 
+An object representing a single batch of request. The item must have the following
 
 * `name` - identifier of the item, the name is used as reference. Names must be UNIQUE! [required]
 * `url` - URL that calls the item. Possible GET parameters are also given here [required]
@@ -186,7 +189,7 @@ ws.onmessage = function (event) {
             headers: {"content-type":"application/json"}
         },
         item2:{
-            body: {name: "myname2", id: 2},    
+            body: {name: "myname2", id: 2},
             statusCode: 200,
             headers: {"content-type":"application/json"}
         }
