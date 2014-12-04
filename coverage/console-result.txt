@@ -4,7 +4,6 @@
     configure
       ✓ configure method 
     execute
-{"CREATE_ERROR":{"body":"An error occurs in the API request URL","statusCode":500}}
       ✓ execute method - Creating an exception 
       ✓ execute method - INVALID_TASK - Missing URL 
       ✓ execute method - INVALID_TASK - Missing name 
@@ -42,5 +41,5 @@
       ✓ getActiveJobs method 
 
 
-  25 passing (43ms)
+  25 passing (41ms)
 

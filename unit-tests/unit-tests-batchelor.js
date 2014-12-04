@@ -65,7 +65,6 @@ describe('batchelor', function () {
                     url: "url.com",
                     method: "method"
                 }, function (err, result) {
-                    console.log(JSON.stringify(result));
 //                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
 
                 });
