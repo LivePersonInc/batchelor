@@ -1,3 +1,4 @@
+var sinon     = require('sinon');
 var should    = require('chai').should();
 var expect    = require('chai').expect;
 var assert    = require('chai').assert;
@@ -45,15 +46,32 @@ describe('batchelor', function () {
     });
 
     describe('execute', function () {
-        function buildObj(stringObj) {
-            try {
-                return JSON.parse(stringObj);
-            }
-            catch (e) {
-                return {};
-            }
-        }
+//        var server;
+//
+//        beforeEach(function() {
+//            server = sinon.fakeServer.create();
+//        });
+//
+//        afterEach(function () {
+//            server.restore();
+//        });
+
         var jobId;
+
+        it('execute method - Creating an exception', function () {
+            jobId = batchelor.execute(
+                {
+                    name: "CREATE_ERROR",
+                    url: "url",
+                    method: "method"
+                }, function (err, result) {
+                    console.log(JSON.stringify(result));
+//                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+
+                });
+
+            jobId.should.be.a('string');
+        });
 
         it('execute method - INVALID_TASK - Missing URL', function () {
             jobId = batchelor.execute(
@@ -140,11 +158,26 @@ describe('batchelor', function () {
             jobId.should.be.a('string');
         });
 
-//        it('execute method - NO_JSON_OBJECT', function () {
+        it('execute method - NO_JSON_OBJECT', function () {
+//            server.respondWith("GET", "/noJSON",
+//                [
+//                    200,
+//                    { "Content-Type": "application/text" }, 'text'
+//                ]
+//            );
+//
+//            server.respondWith("POST", "/JSON",
+//                [
+//                    200,
+//                    { "Content-Type": "application/json" }, '{ "stuff": "is", "awesome": "in here" }'
+//                ]
+//            );
+//            var callback = sinon.spy();
+
 //            jobId = batchelor.execute(
 //                {
 //                    name: "NO_JSON_OBJECT",
-//                    url: "http://www.google.com",
+//                    url: "http://localhost/noJSON",
 //                    encoding: "UTF8",
 //                    method: "GET",
 //                    retries: 3,
@@ -157,15 +190,15 @@ describe('batchelor', function () {
 //                }, function (err, result) {
 //                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
 //                });
-//
+//            server.respond();
 //            jobId.should.be.a('string');
-//        });
+        });
 
 //        it('execute method - POST', function () {
 //            jobId = batchelor.execute(
 //                {
 //                    name: "POST",
-//                    url: "https://jsonresponser.herokuapp.com/api/json/users",
+//                    url: "http://localhost/JSON",
 //                    encoding: "UTF8",
 //                    method: "POST",
 //                    retries: 3,
@@ -176,7 +209,9 @@ describe('batchelor', function () {
 //                    body: "body",
 //                    timeout: 5000
 //                }, function (err, result) {
-//                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
+//                    console.log("0000");
+//                    console.log(JSON.stringify(result));
+//                    result["NO_JSON_OBJECT"].body.should.be.a("object");
 //                });
 //
 //            jobId.should.be.a('string');

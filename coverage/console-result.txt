@@ -4,10 +4,13 @@
 [0m    configure[0m
 [2K[0G    [32m  ✓[0m[90m configure method [0m
 [0m    execute[0m
+{"CREATE_ERROR":{"body":"An error occurs in the API request URL","statusCode":500}}
+[2K[0G    [32m  ✓[0m[90m execute method - Creating an exception [0m
 [2K[0G    [32m  ✓[0m[90m execute method - INVALID_TASK - Missing URL [0m
 [2K[0G    [32m  ✓[0m[90m execute method - INVALID_TASK - Missing name [0m
 [2K[0G    [32m  ✓[0m[90m execute method - ETIMEDOUT [0m
 [2K[0G    [32m  ✓[0m[90m execute method - ERROR_API_URL [0m
+[2K[0G    [32m  ✓[0m[90m execute method - NO_JSON_OBJECT [0m
 
 [0m  commons[0m
 [2K[0G  [32m  ✓[0m[90m objects were created [0m
@@ -39,5 +42,5 @@
 [2K[0G    [32m  ✓[0m[90m getActiveJobs method [0m
 
 
-[92m [0m[32m 23 passing[0m[90m (42ms)[0m
+[92m [0m[32m 25 passing[0m[90m (57ms)[0m
 
