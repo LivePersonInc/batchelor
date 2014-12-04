@@ -30,3 +30,6 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# use this folder only for coverage porpoise
+batchelor

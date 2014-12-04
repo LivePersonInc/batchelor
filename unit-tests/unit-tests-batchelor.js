@@ -62,7 +62,7 @@ describe('batchelor', function () {
             jobId = batchelor.execute(
                 {
                     name: "CREATE_ERROR",
-                    url: "url",
+                    url: "url.com",
                     method: "method"
                 }, function (err, result) {
                     console.log(JSON.stringify(result));

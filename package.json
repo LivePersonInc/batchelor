@@ -26,7 +26,8 @@
         "grunt-string-replace": "1.0.x",
         "travis-cov": "0.2.x",
         "load-grunt-tasks": "1.0.x",
-        "grunt-mustache-render": "1.6.x"
+        "grunt-mustache-render": "1.6.x",
+        "grunt-concurrent": "1.0.x"
     },
     "repository": {
         "type": "git",

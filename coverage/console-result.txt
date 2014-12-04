@@ -1,46 +1,46 @@
 
-[0m[0m
-[0m  batchelor[0m
-[0m    configure[0m
-[2K[0G    [32m  ✓[0m[90m configure method [0m
-[0m    execute[0m
+
+  batchelor
+    configure
+      ✓ configure method 
+    execute
 {"CREATE_ERROR":{"body":"An error occurs in the API request URL","statusCode":500}}
-[2K[0G    [32m  ✓[0m[90m execute method - Creating an exception [0m
-[2K[0G    [32m  ✓[0m[90m execute method - INVALID_TASK - Missing URL [0m
-[2K[0G    [32m  ✓[0m[90m execute method - INVALID_TASK - Missing name [0m
-[2K[0G    [32m  ✓[0m[90m execute method - ETIMEDOUT [0m
-[2K[0G    [32m  ✓[0m[90m execute method - ERROR_API_URL [0m
-[2K[0G    [32m  ✓[0m[90m execute method - NO_JSON_OBJECT [0m
+      ✓ execute method - Creating an exception 
+      ✓ execute method - INVALID_TASK - Missing URL 
+      ✓ execute method - INVALID_TASK - Missing name 
+      ✓ execute method - ETIMEDOUT 
+      ✓ execute method - ERROR_API_URL 
+      ✓ execute method - NO_JSON_OBJECT 
 
-[0m  commons[0m
-[2K[0G  [32m  ✓[0m[90m objects were created [0m
-[2K[0G  [32m  ✓[0m[90m helper [0m
-[2K[0G  [32m  ✓[0m[90m helper configure method [0m
-[2K[0G  [32m  ✓[0m[90m helper merge method [0m
-[2K[0G  [32m  ✓[0m[90m helper setAdditionalProps method [0m
-[2K[0G  [32m  ✓[0m[90m helper convert2Array method [0m
+  commons
+    ✓ objects were created 
+    ✓ helper 
+    ✓ helper configure method 
+    ✓ helper merge method 
+    ✓ helper setAdditionalProps method 
+    ✓ helper convert2Array method 
 
-[0m  processor[0m
-[0m    configure[0m
-[2K[0G    [32m  ✓[0m[90m test configure method [0m
-[0m    run[0m
-[2K[0G    [32m  ✓[0m[90m run method [0m
+  processor
+    configure
+      ✓ test configure method 
+    run
+      ✓ run method 
 
-[0m  utils[0m
-[2K[0G  [32m  ✓[0m[90m test objects were created [0m
-[0m    builder[0m
-[2K[0G    [32m  ✓[0m[90m test builder functionality [0m
-[0m    validator[0m
-[2K[0G    [32m  ✓[0m[90m test methods [0m
-[2K[0G    [32m  ✓[0m[90m isValidRequest method [0m
-[2K[0G    [32m  ✓[0m[90m cleanRequest method [0m
-[0m    jobHolder[0m
-[2K[0G    [32m  ✓[0m[90m methods [0m
-[2K[0G    [32m  ✓[0m[90m addJob method [0m
-[2K[0G    [32m  ✓[0m[90m addJob/getJob methods [0m
-[2K[0G    [32m  ✓[0m[90m addJob/getJob/clean methods [0m
-[2K[0G    [32m  ✓[0m[90m getActiveJobs method [0m
+  utils
+    ✓ test objects were created 
+    builder
+      ✓ test builder functionality 
+    validator
+      ✓ test methods 
+      ✓ isValidRequest method 
+      ✓ cleanRequest method 
+    jobHolder
+      ✓ methods 
+      ✓ addJob method 
+      ✓ addJob/getJob methods 
+      ✓ addJob/getJob/clean methods 
+      ✓ getActiveJobs method 
 
 
-[92m [0m[32m 25 passing[0m[90m (57ms)[0m
+  25 passing (43ms)
 
