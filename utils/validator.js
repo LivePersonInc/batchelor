@@ -1,4 +1,4 @@
-var commons = require('./../commons/commons');
+var commons = require("./../commons/commons");
 var config;
 
 exports.configure = function (cfg) {
@@ -6,19 +6,19 @@ exports.configure = function (cfg) {
     return config;
 };
 
-exports.isValidRequest = function (task) {
-    task = task || {};
-    var validTask = false;
-    if ((task.name && typeof task.name === "string") &&
-        (task.url && typeof task.url === "string") &&
-        (task.method && typeof task.method === "string")) {
-        validTask = true;
+exports.isValidRequest = function (req) {
+    req = req || {};
+    var validReq = false;
+    if ((req.name && typeof req.name === "string") &&
+        (req.url && typeof req.url === "string") &&
+        (req.method && typeof req.method === "string")) {
+        validReq = true;
     }
-    config.logger.info("isValidTask: " + validTask)
-    return validTask
+    config.logger.info("isValidReq: " + validReq)
+    return validReq
 };
-exports.cleanRequest = function (task) {
-    task = task || {};
+exports.cleanRequest = function (req) {
+    req = req || {};
     /**
      * we are deleting the headers:
      * 1. content-length - don't limit the size of the content
@@ -29,10 +29,16 @@ exports.cleanRequest = function (task) {
     for (var header in commons.CONST.INVALID_HEADERS) {
         var currentHeader = commons.CONST.INVALID_HEADERS[header];
         // try to delete it only if were passed
-        if (task.headers && task.headers[currentHeader]) {
-            delete task.headers[currentHeader];
+        if (req.headers && req.headers[currentHeader]) {
+            delete req.headers[currentHeader];
         }
     }
-    return task;
+    return req;
 };
 
+
+exports.isPersistentRequest = function (req) {
+    var persistentReq = req && req.persistent && req.persistent === true || false;
+    config.logger.info("isPersistentReq: " + persistentReq);
+    return persistentReq;
+};

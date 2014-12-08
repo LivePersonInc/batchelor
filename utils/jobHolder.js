@@ -1,4 +1,4 @@
-var commons = require('./../commons/commons');
+var commons = require("./../commons/commons");
 var idCounter = 0;
 var jobs = {};
 var config;
@@ -6,7 +6,7 @@ var activeJobs = 0;
 var activeRequests = 0;
 
 function _getUniqueId (prefix) {
-    var id = ++idCounter + '';
+    var id = ++idCounter + "";
     return prefix ? prefix + id : id;
 }
 
