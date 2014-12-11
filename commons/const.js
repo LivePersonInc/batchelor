@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
     RESPONSE_TYPE: {
         INVALID_TASK: "INVALID_TASK",

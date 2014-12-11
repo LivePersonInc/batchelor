@@ -1,3 +1,4 @@
+'use strict';
 var commons = require("./../commons/commons");
 var idCounter = 0;
 var jobs = {};

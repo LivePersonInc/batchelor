@@ -1,3 +1,4 @@
+'use strict';
 var config     = require('./config/config.json');
 var processor  = require('./lib/processor');
 var commons    = require('./commons/commons');

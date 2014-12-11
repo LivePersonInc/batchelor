@@ -1,3 +1,4 @@
+'use strict';
 exports.configure = function (cfg) {
     var config = {};
     for (var key in cfg) {
