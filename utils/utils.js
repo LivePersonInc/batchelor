@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 var utils = {
     jobHolder : require("./jobHolder"),

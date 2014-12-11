@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 var commons = require("./../commons/commons");
 var config;
