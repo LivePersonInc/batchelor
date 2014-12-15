@@ -339,10 +339,10 @@ var persistentJobId = batchelorPersistent.execute(twoReqsPersistent, function (e
 console.log("--->>>>>>>>>>>>persistentJobId: " + persistentJobId);
 
 
-setTimeout(function () {
-    console.log("STOPPING QUEUE")
-    batchelorPersistent.stop(persistentJobId);
-}, 10000)
+//setTimeout(function () {
+//    console.log("STOPPING QUEUE")
+//    batchelorPersistent.stop(persistentJobId);
+//}, 10000)
 
 //setInterval(function () {
 //    repeat();

@@ -4,6 +4,7 @@ var config     = require('./config/config.json');
 var processor  = require('./lib/processor');
 var commons    = require('./commons');
 var utils      = require('./utils');
+var log;
 
 /**
  * helper method that configure the given object
@@ -22,6 +23,7 @@ function _configure(obj, cfg) {
  * @private
  */
 function _prepareRequests(job) {
+    log.info("[batchelor] _prepareRequests");
     var _requests = {
         supported: [],
         unsupported: {}
@@ -46,6 +48,7 @@ function _prepareRequests(job) {
  */
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
+    log = config.logger || console;
     _configure(utils, config);
     _configure(processor, config);
     return config;
@@ -62,7 +65,7 @@ exports.execute = function (job, callback) {
     var _reqs = _prepareRequests(job);
     var jobId = utils.jobHolder.addJob(_reqs.supported);
 
-    config.logger.info("[batchelor] Processing Job # " + jobId);
+    log.info("[batchelor] Processing Job # " + jobId);
 
     processor.run(_reqs.supported, function (err, result) {
         if (err) {
@@ -75,8 +78,4 @@ exports.execute = function (job, callback) {
     });
 
     return jobId;
-};
-
-
-exports.stopJob = function (jobId) {
 };

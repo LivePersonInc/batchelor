@@ -12,10 +12,12 @@ var log;
 var config;
 
 
-function isResponseChanged(_previous, _current) {
-    return JSON.stringify(_previous) !== JSON.stringify(_current)
-}
-
+/**
+ * An asynchronous function for processing a queued task
+ * @param _persistentJob - task to work in queue
+ * @param callback - must method to call when finished, this way we notify to the queue that this function finished
+ * @private
+ */
 function _persist (_persistentJob, callback) {
     batchelor.execute(_persistentJob.requests.persistent, function (err, result) {
         _batchelorCallback(err, result, _persistentJob);
@@ -23,6 +25,23 @@ function _persist (_persistentJob, callback) {
     });
 }
 
+/**
+ * check if the response was changed, currently using JSON.stringify
+ * @param _previous - object of previous request
+ * @param _current object of current request
+ * @returns {boolean} - true is changed, false otherwise
+ */
+function isResponseChanged(_previous, _current) {
+    return JSON.stringify(_previous) !== JSON.stringify(_current)
+}
+
+/**
+ * run the given method, if its a function type
+ * @param callback - method to call
+ * @param err - error to pass in callback
+ * @param result - result to pass in callback
+ * @private
+ */
 function _runCallback(callback, err, result) {
     if (typeof callback === "function") {
         log.info("[Persistent Adaptor] calling given callback")
@@ -34,6 +53,13 @@ function _runCallback(callback, err, result) {
 
 }
 
+/**
+ * callback to be called once the batchelor finish processing the job
+ * @param err - error passed from batchelor
+ * @param result - result passed from batchelor
+ * @param persistentJob - job to process again and again until its stopped
+ * @private
+ */
 function _batchelorCallback(err, result, persistentJob) {
     log.info("[Persistent Adaptor] _batchelorCallback called with err: " + err + " and result: " + JSON.stringify(result));
     var _jobId = persistentJob.jobId;
@@ -69,6 +95,11 @@ function _batchelorCallback(err, result, persistentJob) {
     }
 }
 
+/**
+ * process job calling to "batchelor.execute" and waiting for callback to be called from batchelor
+ * @param _persistentJob
+ * @private
+ */
 function _process(_persistentJob) {
     log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
     batchelor.execute(_persistentJob.requests.persistent, function (err, result) {
@@ -76,6 +107,13 @@ function _process(_persistentJob) {
     });
 }
 
+/**
+ * build job object with the given calllback and job id
+ * @param callback - function
+ * @param jobId - string
+ * @returns {{jobId: *, callback: (*|null), requests: {persistent: Array, non_persistent: {}}}}
+ * @private
+ */
 function _buildJobObj(callback, jobId) {
     return {
         jobId: jobId,
@@ -87,6 +125,11 @@ function _buildJobObj(callback, jobId) {
     } ;
 }
 
+/**
+ * build object queue with stopped status tru
+ * @returns {{queue: Array, stopped: boolean}}
+ * @private
+ */
 function _buildObjectQueue() {
     return {
         queue: async.queue(_persist, 5),
@@ -94,12 +137,23 @@ function _buildObjectQueue() {
     };
 }
 
+/**
+ * set the adaptor configuration + configure batchelor
+ * @param cfg - configuration object for the adaptor and batchelor
+ * @returns {*} - batchelor configuration
+ */
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
     log = config.logger || console;
     return batchelor.configure(cfg);
 };
 
+/**
+ * entry point of the persistent object
+ * @param job - object containing one or more requests
+ * @param callback - method to call once the batchelor finish processing job
+ * @returns {*} - job id - string
+ */
 exports.execute = function (job, callback) {
     log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
     var reqs = commons.helper.convert2Array(job);
@@ -124,8 +178,19 @@ exports.execute = function (job, callback) {
 
 };
 
+/**
+ * method to stop running job, if exist
+ * @param jobId - job to stop
+ * @returns {boolean}
+ */
 exports.stop = function (jobId) {
+    var stopped = false;
     log.info("[Persistent Adaptor] stopping job: " + jobId);
-    persistentManager[jobId].stopped = true;
-    persistentManager[jobId].queue.kill();
+
+    if (jobId && persistentManager[jobId]) {
+        stopped = persistentManager[jobId].stopped = stopped;
+        persistentManager[jobId].queue.kill();
+    }
+
+    return stopped;
 };
