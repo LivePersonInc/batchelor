@@ -1,4 +1,5 @@
 'use strict';
+var _          = require("lodash");
 var config     = require('./config/config.json');
 var processor  = require('./lib/processor');
 var commons    = require('./commons');
@@ -21,25 +22,22 @@ function _configure(obj, cfg) {
  * @private
  */
 function _prepareRequests(job) {
-    var requests = {
+    var _requests = {
         supported: [],
         unsupported: {}
     };
-    var cReq;
-    var len = job.length;
-    for (var i=0; i<len; i++) {
-        cReq = job[i];
+    _.forEach(job, function (cReq) {
         cReq = commons.helper.setAdditionalProps(config.request, cReq);
         if (utils.validator.isValidRequest(cReq)) {
             cReq = utils.validator.cleanRequest(cReq);
-            requests.supported.push(cReq);
+            _requests.supported.push(cReq);
         }
         else {
-            requests.unsupported[cReq.name || "missingName"] = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK);
+            _requests.unsupported[cReq.name || "missingName"] = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK);
         }
-    }
+    });
 
-    return requests;
+    return _requests;
 }
 
 /**
@@ -61,17 +59,17 @@ exports.configure = function (cfg) {
  */
 exports.execute = function (job, callback) {
     job = commons.helper.convert2Array(job);
-    var reqs = _prepareRequests(job);
-    var jobId = utils.jobHolder.addJob(reqs.supported);
+    var _reqs = _prepareRequests(job);
+    var jobId = utils.jobHolder.addJob(_reqs.supported);
 
     config.logger.info("[batchelor] Processing Job # " + jobId);
 
-    processor.run(reqs.supported, function (err, result) {
+    processor.run(_reqs.supported, function (err, result) {
         if (err) {
             callback(err);
         }
         else {
-            result = commons.helper.merge(reqs.unsupported, result);
+            result = commons.helper.merge(_reqs.unsupported, result);
             callback(null, result);
         }
     });
