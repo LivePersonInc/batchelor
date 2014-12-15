@@ -1,5 +1,8 @@
 /*jslint node: true */
 'use strict';
+
+var idCounter = 0;
+
 exports.configure = function (cfg) {
     var config = {};
     for (var key in cfg) {
@@ -35,4 +38,14 @@ exports.convert2Array = function(obj) {
     }
 
     return arr;
+};
+exports.function = function () {
+
+};
+exports.getUniqueId = function (prefix) {
+    var id = ++idCounter + "";
+    return prefix ? prefix + id : id;
+};
+exports.isObjectEmpty = function (obj) {
+    return Object.keys(obj).length === 0;
 };

@@ -9,6 +9,7 @@ module.exports = {
         URL_NOT_VALID: "URL_NOT_VALID",
         NO_JSON_OBJECT: "NO_JSON_OBJECT",
         ERROR_API_URL: "ERROR_API_URL",
+        NON_PERSISTENT_REQUEST: "NON_PERSISTENT_REQUEST",
         DEFAULT: "DEFAULT"
     },
     BODY_RESPONSE: 
@@ -20,6 +21,7 @@ module.exports = {
         URL_NOT_VALID: "Request URL is not valid, doesn't exist in the whitelist",
         NO_JSON_OBJECT: "Response was no JSON object",
         ERROR_API_URL: "An error occurs in the API request URL",
+        NON_PERSISTENT_REQUEST: "Trying to run non persistent(lazy) request with wrong persistent adaptor",
         DEFAULT: "Api host didn't response (not exist)"
     },
     RESPONSE_ERROR_CODE: {

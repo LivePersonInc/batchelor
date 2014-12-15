@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 var config;
-var commons = require("./../commons/commons");
+var commons = require("./../commons");
 
 var RESPONSE_TYPE = {
     INVALID_TASK: {
@@ -27,6 +27,10 @@ var RESPONSE_TYPE = {
     NO_JSON_OBJECT: {
         body: commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT,
         statusCode: commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR
+    },
+    NON_PERSISTENT_REQUEST: {
+        body: commons.CONST.BODY_RESPONSE.NON_PERSISTENT_REQUEST,
+        statusCode: commons.CONST.HTTP_STATUS.NOT_ACCEPTABLE
     },
     DEFAULT: {
         body: commons.CONST.BODY_RESPONSE.DEFAULT,

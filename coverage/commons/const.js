@@ -1,6 +1,8 @@
 if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['commons/const.js'] === 'undefined'){_$jscoverage['commons/const.js']=[];
-_$jscoverage['commons/const.js'].source=['module.exports = {',
+_$jscoverage['commons/const.js'].source=['/*jslint node: true */',
+'\'use strict\';',
+'module.exports = {',
 '    RESPONSE_TYPE: {',
 '        INVALID_TASK: "INVALID_TASK",',
 '        ETIMEDOUT: "ETIMEDOUT",',
@@ -9,6 +11,7 @@ _$jscoverage['commons/const.js'].source=['module.exports = {',
 '        URL_NOT_VALID: "URL_NOT_VALID",',
 '        NO_JSON_OBJECT: "NO_JSON_OBJECT",',
 '        ERROR_API_URL: "ERROR_API_URL",',
+'        NON_PERSISTENT_REQUEST: "NON_PERSISTENT_REQUEST",',
 '        DEFAULT: "DEFAULT"',
 '    },',
 '    BODY_RESPONSE: ',
@@ -20,6 +23,7 @@ _$jscoverage['commons/const.js'].source=['module.exports = {',
 '        URL_NOT_VALID: "Request URL is not valid, doesn\'t exist in the whitelist",',
 '        NO_JSON_OBJECT: "Response was no JSON object",',
 '        ERROR_API_URL: "An error occurs in the API request URL",',
+'        NON_PERSISTENT_REQUEST: "Trying to run non persistent(lazy) request with wrong persistent adaptor",',
 '        DEFAULT: "Api host didn\'t response (not exist)"',
 '    },',
 '    RESPONSE_ERROR_CODE: {',
@@ -116,8 +120,12 @@ _$jscoverage['commons/const.js'].source=['module.exports = {',
 '        HOST: "host"',
 '    }',
 '};'];
-_$jscoverage['commons/const.js'][1]=0;
-}_$jscoverage['commons/const.js'][1]++;
+_$jscoverage['commons/const.js'][2]=0;
+_$jscoverage['commons/const.js'][3]=0;
+}/*jslint node: true */
+_$jscoverage['commons/const.js'][2]++;
+'use strict';
+_$jscoverage['commons/const.js'][3]++;
 module.exports = {
     RESPONSE_TYPE: {
         INVALID_TASK: "INVALID_TASK",
@@ -127,6 +135,7 @@ module.exports = {
         URL_NOT_VALID: "URL_NOT_VALID",
         NO_JSON_OBJECT: "NO_JSON_OBJECT",
         ERROR_API_URL: "ERROR_API_URL",
+        NON_PERSISTENT_REQUEST: "NON_PERSISTENT_REQUEST",
         DEFAULT: "DEFAULT"
     },
     BODY_RESPONSE: 
@@ -138,6 +147,7 @@ module.exports = {
         URL_NOT_VALID: "Request URL is not valid, doesn't exist in the whitelist",
         NO_JSON_OBJECT: "Response was no JSON object",
         ERROR_API_URL: "An error occurs in the API request URL",
+        NON_PERSISTENT_REQUEST: "Trying to run non persistent(lazy) request with wrong persistent adaptor",
         DEFAULT: "Api host didn't response (not exist)"
     },
     RESPONSE_ERROR_CODE: {

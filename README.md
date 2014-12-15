@@ -1,7 +1,7 @@
 Batchelor
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![coverage status](http://img.shields.io/badge/local%20coverage-92%25-green.svg)](http://img.shields.io/badge/local%20coverage-92%25-green.svg)
+[![coverage status](http://img.shields.io/badge/local%20coverage-91%25-green.svg)](http://img.shields.io/badge/local%20coverage-91%25-green.svg)
 
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.

@@ -1,6 +1,6 @@
 /*jslint node: true */
 'use strict';
-var commons = require("./../commons/commons");
+var commons = require("./../commons");
 var config;
 
 exports.configure = function (cfg) {
@@ -16,7 +16,7 @@ exports.isValidRequest = function (req) {
         (req.method && typeof req.method === "string")) {
         validReq = true;
     }
-    config.logger.info("isValidReq: " + validReq)
+    config.logger.info("[validator] isValidReq: " + validReq)
     return validReq
 };
 exports.cleanRequest = function (req) {
@@ -41,6 +41,6 @@ exports.cleanRequest = function (req) {
 
 exports.isPersistentRequest = function (req) {
     var persistentReq = req && req.persistent && req.persistent === true || false;
-    config.logger.info("isPersistentReq: " + persistentReq);
+    config.logger.info("[validator] isPersistentReq: " + persistentReq);
     return persistentReq;
 };

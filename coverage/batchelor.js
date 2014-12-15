@@ -1,9 +1,10 @@
 if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['batchelor/batchelor.js'] === 'undefined'){_$jscoverage['batchelor/batchelor.js']=[];
-_$jscoverage['batchelor/batchelor.js'].source=['var config     = require(\'./config/config.json\');',
+_$jscoverage['batchelor/batchelor.js'].source=['\'use strict\';',
+'var config     = require(\'./config/config.json\');',
 'var processor  = require(\'./lib/processor\');',
-'var commons    = require(\'./commons/commons\');',
-'var utils      = require(\'./utils/utils\');',
+'var commons    = require(\'./commons\');',
+'var utils      = require(\'./utils\');',
 '',
 '/**',
 ' * helper method that configure the given object',
@@ -65,7 +66,7 @@ _$jscoverage['batchelor/batchelor.js'].source=['var config     = require(\'./con
 '    var reqs = _prepareRequests(job);',
 '    var jobId = utils.jobHolder.addJob(reqs.supported);',
 '',
-'    config.logger.info("Processing Job # " + jobId);',
+'    config.logger.info("[batchelor] Processing Job # " + jobId);',
 '',
 '    processor.run(reqs.supported, function (err, result) {',
 '        if (err) {',
@@ -83,49 +84,52 @@ _$jscoverage['batchelor/batchelor.js'].source=['var config     = require(\'./con
 '',
 'exports.stopJob = function (jobId) {',
 '};'];
-_$jscoverage['batchelor/batchelor.js'][22]=0;
+_$jscoverage['batchelor/batchelor.js'][23]=0;
 _$jscoverage['batchelor/batchelor.js'][1]=0;
-_$jscoverage['batchelor/batchelor.js'][49]=0;
+_$jscoverage['batchelor/batchelor.js'][50]=0;
 _$jscoverage['batchelor/batchelor.js'][3]=0;
 _$jscoverage['batchelor/batchelor.js'][2]=0;
 _$jscoverage['batchelor/batchelor.js'][51]=0;
-_$jscoverage['batchelor/batchelor.js'][12]=0;
-_$jscoverage['batchelor/batchelor.js'][4]=0;
-_$jscoverage['batchelor/batchelor.js'][52]=0;
-_$jscoverage['batchelor/batchelor.js'][28]=0;
-_$jscoverage['batchelor/batchelor.js'][23]=0;
-_$jscoverage['batchelor/batchelor.js'][27]=0;
+_$jscoverage['batchelor/batchelor.js'][14]=0;
 _$jscoverage['batchelor/batchelor.js'][13]=0;
-_$jscoverage['batchelor/batchelor.js'][63]=0;
-_$jscoverage['batchelor/batchelor.js'][37]=0;
-_$jscoverage['batchelor/batchelor.js'][29]=0;
-_$jscoverage['batchelor/batchelor.js'][32]=0;
-_$jscoverage['batchelor/batchelor.js'][34]=0;
-_$jscoverage['batchelor/batchelor.js'][33]=0;
-_$jscoverage['batchelor/batchelor.js'][30]=0;
+_$jscoverage['batchelor/batchelor.js'][4]=0;
+_$jscoverage['batchelor/batchelor.js'][5]=0;
+_$jscoverage['batchelor/batchelor.js'][49]=0;
 _$jscoverage['batchelor/batchelor.js'][31]=0;
-_$jscoverage['batchelor/batchelor.js'][73]=0;
-_$jscoverage['batchelor/batchelor.js'][50]=0;
-_$jscoverage['batchelor/batchelor.js'][48]=0;
-_$jscoverage['batchelor/batchelor.js'][41]=0;
-_$jscoverage['batchelor/batchelor.js'][61]=0;
+_$jscoverage['batchelor/batchelor.js'][24]=0;
+_$jscoverage['batchelor/batchelor.js'][28]=0;
+_$jscoverage['batchelor/batchelor.js'][29]=0;
+_$jscoverage['batchelor/batchelor.js'][30]=0;
+_$jscoverage['batchelor/batchelor.js'][65]=0;
+_$jscoverage['batchelor/batchelor.js'][33]=0;
+_$jscoverage['batchelor/batchelor.js'][32]=0;
+_$jscoverage['batchelor/batchelor.js'][67]=0;
+_$jscoverage['batchelor/batchelor.js'][35]=0;
+_$jscoverage['batchelor/batchelor.js'][34]=0;
+_$jscoverage['batchelor/batchelor.js'][74]=0;
+_$jscoverage['batchelor/batchelor.js'][53]=0;
+_$jscoverage['batchelor/batchelor.js'][38]=0;
+_$jscoverage['batchelor/batchelor.js'][52]=0;
+_$jscoverage['batchelor/batchelor.js'][42]=0;
 _$jscoverage['batchelor/batchelor.js'][62]=0;
+_$jscoverage['batchelor/batchelor.js'][63]=0;
 _$jscoverage['batchelor/batchelor.js'][64]=0;
-_$jscoverage['batchelor/batchelor.js'][66]=0;
-_$jscoverage['batchelor/batchelor.js'][68]=0;
 _$jscoverage['batchelor/batchelor.js'][69]=0;
 _$jscoverage['batchelor/batchelor.js'][70]=0;
-_$jscoverage['batchelor/batchelor.js'][74]=0;
-_$jscoverage['batchelor/batchelor.js'][78]=0;
-_$jscoverage['batchelor/batchelor.js'][82]=0;
+_$jscoverage['batchelor/batchelor.js'][71]=0;
+_$jscoverage['batchelor/batchelor.js'][75]=0;
+_$jscoverage['batchelor/batchelor.js'][79]=0;
+_$jscoverage['batchelor/batchelor.js'][83]=0;
 }_$jscoverage['batchelor/batchelor.js'][1]++;
-var config     = require('./config/config.json');
+'use strict';
 _$jscoverage['batchelor/batchelor.js'][2]++;
-var processor  = require('./lib/processor');
+var config     = require('./config/config.json');
 _$jscoverage['batchelor/batchelor.js'][3]++;
-var commons    = require('./commons/commons');
+var processor  = require('./lib/processor');
 _$jscoverage['batchelor/batchelor.js'][4]++;
-var utils      = require('./utils/utils');
+var commons    = require('./commons');
+_$jscoverage['batchelor/batchelor.js'][5]++;
+var utils      = require('./utils');
 
 /**
  * helper method that configure the given object
@@ -133,9 +137,9 @@ var utils      = require('./utils/utils');
  * @param cfg - source object
  * @private
  */
-_$jscoverage['batchelor/batchelor.js'][12]++;
+_$jscoverage['batchelor/batchelor.js'][13]++;
 function _configure(obj, cfg) {
-    _$jscoverage['batchelor/batchelor.js'][13]++;
+    _$jscoverage['batchelor/batchelor.js'][14]++;
 obj.configure(cfg);
 }
 
@@ -145,37 +149,37 @@ obj.configure(cfg);
  * @returns {{supported: Array, unsupported: {}}}
  * @private
  */
-_$jscoverage['batchelor/batchelor.js'][22]++;
+_$jscoverage['batchelor/batchelor.js'][23]++;
 function _prepareRequests(job) {
-    _$jscoverage['batchelor/batchelor.js'][23]++;
+    _$jscoverage['batchelor/batchelor.js'][24]++;
 var requests = {
         supported: [],
         unsupported: {}
     };
-    _$jscoverage['batchelor/batchelor.js'][27]++;
-var cReq;
     _$jscoverage['batchelor/batchelor.js'][28]++;
-var len = job.length;
+var cReq;
     _$jscoverage['batchelor/batchelor.js'][29]++;
+var len = job.length;
+    _$jscoverage['batchelor/batchelor.js'][30]++;
 for (var i=0; i<len; i++) {
-        _$jscoverage['batchelor/batchelor.js'][30]++;
-cReq = job[i];
         _$jscoverage['batchelor/batchelor.js'][31]++;
-cReq = commons.helper.setAdditionalProps(config.request, cReq);
+cReq = job[i];
         _$jscoverage['batchelor/batchelor.js'][32]++;
+cReq = commons.helper.setAdditionalProps(config.request, cReq);
+        _$jscoverage['batchelor/batchelor.js'][33]++;
 if (utils.validator.isValidRequest(cReq)) {
-            _$jscoverage['batchelor/batchelor.js'][33]++;
-cReq = utils.validator.cleanRequest(cReq);
             _$jscoverage['batchelor/batchelor.js'][34]++;
+cReq = utils.validator.cleanRequest(cReq);
+            _$jscoverage['batchelor/batchelor.js'][35]++;
 requests.supported.push(cReq);
         }
         else {
-            _$jscoverage['batchelor/batchelor.js'][37]++;
+            _$jscoverage['batchelor/batchelor.js'][38]++;
 requests.unsupported[cReq.name || "missingName"] = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK);
         }
     }
 
-    _$jscoverage['batchelor/batchelor.js'][41]++;
+    _$jscoverage['batchelor/batchelor.js'][42]++;
 return requests;
 }
 
@@ -183,15 +187,15 @@ return requests;
  * configure the batchelor object and utils library
  * @param cfg
  */
-_$jscoverage['batchelor/batchelor.js'][48]++;
+_$jscoverage['batchelor/batchelor.js'][49]++;
 exports.configure = function (cfg) {
-    _$jscoverage['batchelor/batchelor.js'][49]++;
-config = commons.helper.configure(cfg);
     _$jscoverage['batchelor/batchelor.js'][50]++;
-_configure(utils, config);
+config = commons.helper.configure(cfg);
     _$jscoverage['batchelor/batchelor.js'][51]++;
-_configure(processor, config);
+_configure(utils, config);
     _$jscoverage['batchelor/batchelor.js'][52]++;
+_configure(processor, config);
+    _$jscoverage['batchelor/batchelor.js'][53]++;
 return config;
 };
 
@@ -201,38 +205,38 @@ return config;
  * @param callback - callback  method to be called once the request are performed
  * @returns {jobId}
  */
-_$jscoverage['batchelor/batchelor.js'][61]++;
+_$jscoverage['batchelor/batchelor.js'][62]++;
 exports.execute = function (job, callback) {
-    _$jscoverage['batchelor/batchelor.js'][62]++;
-job = commons.helper.convert2Array(job);
     _$jscoverage['batchelor/batchelor.js'][63]++;
-var reqs = _prepareRequests(job);
+job = commons.helper.convert2Array(job);
     _$jscoverage['batchelor/batchelor.js'][64]++;
+var reqs = _prepareRequests(job);
+    _$jscoverage['batchelor/batchelor.js'][65]++;
 var jobId = utils.jobHolder.addJob(reqs.supported);
 
-    _$jscoverage['batchelor/batchelor.js'][66]++;
-config.logger.info("Processing Job # " + jobId);
+    _$jscoverage['batchelor/batchelor.js'][67]++;
+config.logger.info("[batchelor] Processing Job # " + jobId);
 
-    _$jscoverage['batchelor/batchelor.js'][68]++;
+    _$jscoverage['batchelor/batchelor.js'][69]++;
 processor.run(reqs.supported, function (err, result) {
-        _$jscoverage['batchelor/batchelor.js'][69]++;
+        _$jscoverage['batchelor/batchelor.js'][70]++;
 if (err) {
-            _$jscoverage['batchelor/batchelor.js'][70]++;
+            _$jscoverage['batchelor/batchelor.js'][71]++;
 callback(err);
         }
         else {
-            _$jscoverage['batchelor/batchelor.js'][73]++;
-result = commons.helper.merge(reqs.unsupported, result);
             _$jscoverage['batchelor/batchelor.js'][74]++;
+result = commons.helper.merge(reqs.unsupported, result);
+            _$jscoverage['batchelor/batchelor.js'][75]++;
 callback(null, result);
         }
     });
 
-    _$jscoverage['batchelor/batchelor.js'][78]++;
+    _$jscoverage['batchelor/batchelor.js'][79]++;
 return jobId;
 };
 
 
-_$jscoverage['batchelor/batchelor.js'][82]++;
+_$jscoverage['batchelor/batchelor.js'][83]++;
 exports.stopJob = function (jobId) {
 };

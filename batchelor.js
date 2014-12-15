@@ -1,8 +1,8 @@
 'use strict';
 var config     = require('./config/config.json');
 var processor  = require('./lib/processor');
-var commons    = require('./commons/commons');
-var utils      = require('./utils/utils');
+var commons    = require('./commons');
+var utils      = require('./utils');
 
 /**
  * helper method that configure the given object
@@ -64,7 +64,7 @@ exports.execute = function (job, callback) {
     var reqs = _prepareRequests(job);
     var jobId = utils.jobHolder.addJob(reqs.supported);
 
-    config.logger.info("Processing Job # " + jobId);
+    config.logger.info("[batchelor] Processing Job # " + jobId);
 
     processor.run(reqs.supported, function (err, result) {
         if (err) {

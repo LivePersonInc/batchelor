@@ -1,16 +1,11 @@
 /*jslint node: true */
 'use strict';
-var commons = require("./../commons/commons");
-var idCounter = 0;
+var commons = require("./../commons");
 var jobs = {};
 var config;
 var activeJobs = 0;
 var activeRequests = 0;
 
-function _getUniqueId (prefix) {
-    var id = ++idCounter + "";
-    return prefix ? prefix + id : id;
-}
 
 function _incrementCounters(_reqsLength) {
     activeJobs++;
@@ -29,7 +24,7 @@ exports.configure = function (cfg) {
 
 
 exports.addJob = function (reqs) {
-    var jobId = _getUniqueId("job");
+    var jobId = commons.helper.getUniqueId("job");
     jobs[jobId] = {}
     jobs[jobId].reqs = reqs;
 
