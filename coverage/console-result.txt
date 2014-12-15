@@ -18,6 +18,7 @@
     ✓ helper merge method 
     ✓ helper setAdditionalProps method 
     ✓ helper convert2Array method 
+    ✓ helper isObjectEmpty method 
 
   processor
     configure
@@ -33,6 +34,7 @@
       ✓ test methods 
       ✓ isValidRequest method 
       ✓ cleanRequest method 
+      ✓ isPersistentRequest method 
     jobHolder
       ✓ methods 
       ✓ addJob method 
@@ -41,5 +43,5 @@
       ✓ getActiveJobs method 
 
 
-  25 passing (42ms)
+  27 passing (51ms)
 

@@ -68,6 +68,14 @@ describe('commons', function () {
         obj.should.be.a('array');
     });
 
+    it('helper isObjectEmpty method', function () {
+        var emptyObj = {};
+        var fullObj = {a: "s"};
+        commons.helper.isEmptyObject(emptyObj).should.be.a('boolean');
+        commons.helper.isEmptyObject(emptyObj).should.equal(true);
+        commons.helper.isEmptyObject(fullObj).should.equal(false);
+    });
+
 
 
 

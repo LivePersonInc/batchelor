@@ -93,6 +93,7 @@ describe('utils', function () {
             utils.validator.configure.should.be.a('function');
             utils.validator.isValidRequest.should.be.a('function');
             utils.validator.cleanRequest.should.be.a('function');
+            utils.validator.isPersistentRequest.should.be.a('function');
         });
 
         it('isValidRequest method', function () {
@@ -112,6 +113,13 @@ describe('utils', function () {
             validReq.should.have.ownProperty("headers")
             inValidReq.should.have.not.ownProperty("headers.host")
         });
+
+        it('isPersistentRequest method', function () {
+            utils.validator.isPersistentRequest({name: "name", persistent: true}).should.be.a('boolean');
+            utils.validator.isPersistentRequest({name: "name", persistent: true}).should.equal(true);
+            utils.validator.isPersistentRequest({name: "name", persistent: false}).should.equal(false);
+        });
+
     });
 
     describe('jobHolder', function () {

@@ -76,7 +76,7 @@ function _batchelorCallback(err, result, persistentJob) {
         _persistentRequests.requests.persistent.push(cPersistent);
     });
 
-    if (!commons.helper.isObjectEmpty(result) && _responseChanged) {
+    if (!commons.helper.isEmptyObject(result) && _responseChanged) {
         log.info("[Persistent Adaptor] result from batchelor is not empty and _responseChanged: " + _responseChanged);
         _runCallback(persistentJob.callback, err, result)
     }
@@ -184,13 +184,12 @@ exports.execute = function (job, callback) {
  * @returns {boolean}
  */
 exports.stop = function (jobId) {
-    var stopped = false;
     log.info("[Persistent Adaptor] stopping job: " + jobId);
 
     if (jobId && persistentManager[jobId]) {
-        stopped = persistentManager[jobId].stopped = stopped;
+        persistentManager[jobId].stopped = true;
         persistentManager[jobId].queue.kill();
     }
 
-    return stopped;
+    return persistentManager[jobId].stopped;
 };

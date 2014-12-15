@@ -48,7 +48,7 @@ _$jscoverage['commons/helper.js'].source=['/*jslint node: true */',
 '    var id = ++idCounter + "";',
 '    return prefix ? prefix + id : id;',
 '};',
-'exports.isObjectEmpty = function (obj) {',
+'exports.isEmptyObject = function (obj) {',
 '    return Object.keys(obj).length === 0;',
 '};'];
 _$jscoverage['commons/helper.js'][28]=0;
@@ -154,7 +154,7 @@ var id = ++idCounter + "";
 return prefix ? prefix + id : id;
 };
 _$jscoverage['commons/helper.js'][49]++;
-exports.isObjectEmpty = function (obj) {
+exports.isEmptyObject = function (obj) {
     _$jscoverage['commons/helper.js'][50]++;
 return Object.keys(obj).length === 0;
 };

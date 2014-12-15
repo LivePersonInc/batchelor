@@ -46,6 +46,6 @@ exports.getUniqueId = function (prefix) {
     var id = ++idCounter + "";
     return prefix ? prefix + id : id;
 };
-exports.isObjectEmpty = function (obj) {
+exports.isEmptyObject = function (obj) {
     return Object.keys(obj).length === 0;
 };
