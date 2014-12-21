@@ -1,29 +1,17 @@
 /*jslint node: true */
-'use strict';
+"use strict";
 
-var async               = require('async');
-var _                   = require("lodash");
-var commons             = require('./../commons');
-var utils               = require('./../utils');
-var batchelor           = require("./../batchelor");
-var persistentJobs      = {};
-var persistentManager   = {}
-var log;
-var config;
+var async           = require("async")
+    , _             = require("lodash")
+    , commons       = require("./../commons")
+    , utils         = require("./../utils")
+    , batchelor     = require("./../batchelor")
+    , Runner        = require("./../commons/runner")
+    , separator     = "_"
+    , runner
+    , log
+    , config;
 
-
-/**
- * An asynchronous function for processing a queued task
- * @param _persistentJob - task to work in queue
- * @param callback - must method to call when finished, this way we notify to the queue that this function finished
- * @private
- */
-function _persist (_persistentJob, callback) {
-    batchelor.execute(_persistentJob.requests.persistent, function (err, result) {
-        _batchelorCallback(err, result, _persistentJob);
-        callback(null);
-    });
-}
 
 /**
  * check if the response was changed, currently using JSON.stringify
@@ -31,8 +19,8 @@ function _persist (_persistentJob, callback) {
  * @param _current object of current request
  * @returns {boolean} - true is changed, false otherwise
  */
-function isResponseChanged(_previous, _current) {
-    return JSON.stringify(_previous) !== JSON.stringify(_current)
+function _isResponseChanged(previous, current) {
+    return JSON.stringify(previous) !== JSON.stringify(current);
 }
 
 /**
@@ -44,13 +32,65 @@ function isResponseChanged(_previous, _current) {
  */
 function _runCallback(callback, err, result) {
     if (typeof callback === "function") {
-        log.info("[Persistent Adaptor] calling given callback")
-        callback(err, result);
+        log.info("[Persistent Adaptor] calling given callback");
+
+        try {
+            callback(err, result);
+        }
+        catch (e) {
+            log.error("[Persistent Adaptor], exception when calling given method e: " + e);
+        }
     }
     else {
-        log.info("[Persistent Adaptor] not an allow callback")
+        log.info("[Persistent Adaptor] not a valid callback");
     }
 
+}
+
+/**
+ * method for taking care of a single persistent request
+ * it will run the callback for the given request only if the response from the current response and previous is different
+ * @param err
+ * @param result
+ * @param persistentReq
+ * @private
+ */
+function _processSingleItem (item) {
+    var currTime = Date.now()
+        , delta = currTime - item.firedTime
+        , name = item.name
+        , callCallback = false;
+
+    if (delta >= item.persistentDelay) {
+        item.firedTime = currTime;
+        item.bodyTemp = item.bodyTemp || {};
+        batchelor.execute(item, function (err, result) {
+
+            // TODO[omher]: HOW TO REAL CHECK IF THERE IS CHANGED, WITH BODY ?????
+            if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
+                item.bodyTemp = result[name].body;
+                _runCallback(item.callback, err, result);
+            }
+
+        });
+    }
+}
+
+function _startPersist () {
+    setImmediate(runner.start(0, false,
+        function (err, item) {
+            _processSingleItem(item);
+        },
+        function () {
+            setTimeout(function () {
+                _startPersist();
+            }, 0);
+        }));
+
+}
+
+function _persist () {
+    _startPersist();
 }
 
 /**
@@ -60,39 +100,28 @@ function _runCallback(callback, err, result) {
  * @param persistentJob - job to process again and again until its stopped
  * @private
  */
-function _batchelorCallback(err, result, persistentJob) {
-    log.info("[Persistent Adaptor] _batchelorCallback called with err: " + err + " and result: " + JSON.stringify(result));
-    var _jobId = persistentJob.jobId;
-    var _persistentRequests = _buildJobObj(persistentJob.callback, _jobId);
-    var _responseChanged = false;
+function _batchelorCallbackFirstRun(err, result, reqs) {
+    var delays = [], minTime;
 
-    _.forEach(persistentJob.requests.persistent, function (cPersistent) {
-        var name = cPersistent.name;
-        cPersistent.bodyTemp = cPersistent.bodyTemp || {};
-        if (isResponseChanged(result[name].body, cPersistent.bodyTemp)) {
-            _responseChanged = true;
-            cPersistent.bodyTemp = result[name].body;
+    log.error("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
+
+    _.forEach(reqs, function (cReq) {
+        var name = cReq.name;
+
+        if (utils.validator.isPersistentRequest(cReq)) {
+            delays.push(cReq.persistentDelay || 2000);
         }
-        _persistentRequests.requests.persistent.push(cPersistent);
+
+        _runCallback(cReq.callback, err, result[name]);
     });
 
-    if (!commons.helper.isEmptyObject(result) && _responseChanged) {
-        log.info("[Persistent Adaptor] result from batchelor is not empty and _responseChanged: " + _responseChanged);
-        _runCallback(persistentJob.callback, err, result)
-    }
-    else {
-        log.info("[Persistent Adaptor] result from batchelor is empty or _responseChanged: " + _responseChanged);
-    }
+    // take the minimum timeout - the minimum is the one we will use in the timeout
+    minTime = Math.min.apply(Math, delays);
 
-    persistentManager[_jobId] = persistentManager[_jobId] || {};
-    if (persistentManager[_jobId] && !persistentManager[_jobId].stopped) {
-        setTimeout(function () {
-            persistentJob.jobId = _jobId;
+    setTimeout(function () {
+        _persist();
+    }, minTime);
 
-            persistentManager[_jobId].queue.push(_persistentRequests, function (err) {
-            });
-        }, 3000);
-    }
 }
 
 /**
@@ -100,42 +129,15 @@ function _batchelorCallback(err, result, persistentJob) {
  * @param _persistentJob
  * @private
  */
-function _process(_persistentJob) {
+function _process(allowReqs) {
     log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
-    batchelor.execute(_persistentJob.requests.persistent, function (err, result) {
-        _batchelorCallback(err, result, _persistentJob);
+
+    batchelor.execute(allowReqs, function(err, result) {
+        _batchelorCallbackFirstRun(err, result, allowReqs);
+
     });
 }
 
-/**
- * build job object with the given calllback and job id
- * @param callback - function
- * @param jobId - string
- * @returns {{jobId: *, callback: (*|null), requests: {persistent: Array, non_persistent: {}}}}
- * @private
- */
-function _buildJobObj(callback, jobId) {
-    return {
-        jobId: jobId,
-        callback: callback || null,
-        requests: {
-            persistent: [],
-            non_persistent: {}
-        }
-    } ;
-}
-
-/**
- * build object queue with stopped status tru
- * @returns {{queue: Array, stopped: boolean}}
- * @private
- */
-function _buildObjectQueue() {
-    return {
-        queue: async.queue(_persist, 5),
-        stopped: false
-    };
-}
 
 /**
  * set the adaptor configuration + configure batchelor
@@ -156,23 +158,26 @@ exports.configure = function (cfg) {
  */
 exports.execute = function (job, callback) {
     log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
+    var allowReqs = [];
     var reqs = commons.helper.convert2Array(job);
-    var jobId = commons.helper.getUniqueId("jobName");
-    persistentJobs[jobId] = _buildJobObj(callback, jobId);
+    var jobId = commons.helper.getUniqueId("jobName" + separator);
 
     _.forEach(reqs, function (cReq) {
-        var reqName = cReq.name || "missingName";
 
-        if (utils.validator.isPersistentRequest(cReq)) {
-            persistentJobs[jobId].requests.persistent.push(cReq);
+        cReq.callback = cReq.callback || callback;
+
+        if (utils.validator.isPersistentRequest(cReq) && utils.validator.isValidRequest(cReq)) {
+            cReq.jobId = jobId;
+            cReq.firedTime = Date.now();
+            cReq.ignoreResponse = cReq.ignoreResponse || false;
+            allowReqs.push(cReq);
         }
         else {
-            persistentJobs[jobId].requests.non_persistent[reqName] = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NON_PERSISTENT_REQUEST);
+            log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
         }
     });
-
-    persistentManager[jobId] = _buildObjectQueue();
-    _process(persistentJobs[jobId]);
+    runner = new Runner(allowReqs);
+    _process(reqs);
 
     return jobId;
 
@@ -183,13 +188,18 @@ exports.execute = function (job, callback) {
  * @param jobId - job to stop
  * @returns {boolean}
  */
-exports.stop = function (jobId) {
-    log.info("[Persistent Adaptor] stopping job: " + jobId);
+exports.stop = function (jobId, reqId) {
+    log.info("[Persistent Adaptor] stopping jobId : " + jobId + " request Id: " + reqId);
+    var runnerProp = runner.getProperties();
+    runnerProp.array = runnerProp.array || [];
+    var indexOf = _.findIndex(runnerProp.array, { 'name': reqId });
 
-    if (jobId && persistentManager[jobId]) {
-        persistentManager[jobId].stopped = true;
-        persistentManager[jobId].queue.kill();
+    if (indexOf >= 0) {
+        runner.stop();
+        runner.removeItem(indexOf);
+        runner.resume();
     }
-
-    return persistentManager[jobId].stopped;
+    else {
+        log.warn("[Persistent Adaptor] couldn't stop jobId : " + jobId + " request Id: " + reqId + " given values doesn't exist!");
+    }
 };

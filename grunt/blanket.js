@@ -14,5 +14,10 @@ module.exports = {
     batchelor: {
         src: ['./batchelor'],
         dest: 'coverage'
+    },
+    adaptors: {
+        src: ['./adaptors'],
+        dest: 'coverage/adaptors'
     }
+
 };

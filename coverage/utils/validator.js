@@ -2,8 +2,8 @@ if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['utils/validator.js'] === 'undefined'){_$jscoverage['utils/validator.js']=[];
 _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 '\'use strict\';',
-'var commons = require("./../commons");',
-'var config;',
+'var commons = require("./../commons")',
+'    , config;',
 '',
 'exports.configure = function (cfg) {',
 '    config = commons.helper.configure(cfg);',
@@ -18,8 +18,8 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 '        (req.method && typeof req.method === "string")) {',
 '        validReq = true;',
 '    }',
-'    config.logger.info("[validator] isValidReq: " + validReq)',
-'    return validReq',
+'    config.logger.info("[validator] isValidReq: " + validReq);',
+'    return validReq;',
 '};',
 'exports.cleanRequest = function (req) {',
 '    req = req || {};',
@@ -49,23 +49,22 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 _$jscoverage['utils/validator.js'][11]=0;
 _$jscoverage['utils/validator.js'][2]=0;
 _$jscoverage['utils/validator.js'][23]=0;
-_$jscoverage['utils/validator.js'][4]=0;
-_$jscoverage['utils/validator.js'][3]=0;
-_$jscoverage['utils/validator.js'][32]=0;
+_$jscoverage['utils/validator.js'][7]=0;
 _$jscoverage['utils/validator.js'][6]=0;
+_$jscoverage['utils/validator.js'][3]=0;
 _$jscoverage['utils/validator.js'][35]=0;
 _$jscoverage['utils/validator.js'][13]=0;
-_$jscoverage['utils/validator.js'][12]=0;
-_$jscoverage['utils/validator.js'][7]=0;
 _$jscoverage['utils/validator.js'][8]=0;
-_$jscoverage['utils/validator.js'][38]=0;
+_$jscoverage['utils/validator.js'][12]=0;
+_$jscoverage['utils/validator.js'][31]=0;
 _$jscoverage['utils/validator.js'][20]=0;
 _$jscoverage['utils/validator.js'][14]=0;
-_$jscoverage['utils/validator.js'][17]=0;
 _$jscoverage['utils/validator.js'][19]=0;
+_$jscoverage['utils/validator.js'][17]=0;
 _$jscoverage['utils/validator.js'][22]=0;
-_$jscoverage['utils/validator.js'][31]=0;
+_$jscoverage['utils/validator.js'][32]=0;
 _$jscoverage['utils/validator.js'][34]=0;
+_$jscoverage['utils/validator.js'][38]=0;
 _$jscoverage['utils/validator.js'][42]=0;
 _$jscoverage['utils/validator.js'][43]=0;
 _$jscoverage['utils/validator.js'][44]=0;
@@ -74,9 +73,8 @@ _$jscoverage['utils/validator.js'][45]=0;
 _$jscoverage['utils/validator.js'][2]++;
 'use strict';
 _$jscoverage['utils/validator.js'][3]++;
-var commons = require("./../commons");
-_$jscoverage['utils/validator.js'][4]++;
-var config;
+var commons = require("./../commons")
+    , config;
 
 _$jscoverage['utils/validator.js'][6]++;
 exports.configure = function (cfg) {
@@ -100,9 +98,9 @@ if ((req.name && typeof req.name === "string") &&
 validReq = true;
     }
     _$jscoverage['utils/validator.js'][19]++;
-config.logger.info("[validator] isValidReq: " + validReq)
+config.logger.info("[validator] isValidReq: " + validReq);
     _$jscoverage['utils/validator.js'][20]++;
-return validReq
+return validReq;
 };
 _$jscoverage['utils/validator.js'][22]++;
 exports.cleanRequest = function (req) {

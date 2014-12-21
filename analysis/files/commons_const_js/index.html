@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - commons/const.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>commons/const.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">37.61</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">119</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">2.75</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">0.84</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/*jslint node: true */
+&#039;use strict&#039;;
+module.exports = {
+    RESPONSE_TYPE: {
+        INVALID_TASK: &quot;INVALID_TASK&quot;,
+        ETIMEDOUT: &quot;ETIMEDOUT&quot;,
+        ECONNREFUSED: &quot;ECONNREFUSED&quot;,
+        ENOTFOUND: &quot;ENOTFOUND&quot;,
+        URL_NOT_VALID: &quot;URL_NOT_VALID&quot;,
+        NO_JSON_OBJECT: &quot;NO_JSON_OBJECT&quot;,
+        ERROR_API_URL: &quot;ERROR_API_URL&quot;,
+        NON_PERSISTENT_REQUEST: &quot;NON_PERSISTENT_REQUEST&quot;,
+        DEFAULT: &quot;DEFAULT&quot;
+    },
+    BODY_RESPONSE: 
+    {
+        INVALID_TASK: &quot;Request URL is not valid(doesn&#039;t exist in the whitelist) or one of the following parameters is/are missing/s or invalid/s: name/method/url&quot;,
+        ETIMEDOUT: &quot;Api host didn&#039;t return a response in the time that was expected&quot;,
+        ECONNREFUSED: &quot;Api host didn&#039;t response&quot;,
+        ENOTFOUND: &quot;Api host didn&#039;t response (not exist)&quot;,
+        URL_NOT_VALID: &quot;Request URL is not valid, doesn&#039;t exist in the whitelist&quot;,
+        NO_JSON_OBJECT: &quot;Response was no JSON object&quot;,
+        ERROR_API_URL: &quot;An error occurs in the API request URL&quot;,
+        NON_PERSISTENT_REQUEST: &quot;Trying to run non persistent(lazy) request with wrong persistent adaptor&quot;,
+        DEFAULT: &quot;Api host didn&#039;t response (not exist)&quot;
+    },
+    RESPONSE_ERROR_CODE: {
+        ETIMEDOUT: &quot;ETIMEDOUT&quot;,
+        ECONNREFUSED: &quot;ECONNREFUSED&quot;,
+        ENOTFOUND: &quot;ENOTFOUND&quot;
+    },
+    HTTP_STATUS: {
+        100: &quot;Continue&quot;,
+        101: &quot;Switching Protocols&quot;,
+        200: &quot;OK&quot;,
+        201: &quot;Created&quot;,
+        202: &quot;Accepted&quot;,
+        203: &quot;Non-Authoritative Information&quot;,
+        204: &quot;No Content&quot;,
+        205: &quot;Reset Content&quot;,
+        206: &quot;Partial Content&quot;,
+        300: &quot;Multiple Choices&quot;,
+        301: &quot;Moved Permanently&quot;,
+        302: &quot;Found&quot;,
+        303: &quot;See Other&quot;,
+        304: &quot;Not Modified&quot;,
+        305: &quot;Use Proxy&quot;,
+        307: &quot;Temporary Redirect&quot;,
+        400: &quot;Bad Request&quot;,
+        401: &quot;Unauthorized&quot;,
+        402: &quot;Payment Required&quot;,
+        403: &quot;Forbidden&quot;,
+        404: &quot;Not Found&quot;,
+        405: &quot;Method Not Allowed&quot;,
+        406: &quot;Not Acceptable&quot;,
+        407: &quot;Proxy Authentication Required&quot;,
+        408: &quot;Request Time-out&quot;,
+        409: &quot;Conflict&quot;,
+        410: &quot;Gone&quot;,
+        411: &quot;Length Required&quot;,
+        412: &quot;Precondition Failed&quot;,
+        413: &quot;Request Entity Too Large&quot;,
+        414: &quot;Request-URI Too Large&quot;,
+        415: &quot;Unsupported Media Type&quot;,
+        416: &quot;Requested range not satisfiable&quot;,
+        417: &quot;Expectation Failed&quot;,
+        500: &quot;Internal Server Error&quot;,
+        501: &quot;Not Implemented&quot;,
+        502: &quot;Bad Gateway&quot;,
+        503: &quot;Service Unavailable&quot;,
+        504: &quot;Gateway Time-out&quot;,
+        505: &quot;HTTP Version not supported&quot;,
+        CONTINUE: 100,
+        SWITCHING_PROTOCOLS: 101,
+        OK: 200,
+        CREATED: 201,
+        ACCEPTED: 202,
+        NON_AUTHORITATIVE_INFORMATION: 203,
+        NO_CONTENT: 204,
+        RESET_CONTENT: 205,
+        PARTIAL_CONTENT: 206,
+        MULTIPLE_CHOICES: 300,
+        MOVED_PERMANENTLY: 301,
+        FOUND: 302,
+        SEE_OTHER: 303,
+        NOT_MODIFIED: 304,
+        USE_PROXY: 305,
+        TEMPORARY_REDIRECT: 307,
+        BAD_REQUEST: 400,
+        UNAUTHORIZED: 401,
+        PAYMENT_REQUIRED: 402,
+        FORBIDDEN: 403,
+        NOT_FOUND: 404,
+        METHOD_NOT_ALLOWED: 405,
+        NOT_ACCEPTABLE: 406,
+        PROXY_AUTHENTICATION_REQUIRED: 407,
+        REQUEST_TIMEOUT: 408,
+        CONFLICT: 409,
+        GONE: 410,
+        LENGTH_REQUIRED: 411,
+        PRECONDITION_FAILED: 412,
+        REQUEST_ENTITY_TOO_LARGE: 413,
+        REQUEST_URI_TOO_LONG: 414,
+        UNSUPPORTED_MEDIA_TYPE: 415,
+        REQUESTED_RANGE_NOT_SATISFIABLE: 416,
+        EXPECTATION_FAILED: 417,
+        INTERNAL_SERVER_ERROR: 500,
+        NOT_IMPLEMENTED: 501,
+        BAD_GATEWAY: 502,
+        SERVICE_UNAVAILABLE: 503,
+        GATEWAY_TIMEOUT: 504,
+        HTTP_VERSION_NOTSUPPORTED: 505
+    },
+    INVALID_HEADERS: {
+        CONTENT_LENGTH: &quot;content-length&quot;,
+        ACCEPT_ENCODING: &quot;accept-encoding&quot;,
+        CONNECTION: &quot;connection&quot;,
+        HOST: &quot;host&quot;
+    }
+};</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

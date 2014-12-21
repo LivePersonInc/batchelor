@@ -1,5 +1,17 @@
 
 
+  Adaptor Persistent
+    configure
+      ✓ configure method 
+    execute method
+      ✓ execute 
+      ✓ execute not persistent request 
+      ✓ execute not persistent request, persistent=false 
+      ✓ execute persistent request not valid callback 
+      ✓ execute persistent request small delay 
+      stop method
+        ✓ execute persistent and stop 
+
   batchelor
     configure
       ✓ configure method 
@@ -43,5 +55,5 @@
       ✓ getActiveJobs method 
 
 
-  27 passing (51ms)
+  34 passing (78ms)
 

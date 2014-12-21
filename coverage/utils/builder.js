@@ -2,8 +2,8 @@ if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['utils/builder.js'] === 'undefined'){_$jscoverage['utils/builder.js']=[];
 _$jscoverage['utils/builder.js'].source=['/*jslint node: true */',
 '\'use strict\';',
-'var config;',
-'var commons = require("./../commons");',
+'var config',
+'    , commons = require("./../commons");',
 '',
 'var RESPONSE_TYPE = {',
 '    INVALID_TASK: {',
@@ -48,12 +48,11 @@ _$jscoverage['utils/builder.js'].source=['/*jslint node: true */',
 '',
 '',
 'exports.buildResponse = function (type) {',
-'    type = type || "DEFAULT"',
+'    type = type || "DEFAULT";',
 '    return RESPONSE_TYPE[type];',
 '};'];
 _$jscoverage['utils/builder.js'][2]=0;
 _$jscoverage['utils/builder.js'][3]=0;
-_$jscoverage['utils/builder.js'][4]=0;
 _$jscoverage['utils/builder.js'][6]=0;
 _$jscoverage['utils/builder.js'][42]=0;
 _$jscoverage['utils/builder.js'][43]=0;
@@ -65,9 +64,8 @@ _$jscoverage['utils/builder.js'][50]=0;
 _$jscoverage['utils/builder.js'][2]++;
 'use strict';
 _$jscoverage['utils/builder.js'][3]++;
-var config;
-_$jscoverage['utils/builder.js'][4]++;
-var commons = require("./../commons");
+var config
+    , commons = require("./../commons");
 
 _$jscoverage['utils/builder.js'][6]++;
 var RESPONSE_TYPE = {
@@ -118,7 +116,7 @@ return config;
 _$jscoverage['utils/builder.js'][48]++;
 exports.buildResponse = function (type) {
     _$jscoverage['utils/builder.js'][49]++;
-type = type || "DEFAULT"
+type = type || "DEFAULT";
     _$jscoverage['utils/builder.js'][50]++;
 return RESPONSE_TYPE[type];
 };

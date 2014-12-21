@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
-var config;
-var commons = require("./../commons");
+var config
+    , commons = require("./../commons");
 
 var RESPONSE_TYPE = {
     INVALID_TASK: {
@@ -46,6 +46,6 @@ exports.configure = function (cfg) {
 
 
 exports.buildResponse = function (type) {
-    type = type || "DEFAULT"
+    type = type || "DEFAULT";
     return RESPONSE_TYPE[type];
 };

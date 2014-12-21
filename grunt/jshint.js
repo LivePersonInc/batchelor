@@ -2,5 +2,5 @@ module.exports = {
     options:{
         jshintrc:".jshintrc"
     },
-    files: ['./lib/*', './commons/*.js']
+    files: ["./batchelor.js", "./lib/*", "./commons/*.js", "./utils", "./adaptors"]
 };

@@ -2,11 +2,11 @@ if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['utils/jobHolder.js'] === 'undefined'){_$jscoverage['utils/jobHolder.js']=[];
 _$jscoverage['utils/jobHolder.js'].source=['/*jslint node: true */',
 '\'use strict\';',
-'var commons = require("./../commons");',
-'var jobs = {};',
-'var config;',
-'var activeJobs = 0;',
-'var activeRequests = 0;',
+'var commons = require("./../commons")',
+'    , jobs = {}',
+'    , config',
+'    , activeJobs = 0',
+'    , activeRequests = 0;',
 '',
 '',
 'function _incrementCounters(_reqsLength) {',
@@ -27,7 +27,7 @@ _$jscoverage['utils/jobHolder.js'].source=['/*jslint node: true */',
 '',
 'exports.addJob = function (reqs) {',
 '    var jobId = commons.helper.getUniqueId("job");',
-'    jobs[jobId] = {}',
+'    jobs[jobId] = {};',
 '    jobs[jobId].reqs = reqs;',
 '',
 '    _incrementCounters(jobs[jobId].reqs.length || 0);',
@@ -51,30 +51,26 @@ _$jscoverage['utils/jobHolder.js'].source=['/*jslint node: true */',
 '    return {',
 '        activeJobs: activeJobs,',
 '        activeRequests: activeRequests',
-'    }',
+'    };',
 '};',
 ''];
-_$jscoverage['utils/jobHolder.js'][20]=0;
-_$jscoverage['utils/jobHolder.js'][2]=0;
-_$jscoverage['utils/jobHolder.js'][27]=0;
-_$jscoverage['utils/jobHolder.js'][4]=0;
-_$jscoverage['utils/jobHolder.js'][3]=0;
-_$jscoverage['utils/jobHolder.js'][29]=0;
-_$jscoverage['utils/jobHolder.js'][7]=0;
-_$jscoverage['utils/jobHolder.js'][5]=0;
-_$jscoverage['utils/jobHolder.js'][6]=0;
-_$jscoverage['utils/jobHolder.js'][33]=0;
-_$jscoverage['utils/jobHolder.js'][16]=0;
-_$jscoverage['utils/jobHolder.js'][15]=0;
-_$jscoverage['utils/jobHolder.js'][11]=0;
-_$jscoverage['utils/jobHolder.js'][12]=0;
-_$jscoverage['utils/jobHolder.js'][10]=0;
-_$jscoverage['utils/jobHolder.js'][36]=0;
-_$jscoverage['utils/jobHolder.js'][22]=0;
-_$jscoverage['utils/jobHolder.js'][21]=0;
-_$jscoverage['utils/jobHolder.js'][17]=0;
-_$jscoverage['utils/jobHolder.js'][26]=0;
 _$jscoverage['utils/jobHolder.js'][28]=0;
+_$jscoverage['utils/jobHolder.js'][2]=0;
+_$jscoverage['utils/jobHolder.js'][29]=0;
+_$jscoverage['utils/jobHolder.js'][11]=0;
+_$jscoverage['utils/jobHolder.js'][10]=0;
+_$jscoverage['utils/jobHolder.js'][3]=0;
+_$jscoverage['utils/jobHolder.js'][33]=0;
+_$jscoverage['utils/jobHolder.js'][17]=0;
+_$jscoverage['utils/jobHolder.js'][15]=0;
+_$jscoverage['utils/jobHolder.js'][12]=0;
+_$jscoverage['utils/jobHolder.js'][16]=0;
+_$jscoverage['utils/jobHolder.js'][36]=0;
+_$jscoverage['utils/jobHolder.js'][27]=0;
+_$jscoverage['utils/jobHolder.js'][22]=0;
+_$jscoverage['utils/jobHolder.js'][20]=0;
+_$jscoverage['utils/jobHolder.js'][21]=0;
+_$jscoverage['utils/jobHolder.js'][26]=0;
 _$jscoverage['utils/jobHolder.js'][31]=0;
 _$jscoverage['utils/jobHolder.js'][37]=0;
 _$jscoverage['utils/jobHolder.js'][40]=0;
@@ -87,15 +83,11 @@ _$jscoverage['utils/jobHolder.js'][49]=0;
 _$jscoverage['utils/jobHolder.js'][2]++;
 'use strict';
 _$jscoverage['utils/jobHolder.js'][3]++;
-var commons = require("./../commons");
-_$jscoverage['utils/jobHolder.js'][4]++;
-var jobs = {};
-_$jscoverage['utils/jobHolder.js'][5]++;
-var config;
-_$jscoverage['utils/jobHolder.js'][6]++;
-var activeJobs = 0;
-_$jscoverage['utils/jobHolder.js'][7]++;
-var activeRequests = 0;
+var commons = require("./../commons")
+    , jobs = {}
+    , config
+    , activeJobs = 0
+    , activeRequests = 0;
 
 
 _$jscoverage['utils/jobHolder.js'][10]++;
@@ -128,7 +120,7 @@ exports.addJob = function (reqs) {
     _$jscoverage['utils/jobHolder.js'][27]++;
 var jobId = commons.helper.getUniqueId("job");
     _$jscoverage['utils/jobHolder.js'][28]++;
-jobs[jobId] = {}
+jobs[jobId] = {};
     _$jscoverage['utils/jobHolder.js'][29]++;
 jobs[jobId].reqs = reqs;
 
@@ -163,5 +155,5 @@ exports.getActiveJobs = function () {
 return {
         activeJobs: activeJobs,
         activeRequests: activeRequests
-    }
+    };
 };

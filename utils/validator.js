@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
-var commons = require("./../commons");
-var config;
+var commons = require("./../commons")
+    , config;
 
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
@@ -16,8 +16,8 @@ exports.isValidRequest = function (req) {
         (req.method && typeof req.method === "string")) {
         validReq = true;
     }
-    config.logger.info("[validator] isValidReq: " + validReq)
-    return validReq
+    config.logger.info("[validator] isValidReq: " + validReq);
+    return validReq;
 };
 exports.cleanRequest = function (req) {
     req = req || {};

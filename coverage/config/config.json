@@ -10,6 +10,5 @@
         "headers": {},
         "body": ""
     },
-    "whiteList": ["lprnd.net", "lprnd.net:5050", "github.com"],
-    "requestValidationType": 0
+    "whiteList": ["lprnd.net", "lprnd.net:5050", "github.com"]
 }
