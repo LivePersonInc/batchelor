@@ -1,22 +1,17 @@
 
 
   Adaptor Persistent
-    configure
-      ✓ configure method 
-    execute method
-      ✓ execute 
+    Adaptor Persistent functionality
+      ✓ configure 
       ✓ execute not persistent request 
       ✓ execute not persistent request, persistent=false 
       ✓ execute persistent request not valid callback 
-      ✓ execute persistent request small delay 
       stop method
         ✓ execute persistent and stop 
 
   batchelor
-    configure
-      ✓ configure method 
-    execute
-      ✓ execute method - Creating an exception 
+    batchelor functionality
+      ✓ configure 
       ✓ execute method - INVALID_TASK - Missing URL 
       ✓ execute method - INVALID_TASK - Missing name 
       ✓ execute method - ETIMEDOUT 
@@ -33,10 +28,12 @@
     ✓ helper isObjectEmpty method 
 
   processor
-    configure
-      ✓ test configure method 
-    run
-      ✓ run method 
+    processor functionality
+      ✓ configure 
+      ✓ execute method - INVALID_TASK - Missing URL 
+      ✓ execute method - ETIMEDOUT 
+      ✓ run method - ERROR_API_URL 
+      ✓ run method - NO_JSON_OBJECT 
 
   utils
     ✓ test objects were created 
@@ -55,5 +52,5 @@
       ✓ getActiveJobs method 
 
 
-  34 passing (78ms)
+  34 passing (65ms)
 

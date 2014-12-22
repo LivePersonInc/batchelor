@@ -29,7 +29,9 @@
         "load-grunt-tasks": "1.0.x",
         "grunt-mustache-render": "1.6.x",
         "grunt-concurrent": "1.0.x",
-        "grunt-plato": "1.3.x"
+        "grunt-plato": "1.3.x",
+        "mockery": "1.4.x",
+        "sinon": "1.12.x"
     },
     "repository": {
         "type": "git",

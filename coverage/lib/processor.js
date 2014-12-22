@@ -91,6 +91,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 ' */',
 'exports.configure = function (cfg) {',
 '    config = commons.helper.configure(cfg);',
+'    utils.configure(cfg);',
 '    log = config.logger || console;',
 '    return config;',
 '};',
@@ -121,13 +122,13 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '    });',
 '',
 '};'];
-_$jscoverage['lib/processor.js'][63]=0;
-_$jscoverage['lib/processor.js'][2]=0;
 _$jscoverage['lib/processor.js'][74]=0;
+_$jscoverage['lib/processor.js'][2]=0;
+_$jscoverage['lib/processor.js'][76]=0;
 _$jscoverage['lib/processor.js'][22]=0;
 _$jscoverage['lib/processor.js'][3]=0;
 _$jscoverage['lib/processor.js'][21]=0;
-_$jscoverage['lib/processor.js'][80]=0;
+_$jscoverage['lib/processor.js'][79]=0;
 _$jscoverage['lib/processor.js'][31]=0;
 _$jscoverage['lib/processor.js'][23]=0;
 _$jscoverage['lib/processor.js'][26]=0;
@@ -137,31 +138,32 @@ _$jscoverage['lib/processor.js'][30]=0;
 _$jscoverage['lib/processor.js'][91]=0;
 _$jscoverage['lib/processor.js'][34]=0;
 _$jscoverage['lib/processor.js'][32]=0;
-_$jscoverage['lib/processor.js'][92]=0;
+_$jscoverage['lib/processor.js'][93]=0;
 _$jscoverage['lib/processor.js'][39]=0;
 _$jscoverage['lib/processor.js'][38]=0;
 _$jscoverage['lib/processor.js'][35]=0;
 _$jscoverage['lib/processor.js'][36]=0;
-_$jscoverage['lib/processor.js'][103]=0;
+_$jscoverage['lib/processor.js'][90]=0;
+_$jscoverage['lib/processor.js'][63]=0;
 _$jscoverage['lib/processor.js'][62]=0;
 _$jscoverage['lib/processor.js'][45]=0;
-_$jscoverage['lib/processor.js'][51]=0;
 _$jscoverage['lib/processor.js'][61]=0;
 _$jscoverage['lib/processor.js'][60]=0;
 _$jscoverage['lib/processor.js'][44]=0;
-_$jscoverage['lib/processor.js'][107]=0;
-_$jscoverage['lib/processor.js'][79]=0;
-_$jscoverage['lib/processor.js'][76]=0;
-_$jscoverage['lib/processor.js'][90]=0;
-_$jscoverage['lib/processor.js'][93]=0;
-_$jscoverage['lib/processor.js'][101]=0;
-_$jscoverage['lib/processor.js'][104]=0;
+_$jscoverage['lib/processor.js'][51]=0;
 _$jscoverage['lib/processor.js'][108]=0;
-_$jscoverage['lib/processor.js'][111]=0;
+_$jscoverage['lib/processor.js'][92]=0;
+_$jscoverage['lib/processor.js'][80]=0;
+_$jscoverage['lib/processor.js'][94]=0;
+_$jscoverage['lib/processor.js'][102]=0;
+_$jscoverage['lib/processor.js'][104]=0;
+_$jscoverage['lib/processor.js'][105]=0;
+_$jscoverage['lib/processor.js'][109]=0;
 _$jscoverage['lib/processor.js'][112]=0;
 _$jscoverage['lib/processor.js'][113]=0;
 _$jscoverage['lib/processor.js'][114]=0;
-_$jscoverage['lib/processor.js'][117]=0;
+_$jscoverage['lib/processor.js'][115]=0;
+_$jscoverage['lib/processor.js'][118]=0;
 }/*jslint node: true */
 _$jscoverage['lib/processor.js'][2]++;
 'use strict';
@@ -283,8 +285,10 @@ exports.configure = function (cfg) {
     _$jscoverage['lib/processor.js'][91]++;
 config = commons.helper.configure(cfg);
     _$jscoverage['lib/processor.js'][92]++;
-log = config.logger || console;
+utils.configure(cfg);
     _$jscoverage['lib/processor.js'][93]++;
+log = config.logger || console;
+    _$jscoverage['lib/processor.js'][94]++;
 return config;
 };
 
@@ -293,32 +297,32 @@ return config;
  * @param job - job containing one or more requests
  * @param cb - callback method to call once finish processing job
  */
-_$jscoverage['lib/processor.js'][101]++;
+_$jscoverage['lib/processor.js'][102]++;
 exports.run = function (job, cb) {
 
-    _$jscoverage['lib/processor.js'][103]++;
-log.info("[processor] running processor ...");
     _$jscoverage['lib/processor.js'][104]++;
+log.info("[processor] running processor ...");
+    _$jscoverage['lib/processor.js'][105]++;
 var _reqs = {};
 
     // creates the collection of 'requests' (holds a collection of getReq methods)
-    _$jscoverage['lib/processor.js'][107]++;
+    _$jscoverage['lib/processor.js'][108]++;
 _.forEach(job, function (cReq) {
-        _$jscoverage['lib/processor.js'][108]++;
+        _$jscoverage['lib/processor.js'][109]++;
 _reqs[cReq.name] =_getReq(cReq);
     });
 
-    _$jscoverage['lib/processor.js'][111]++;
+    _$jscoverage['lib/processor.js'][112]++;
 async.parallelLimit(_reqs, config.maxConcurrentJobs, function (err, results) {
-        _$jscoverage['lib/processor.js'][112]++;
+        _$jscoverage['lib/processor.js'][113]++;
 if (err) {
-            _$jscoverage['lib/processor.js'][113]++;
-log.error("[processor] Error in running the job, err: " + err);
             _$jscoverage['lib/processor.js'][114]++;
+log.error("[processor] Error in running the job, err: " + err);
+            _$jscoverage['lib/processor.js'][115]++;
 cb(err);
         }
         else {
-            _$jscoverage['lib/processor.js'][117]++;
+            _$jscoverage['lib/processor.js'][118]++;
 cb(null, results);
         }
     });

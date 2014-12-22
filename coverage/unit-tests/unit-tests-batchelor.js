@@ -1,11 +1,14 @@
-var sinon     = require('sinon');
-var should    = require('chai').should();
-var expect    = require('chai').expect;
-var assert    = require('chai').assert;
-var batchelor = require('./../batchelor');
-var utils     = require('./../utils');
-var commons   = require('./../commons');
-var cfg = {
+var request     = require('request')
+    , mockery   = require('mockery')
+    , sinon     = require('sinon')
+    , should    = require('chai').should()
+    , expect    = require('chai').expect
+    , assert    = require('chai').assert
+    , utils     = require('./../utils')
+    , commons   = require('./../commons')
+    , batchelor
+    , jobId
+    , cfg = {
     "maxConcurrentJobs": 10,
     "maxRequestsPerJob": 10,
     "log" : true,
@@ -26,53 +29,54 @@ var cfg = {
         "headers": {},
         "body": ""
     },
-    "whiteList": ["*"],
-    "requestValidationType": 0
-};
+    "whiteList": ["*"]
+    }
 
 utils.configure(cfg);
 
 describe('batchelor', function () {
 
-    describe('configure', function () {
-        it('configure method', function () {
+    describe('batchelor functionality', function(){
+        /**
+         * In the batchelor utility we are using `request` module (https://github.com/request/request)
+         * and in unit test we don't want to really make a request we use `mockery` && `sinon` to mock and stub
+         * start preparation using:
+         * require('mockery') && require('sinon')
+         * mockery hijacks the require function and replaces modules with our mocks.
+         * In the below code we register a sinon stub to be returned when require('request') is called.
+         * Then we configure the mock in the test using the method .yield on the stub to a call the callback function passed to request with null/code for the error, an object for the response and another object for the body.
+         * */
+        var requestStub;
+
+        before(function(){
+            mockery.enable({
+                warnOnReplace: false,
+                warnOnUnregistered: false,
+                useCleanCache: true
+            });
+
+            requestStub = sinon.stub();
+
+            // replace the module `request` with a stub object
+            mockery.registerMock('request', requestStub);
+            batchelor = require('./../batchelor');
+            batchelor.configure(cfg);
+        });
+
+        after(function(){
+            mockery.disable();
+        });
+
+        it('configure', function (done) {
             batchelor.configure.should.be.a('function');
             var configuration = batchelor.configure(cfg);
             configuration.should.have.ownProperty("whiteList");
             configuration.request.timeout.should.be.a('number');
             configuration.request.timeout.should.be.equal(5);
+            done();
         });
 
-    });
-
-    describe('execute', function () {
-//        var server;
-//
-//        beforeEach(function() {
-//            server = sinon.fakeServer.create();
-//        });
-//
-//        afterEach(function () {
-//            server.restore();
-//        });
-
-        var jobId;
-
-        it('execute method - Creating an exception', function () {
-            jobId = batchelor.execute(
-                {
-                    name: "CREATE_ERROR",
-                    url: "url.com",
-                    method: "method"
-                }, function (err, result) {
-//                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
-
-                });
-
-            jobId.should.be.a('string');
-        });
-
-        it('execute method - INVALID_TASK - Missing URL', function () {
+        it('execute method - INVALID_TASK - Missing URL', function (done) {
             jobId = batchelor.execute(
                 {
                     name: "INVALID_TASK",
@@ -87,16 +91,15 @@ describe('batchelor', function () {
                     timeout: 10000
                 }, function (err, result) {
                     result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+                    done();
 
                 });
 
-            jobId.should.be.a('string');
         });
 
-        it('execute method - INVALID_TASK - Missing name', function () {
+        it('execute method - INVALID_TASK - Missing name', function (done) {
             jobId = batchelor.execute(
                 {
-                    name: "INVALID_TASK_NAME",
                     encoding: "UTF8",
                     method: "GET",
                     retries: 3,
@@ -107,36 +110,38 @@ describe('batchelor', function () {
                     body: "body",
                     timeout: 10000
                 }, function (err, result) {
-                    result["INVALID_TASK_NAME"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+                    result["missingName"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+                    done();
 
                 });
 
             jobId.should.be.a('string');
         });
 
-        it('execute method - ETIMEDOUT', function () {
+        it('execute method - ETIMEDOUT', function (done) {
+            requestStub.yields({code: "ETIMEDOUT"}, null, null);
             jobId = batchelor.execute(
                 {
                     name: "ETIMEDOUT",
-                    url: "https://jsonresponser.herokuapp.com/api/json/users",
+                    url: "http://notexisturl",
                     encoding: "UTF8",
                     method: "GET",
                     retries: 3,
                     headers: {},
-                    doNotMergeHeaders: false,
-                    query: "/user1",
                     mimeType: "application/json",
                     body: "body",
                     timeout: 100
                 }, function (err, result) {
                     result["ETIMEDOUT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).body);
+                    done();
 
                 });
 
             jobId.should.be.a('string');
         });
 
-        it('execute method - ERROR_API_URL', function () {
+        it('execute method - ERROR_API_URL', function (done) {
+            requestStub.yields({error: "error"}, null, null);
             jobId = batchelor.execute(
                 {
                     name: "ERROR_API_URL",
@@ -145,76 +150,38 @@ describe('batchelor', function () {
                     method: "GET",
                     retries: 3,
                     headers: {},
-                    doNotMergeHeaders: false,
-                    query: "/user1",
                     mimeType: "application/json",
                     body: "body",
                     timeout: 1000
                 }, function (err, result) {
                     result["ERROR_API_URL"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).body);
+                    done();
                 });
 
             jobId.should.be.a('string');
         });
 
-        it('execute method - NO_JSON_OBJECT', function () {
-//            server.respondWith("GET", "/noJSON",
-//                [
-//                    200,
-//                    { "Content-Type": "application/text" }, 'text'
-//                ]
-//            );
-//
-//            server.respondWith("POST", "/JSON",
-//                [
-//                    200,
-//                    { "Content-Type": "application/json" }, '{ "stuff": "is", "awesome": "in here" }'
-//                ]
-//            );
-//            var callback = sinon.spy();
+        it('execute method - NO_JSON_OBJECT', function (done) {
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
+            jobId = batchelor.execute(
+                {
+                    name: "NO_JSON_OBJECT",
+                    url: "htp://www.kojo.com",
+                    encoding: "UTF8",
+                    method: "GET",
+                    retries: 3,
+                    headers: {},
+                    mimeType: "application/json",
+                    body: "body",
+                    timeout: 1000
+                }, function (err, result) {
+                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
+                    done();
+                });
 
-//            jobId = batchelor.execute(
-//                {
-//                    name: "NO_JSON_OBJECT",
-//                    url: "http://localhost/noJSON",
-//                    encoding: "UTF8",
-//                    method: "GET",
-//                    retries: 3,
-//                    headers: {},
-//                    doNotMergeHeaders: false,
-//                    query: "/user1",
-//                    mimeType: "application/json",
-//                    body: "body",
-//                    timeout: 10000
-//                }, function (err, result) {
-//                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
-//                });
-//            server.respond();
-//            jobId.should.be.a('string');
+            jobId.should.be.a('string');
         });
 
-//        it('execute method - POST', function () {
-//            jobId = batchelor.execute(
-//                {
-//                    name: "POST",
-//                    url: "http://localhost/JSON",
-//                    encoding: "UTF8",
-//                    method: "POST",
-//                    retries: 3,
-//                    headers: {},
-//                    doNotMergeHeaders: false,
-//                    query: "/user1",
-//                    mimeType: "application/json",
-//                    body: "body",
-//                    timeout: 5000
-//                }, function (err, result) {
-//                    console.log("0000");
-//                    console.log(JSON.stringify(result));
-//                    result["NO_JSON_OBJECT"].body.should.be.a("object");
-//                });
-//
-//            jobId.should.be.a('string');
-//        });
-
     });
+
 });

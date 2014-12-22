@@ -1,2 +1,2 @@
-Coverage: 87%
+Coverage: 89%
 Coverage succeeded.

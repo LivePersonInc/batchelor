@@ -1,73 +1,82 @@
-var should    = require('chai').should();
-var expect    = require('chai').expect;
-var assert    = require('chai').assert;
-var persitent = require('./../adaptors/persistent');
-var utils     = require('./../utils');
-var commons   = require('./../commons');
-var cfg = {
-
-
-    "maxConcurrentJobs": 10,
-    "maxRequestsPerJob": 10,
-    "log" : true,
-    "request": {
-        "method": "GET",
-        "timeout": 10000,
-        "ip": "unknown",
-        "headers": {},
-        "body": ""
-    },
-    "logger": {
-        debug: function () {
+var request     = require('request')
+    , mockery   = require('mockery')
+    , sinon     = require('sinon')
+    , should    = require('chai').should()
+    , expect    = require('chai').expect
+    , assert    = require('chai').assert
+    , utils     = require('./../utils')
+    , commons   = require('./../commons')
+    , persistent
+    , jobId
+    , cfg = {
+        "maxConcurrentJobs": 10,
+        "maxRequestsPerJob": 10,
+        "log" : true,
+        "logger": {
+            debug: function () {
+            },
+            info: function () {
+            },
+            warn: function () {
+            },
+            error: function () {
+            }
         },
-        info: function () {
+        "request": {
+            "method": "GET",
+            "timeout": 5,
+            "ip": "unknown",
+            "headers": {},
+            "body": ""
         },
-        warn: function () {
-        },
-        error: function () {
-        }
+        "whiteList": ["*"]
     }
-};
 
 utils.configure(cfg);
 
 describe('Adaptor Persistent', function () {
 
-    describe('configure', function () {
-        it('configure method', function () {
-            persitent.configure.should.be.a('function');
-            persitent.configure(cfg);
+    describe('Adaptor Persistent functionality', function(){
+        /**
+         * In the persistent utility we are using `request` module (https://github.com/request/request)
+         * and in unit test we don't want to really make a request we use `mockery` && `sinon` to mock and stub
+         * start preparation using:
+         * require('mockery') && require('sinon')
+         * mockery hijacks the require function and replaces modules with our mocks.
+         * In the below code we register a sinon stub to be returned when require('request') is called.
+         * Then we configure the mock in the test using the method .yield on the stub to a call the callback function passed to request with null/code for the error, an object for the response and another object for the body.
+         * */
+        var requestStub;
+
+        before(function(){
+            mockery.enable({
+                warnOnReplace: false,
+                warnOnUnregistered: false,
+                useCleanCache: true
+            });
+
+            requestStub = sinon.stub();
+
+            // replace the module `request` with a stub object
+            mockery.registerMock('request', requestStub);
+            persistent = require('./../adaptors/persistent');
+            persistent.configure(cfg);
         });
-    });
 
-    describe('execute method', function () {
-        var jobId;
+        after(function(){
+            mockery.disable();
+        });
 
-        it('execute', function () {
-            jobId = persitent.execute(
-                {
-                    name: "PERSISTENT_REQ",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    query: "/user1",
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000,
-                    persistent: true,
-                    persistentDelay: 5000
-                },
-                function (err, result) {
-                    result["PERSISTENT_REQ"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
-                });
-
-            jobId.should.be.a('string');
+        it('configure', function (done) {
+            var configuration;
+            persistent.configure.should.be.a('function');
+            configuration = persistent.configure(cfg);
+            configuration.should.be.a('object');
+            done();
         });
 
         it('execute not persistent request', function () {
-            jobId = persitent.execute(
+            var jobId = persistent.execute(
                 {
                     name: "NOT_PERSISTENT_REQ_TEST_1",
                     url: "htp://www.kojo.com",
@@ -82,11 +91,11 @@ describe('Adaptor Persistent', function () {
                 },
                 function (err, result) {
                 });
-
+            jobId.should.be.a('string');
         });
 
         it('execute not persistent request, persistent=false', function () {
-            jobId = persitent.execute(
+            var jobId = persistent.execute(
                 {
                     name: "NOT_PERSISTENT_REQ_TEST_2",
                     url: "htp://www.kojo.com",
@@ -102,11 +111,12 @@ describe('Adaptor Persistent', function () {
                 },
                 function (err, result) {
                 });
-
+            jobId.should.be.a('string');
         });
 
         it('execute persistent request not valid callback', function () {
-            jobId = persitent.execute(
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
+            jobId = persistent.execute(
                 {
                     name: "NOT_PERSISTENT_REQ_TEST_2",
                     url: "htp://www.kojo.com",
@@ -126,35 +136,14 @@ describe('Adaptor Persistent', function () {
 
         });
 
-        it('execute persistent request small delay', function () {
-            jobId = persitent.execute(
-                {
-                    name: "NOT_PERSISTENT_REQ_TEST_4",
-                    url: "https://jsonresponser.herokuapp.com/api/json/users",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    query: "/user1",
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 10000,
-                    persistent: true,
-                    persistentDelay: 1,
-                    callback: "callback"
-                },
-                function (err, result) {
-                });
-        });
-
-
         describe('stop method', function () {
             it('execute persistent and stop', function () {
-                persitent.stop.should.be.a('function');
-                jobId = persitent.execute(
+                requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
+                persistent.stop.should.be.a('function');
+                var jobId = persistent.execute(
                     {
                         name: "PERSISTENT_STOP",
-                        url: "https://jsonresponser.herokuapp.com/api/json/users",
+                        url: "http://mockURL",
                         encoding: "UTF8",
                         method: "GET",
                         retries: 3,
@@ -167,10 +156,12 @@ describe('Adaptor Persistent', function () {
                         persistentDelay: 5000
                     },
                     function (err, result) {
+                        persistent.stop("notExistId", "PERSISTENT_STOP");
+                        persistent.stop(jobId, "PERSISTENT_STOP");
                     });
             });
 
-//            persitent.stop(jobId, "PERSISTENT_STOP");
         });
     });
+
 });
