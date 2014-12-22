@@ -75,65 +75,91 @@ describe('Adaptor Persistent', function () {
             done();
         });
 
-        it('execute not persistent request', function () {
-            var jobId = persistent.execute(
-                {
-                    name: "NOT_PERSISTENT_REQ_TEST_1",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    query: "/user1",
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000
-                },
-                function (err, result) {
-                });
-            jobId.should.be.a('string');
-        });
+        describe('execute method', function () {
+            it('execute not persistent request', function () {
+                var jobId = persistent.execute(
+                    {
+                        name: "NOT_PERSISTENT_REQ_TEST_1",
+                        url: "htp://www.kojo.com",
+                        encoding: "UTF8",
+                        method: "GET",
+                        retries: 3,
+                        headers: {},
+                        query: "/user1",
+                        mimeType: "application/json",
+                        body: "body",
+                        timeout: 1000
+                    },
+                    function (err, result) {
+                    });
+                jobId.should.be.a('string');
+            });
 
-        it('execute not persistent request, persistent=false', function () {
-            var jobId = persistent.execute(
-                {
-                    name: "NOT_PERSISTENT_REQ_TEST_2",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    query: "/user1",
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000,
-                    persistent: false
-                },
-                function (err, result) {
-                });
-            jobId.should.be.a('string');
-        });
+            it('execute not persistent request, persistent=false', function () {
+                var jobId = persistent.execute(
+                    {
+                        name: "NOT_PERSISTENT_REQ_TEST_2",
+                        url: "htp://www.kojo.com",
+                        encoding: "UTF8",
+                        method: "GET",
+                        retries: 3,
+                        headers: {},
+                        query: "/user1",
+                        mimeType: "application/json",
+                        body: "body",
+                        timeout: 1000,
+                        persistent: false
+                    },
+                    function (err, result) {
+                    });
+                jobId.should.be.a('string');
+            });
 
-        it('execute persistent request not valid callback', function () {
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
-            jobId = persistent.execute(
-                {
-                    name: "NOT_PERSISTENT_REQ_TEST_2",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    query: "/user1",
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000,
-                    persistent: true,
-                    callback: "callback"
-                },
-                function (err, result) {
-                });
+            it('execute persistent request not valid callback', function () {
+                requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
+                jobId = persistent.execute(
+                    {
+                        name: "NOT_PERSISTENT_REQ_TEST_2",
+                        url: "htp://www.kojo.com",
+                        encoding: "UTF8",
+                        method: "GET",
+                        retries: 3,
+                        headers: {},
+                        query: "/user1",
+                        mimeType: "application/json",
+                        body: "body",
+                        timeout: 1000,
+                        persistent: true,
+                        callback: "callback"
+                    },
+                    function (err, result) {
+                    });
 
+            });
+
+            it('execute persistent callback throws exception', function () {
+                requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
+                jobId = persistent.execute(
+                    {
+                        name: "NOT_PERSISTENT_REQ_TEST_2",
+                        url: "htp://www.kojo.com",
+                        encoding: "UTF8",
+                        method: "GET",
+                        retries: 3,
+                        headers: {},
+                        query: "/user1",
+                        mimeType: "application/json",
+                        body: "body",
+                        timeout: 1000,
+                        persistent: true,
+                        callback: function () {
+                            throw {error: "error"};
+                        }
+                    },
+                    function (err, result) {
+                    });
+
+            });
         });
 
         describe('stop method', function () {

@@ -3,9 +3,11 @@
   Adaptor Persistent
     Adaptor Persistent functionality
       ✓ configure 
-      ✓ execute not persistent request 
-      ✓ execute not persistent request, persistent=false 
-      ✓ execute persistent request not valid callback 
+      execute method
+        ✓ execute not persistent request 
+        ✓ execute not persistent request, persistent=false 
+        ✓ execute persistent request not valid callback 
+        ✓ execute persistent callback throws exception 
       stop method
         ✓ execute persistent and stop 
 
@@ -52,5 +54,5 @@
       ✓ getActiveJobs method 
 
 
-  34 passing (65ms)
+  35 passing (68ms)
 

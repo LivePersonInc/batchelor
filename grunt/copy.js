@@ -1,7 +1,6 @@
 module.exports = {
     batchelor: {
         files: [
-            {src: "./batchelor.js", dest: "./batchelor/batchelor.js"},
             {src: "./config/*.json", dest: "coverage/"}
         ],
         process: function (content, srcpath) {
