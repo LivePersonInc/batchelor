@@ -1,31 +1,30 @@
-var should  = require('chai').should();
-var expect  = require('chai').expect;
-var assert  = require('chai').assert;
-var utils   = require('./../utils');
-var commons = require('./../commons');
-var cfg = {
-    "maxConcurrentJobs": 10,
-    "maxRequestsPerJob": 10,
-    "log" : true,
-    "logger": {
-        debug: function () {
+var should  = require('chai').should()
+    , expect  = require('chai').expect
+    , assert  = require('chai').assert
+    , utils   = require('./../utils')
+    , commons = require('./../commons')
+    , cfg = {
+        "maxConcurrentJobs": 10,
+        "maxRequestsPerJob": 10,
+        "log": true,
+        "logger": {
+            debug: function () {
+            },
+            info: function () {
+            },
+            warn: function () {
+            },
+            error: function () {
+            }
         },
-        info: function () {
+        "request": {
+            "method": "GET",
+            "timeout": 10000,
+            "ip": "unknown",
+            "headers": {},
+            "body": ""
         },
-        warn: function () {
-        },
-        error: function () {
-        }
-    },
-    "request": {
-        "method": "GET",
-        "timeout": 10000,
-        "ip": "unknown",
-        "headers": {},
-        "body": ""
-    },
-    "whiteList": ["*"],
-    "requestValidationType": 0
+        "whiteList": ["*"]
 };
 
 

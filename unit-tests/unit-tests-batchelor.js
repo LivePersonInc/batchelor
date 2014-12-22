@@ -9,27 +9,27 @@ var request     = require('request')
     , batchelor
     , jobId
     , cfg = {
-    "maxConcurrentJobs": 10,
-    "maxRequestsPerJob": 10,
-    "log" : true,
-    "logger": {
-        debug: function () {
+        "maxConcurrentJobs": 10,
+        "maxRequestsPerJob": 10,
+        "log": true,
+        "logger": {
+            debug: function () {
+            },
+            info: function () {
+            },
+            warn: function () {
+            },
+            error: function () {
+            }
         },
-        info: function () {
+        "request": {
+            "method": "GET",
+            "timeout": 5,
+            "ip": "unknown",
+            "headers": {},
+            "body": ""
         },
-        warn: function () {
-        },
-        error: function () {
-        }
-    },
-    "request": {
-        "method": "GET",
-        "timeout": 5,
-        "ip": "unknown",
-        "headers": {},
-        "body": ""
-    },
-    "whiteList": ["*"]
+        "whiteList": ["*"]
     }
 
 utils.configure(cfg);
