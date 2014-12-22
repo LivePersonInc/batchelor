@@ -2,8 +2,8 @@ if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (typeof _$jscoverage['lib/processor.js'] === 'undefined'){_$jscoverage['lib/processor.js']=[];
 _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '\'use strict\';',
-'var _     = require("lodash")',
-'    , async   = require("async")',
+'var async     = require("async")',
+'    , _       = require("lodash")',
 '    , request = require("request")',
 '    , utils   = require("./../utils")',
 '    , commons = require("./../commons")',
@@ -168,8 +168,8 @@ _$jscoverage['lib/processor.js'][118]=0;
 _$jscoverage['lib/processor.js'][2]++;
 'use strict';
 _$jscoverage['lib/processor.js'][3]++;
-var _     = require("lodash")
-    , async   = require("async")
+var async     = require("async")
+    , _       = require("lodash")
     , request = require("request")
     , utils   = require("./../utils")
     , commons = require("./../commons")

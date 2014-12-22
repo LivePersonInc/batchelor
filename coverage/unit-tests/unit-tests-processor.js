@@ -108,7 +108,7 @@ describe('processor', function () {
         });
 
         it('run method - ERROR_API_URL', function () {
-            requestStub.yields({error: "error"}, {response: "reponse"}, null);
+            requestStub.yields({error: "error"}, {response: "response"}, null);
             processor.run(
                 [{
                     name: "ERROR_API_URL",
