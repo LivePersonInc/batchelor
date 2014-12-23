@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">73.71</p>
+      <p class="stat">73.67</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">204</p>
+      <p class="stat">197</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">33.42</p>
+      <p class="stat">32.68</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">1.30</p>
+      <p class="stat">1.27</p>
     </div>
   </div>
 </div>
@@ -97,9 +97,9 @@ var async           = require(&quot;async&quot;)
     , commons       = require(&quot;./../commons&quot;)
     , utils         = require(&quot;./../utils&quot;)
     , batchelor     = require(&quot;./../batchelor&quot;)
-    , Runner        = require(&quot;./../commons/runner&quot;)
+    , Eterator        = require(&quot;./../commons/eterator&quot;)
     , separator     = &quot;_&quot;
-    , runner
+    , eterator      = new Eterator()
     , log
     , config;
 
@@ -149,8 +149,7 @@ function _runCallback(callback, err, result) {
 function _processSingleItem (item) {
     var currTime = Date.now()
         , delta = currTime - item.firedTime
-        , name = item.name
-        , callCallback = false;
+        , name = item.name;
 
     if (delta &gt;= item.persistentDelay) {
         item.firedTime = currTime;
@@ -167,17 +166,13 @@ function _processSingleItem (item) {
     }
 }
 
-function _startPersist () {
-    setImmediate(runner.start(0, false,
-        function (err, item) {
-            _processSingleItem(item);
-        },
-        function () {
-            setTimeout(function () {
-                _startPersist();
-            }, 0);
-        }));
-
+function _startPersist() {
+    setImmediate(function () {
+        eterator.start(0, true,
+            function (err, item) {
+                _processSingleItem(item);
+            });
+    });
 }
 
 function _persist () {
@@ -229,7 +224,6 @@ function _process(allowReqs) {
     });
 }
 
-
 /**
  * set the adaptor configuration + configure batchelor
  * @param cfg - configuration object for the adaptor and batchelor
@@ -267,7 +261,9 @@ exports.execute = function (job, callback) {
             log.error(&quot;[Persistent Adaptor] not a persistent request: &quot; + JSON.stringify(cReq));
         }
     });
-    runner = new Runner(allowReqs);
+
+    eterator.addItems(allowReqs);
+
     _process(reqs);
 
     return jobId;
@@ -281,14 +277,11 @@ exports.execute = function (job, callback) {
  */
 exports.stop = function (jobId, reqId) {
     log.info(&quot;[Persistent Adaptor] stopping jobId : &quot; + jobId + &quot; request Id: &quot; + reqId);
-    var runnerProp = runner.getProperties();
-    runnerProp.array = runnerProp.array || [];
-    var indexOf = _.findIndex(runnerProp.array, { &#039;name&#039;: reqId });
-
-    if (indexOf &gt;= 0) {
-        runner.stop();
-        runner.removeItem(indexOf);
-        runner.resume();
+    var eteratorProp = eterator.getProperties();
+    eteratorProp.array = eteratorProp.array || [];
+    var index = _.findIndex(eteratorProp.array, { &#039;name&#039;: reqId });
+    if (index &gt;= 0) {
+        eterator.removeItem(eteratorProp.array[index]);
     }
     else {
         log.warn(&quot;[Persistent Adaptor] couldn&#039;t stop jobId : &quot; + jobId + &quot; request Id: &quot; + reqId + &quot; given values doesn&#039;t exist!&quot;);

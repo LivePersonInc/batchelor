@@ -6,9 +6,9 @@ var async           = require("async")
     , commons       = require("./../commons")
     , utils         = require("./../utils")
     , batchelor     = require("./../batchelor")
-    , Runner        = require("./../commons/runner")
+    , Eterator        = require("./../commons/eterator")
     , separator     = "_"
-    , runner
+    , eterator      = new Eterator()
     , log
     , config;
 
@@ -58,8 +58,7 @@ function _runCallback(callback, err, result) {
 function _processSingleItem (item) {
     var currTime = Date.now()
         , delta = currTime - item.firedTime
-        , name = item.name
-        , callCallback = false;
+        , name = item.name;
 
     if (delta >= item.persistentDelay) {
         item.firedTime = currTime;
@@ -76,17 +75,13 @@ function _processSingleItem (item) {
     }
 }
 
-function _startPersist () {
-    setImmediate(runner.start(0, false,
-        function (err, item) {
-            _processSingleItem(item);
-        },
-        function () {
-            setTimeout(function () {
-                _startPersist();
-            }, 0);
-        }));
-
+function _startPersist() {
+    setImmediate(function () {
+        eterator.start(0, true,
+            function (err, item) {
+                _processSingleItem(item);
+            });
+    });
 }
 
 function _persist () {
@@ -176,7 +171,9 @@ exports.execute = function (job, callback) {
             log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
         }
     });
-    runner = new Runner(allowReqs);
+
+    eterator.addItems(allowReqs);
+
     _process(reqs);
 
     return jobId;
@@ -190,14 +187,11 @@ exports.execute = function (job, callback) {
  */
 exports.stop = function (jobId, reqId) {
     log.info("[Persistent Adaptor] stopping jobId : " + jobId + " request Id: " + reqId);
-    var runnerProp = runner.getProperties();
-    runnerProp.array = runnerProp.array || [];
-    var indexOf = _.findIndex(runnerProp.array, { 'name': reqId });
-
-    if (indexOf >= 0) {
-        runner.stop();
-        runner.removeItem(indexOf);
-        runner.resume();
+    var eteratorProp = eterator.getProperties();
+    eteratorProp.array = eteratorProp.array || [];
+    var index = _.findIndex(eteratorProp.array, { 'name': reqId });
+    if (index >= 0) {
+        eterator.removeItem(eteratorProp.array[index]);
     }
     else {
         log.warn("[Persistent Adaptor] couldn't stop jobId : " + jobId + " request Id: " + reqId + " given values doesn't exist!");
