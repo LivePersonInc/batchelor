@@ -1,5 +1,34 @@
 
 
+  Adaptor Persistent
+    Adaptor Persistent functionality
+      ✓ configure 
+      execute method
+        ✓ execute not persistent request 
+        ✓ execute not persistent request, persistent=false 
+        ✓ execute persistent request not valid callback 
+        ✓ execute persistent callback throws exception 
+      stop method
+        ✓ execute persistent and stop 
+
+  batchelor
+    batchelor functionality
+      ✓ configure 
+      ✓ execute method - INVALID_TASK - Missing URL 
+      ✓ execute method - INVALID_TASK - Missing name 
+      ✓ execute method - ETIMEDOUT 
+      ✓ execute method - ERROR_API_URL 
+      ✓ execute method - NO_JSON_OBJECT 
+
+  commons
+    ✓ objects were created 
+    ✓ helper 
+    ✓ helper configure method 
+    ✓ helper merge method 
+    ✓ helper setAdditionalProps method 
+    ✓ helper convert2Array method 
+    ✓ helper isObjectEmpty method 
+
   Eterator
     ✓ Test Empty Object 
     ✓ Test Not Empty Object 
@@ -7,7 +36,33 @@
     ✓ Test functionality start endless == false 
     ✓ Test functionality start endless == false with complete callback 
     ✓ Test functionality start endless == true 
+    ✓ Test functionality start and add items while running 
+    ✓ Test functionality start and add item while running 
+
+  processor
+    processor functionality
+      ✓ configure 
+      ✓ execute method - INVALID_TASK - Missing URL 
+      ✓ execute method - ETIMEDOUT 
+      ✓ run method - ERROR_API_URL 
+      ✓ run method - NO_JSON_OBJECT 
+
+  utils
+    ✓ test objects were created 
+    builder
+      ✓ test builder functionality 
+    validator
+      ✓ test methods 
+      ✓ isValidRequest method 
+      ✓ cleanRequest method 
+      ✓ isPersistentRequest method 
+    jobHolder
+      ✓ methods 
+      ✓ addJob method 
+      ✓ addJob/getJob methods 
+      ✓ addJob/getJob/clean methods 
+      ✓ getActiveJobs method 
 
 
-  6 passing (8ms)
+  43 passing (71ms)
 

@@ -129,4 +129,46 @@ describe('Eterator', function () {
         );
     });
 
+    it('Test functionality start and add items while running', function (done) {
+
+        eterator = new Eterator([
+            {name: "name1", id: 1}
+        ]);
+
+        eterator.start(0, true,
+            function (err, item) {
+            },
+            function () {
+            }
+        );
+
+        setImmediate(function () {
+            eterator.addItem({name: "name4", id: 4});
+            eterator.addItems([
+                {name: "name2", id: 2}
+                , {name: "name3", id: 3}
+            ]);
+            done();
+        });
+
+    });
+
+    it('Test functionality start and add item while running', function (done) {
+
+        eterator = new Eterator();
+
+        eterator.start(0, true,
+            function (err, item) {
+            },
+            function () {
+            }
+        );
+
+        setImmediate(function () {
+            eterator.addItem({name: "name", id: 1});
+            done();
+        });
+
+    });
+
 });
