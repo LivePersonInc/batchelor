@@ -56,6 +56,7 @@
       ✓ isValidRequest method 
       ✓ cleanRequest method 
       ✓ isPersistentRequest method 
+      ✓ isValidURL method 
     jobHolder
       ✓ methods 
       ✓ addJob method 
@@ -64,5 +65,5 @@
       ✓ getActiveJobs method 
 
 
-  43 passing (71ms)
+  44 passing (76ms)
 

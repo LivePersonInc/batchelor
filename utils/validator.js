@@ -1,10 +1,26 @@
 /*jslint node: true */
 'use strict';
 var commons = require("./../commons")
-    , config;
+    , url   = require("url")
+    , config
+    , log;
 
+
+function _getHost (url) {
+    var arr = url.split(".")
+        , host;
+
+    if (arr.length >= 2) {
+        host = arr[arr.length - 2] + "." + arr[arr.length - 1];
+    }
+
+    return host;
+}
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
+    log = config.logger || console;
+    // if there is no "whiteList" in the config, we don't
+    config.whiteList = config.whiteList || "*";
     return config;
 };
 
@@ -16,7 +32,7 @@ exports.isValidRequest = function (req) {
         (req.method && typeof req.method === "string")) {
         validReq = true;
     }
-    config.logger.info("[validator] isValidReq: " + validReq);
+    log.info("[validator] isValidReq: " + validReq);
     return validReq;
 };
 exports.cleanRequest = function (req) {
@@ -43,4 +59,36 @@ exports.isPersistentRequest = function (req) {
     var persistentReq = req && req.persistent && req.persistent === true || false;
     config.logger.info("[validator] isPersistentReq: " + persistentReq);
     return persistentReq;
+};
+
+exports.isValidURL = function (_url) {
+    var valid
+        , urlObj
+        , host;
+
+    // if in the whiteList exist "*" all domains allow
+    if (config.whiteList.indexOf("*") > -1) {
+        log.debug("[validator] Allow all URLS");
+        valid = true;
+    }
+    else {
+        try {
+            urlObj = url.parse(_url, true);
+            host = _getHost(urlObj.host);
+            if (config.whiteList.indexOf(host) > -1) {
+                valid = true;
+                log.info('[validator] URL: ' + host + ' URL is valid -  !!!');
+            }
+            else {
+                valid = false;
+                log.info("[validator] URL is not valid, host: " + host);
+            }
+        }
+        catch (e) {
+            valid = false;
+            log.error("[validator] validateURL, exception e: " + e);
+        }
+    }
+
+    return valid;
 };

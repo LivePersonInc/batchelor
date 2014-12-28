@@ -33,7 +33,7 @@ _$jscoverage['lib/negotiator.js'].source=['/*jslint node: true */',
 '    };',
 '    _.forEach(job, function (cReq) {',
 '        cReq = commons.helper.setAdditionalProps(config.request, cReq);',
-'        if (utils.validator.isValidRequest(cReq)) {',
+'        if (utils.validator.isValidRequest(cReq) && utils.validator.isValidURL(cReq.url)) {',
 '            cReq = utils.validator.cleanRequest(cReq);',
 '            _requests.supported.push(cReq);',
 '        }',
@@ -156,7 +156,7 @@ _.forEach(job, function (cReq) {
         _$jscoverage['lib/negotiator.js'][33]++;
 cReq = commons.helper.setAdditionalProps(config.request, cReq);
         _$jscoverage['lib/negotiator.js'][34]++;
-if (utils.validator.isValidRequest(cReq)) {
+if (utils.validator.isValidRequest(cReq) && utils.validator.isValidURL(cReq.url)) {
             _$jscoverage['lib/negotiator.js'][35]++;
 cReq = utils.validator.cleanRequest(cReq);
             _$jscoverage['lib/negotiator.js'][36]++;

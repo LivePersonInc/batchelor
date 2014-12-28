@@ -119,6 +119,27 @@ describe('utils', function () {
             utils.validator.isPersistentRequest({name: "name", persistent: false}).should.equal(false);
         });
 
+        it('isValidURL method', function () {
+
+            utils.validator.isValidURL("https://www.valid.com").should.be.a('boolean');
+            utils.validator.isValidURL("https://www.valid.com").should.equal(true);
+
+            cfg.whiteList = ["google.com", "github.com"];
+            utils.validator.configure(cfg);
+
+            utils.validator.isValidURL("https://www.invalid.com").should.be.a('boolean');
+            utils.validator.isValidURL("https://www.invalid.com").should.equal(false);
+
+            cfg.whiteList = ["valid.com", "valid.net"];
+            utils.validator.configure(cfg);
+
+            utils.validator.isValidURL("https://www.valid.com").should.be.a('boolean');
+            utils.validator.isValidURL("https://www.valid.net").should.equal(true);
+
+            utils.validator.isValidURL({url: "url"}).should.be.a('boolean');
+            utils.validator.isValidURL({url: "url"}).should.equal(false);
+        });
+
     });
 
     describe('jobHolder', function () {

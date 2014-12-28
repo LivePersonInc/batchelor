@@ -97,7 +97,7 @@ var persistentJobId = batchelor.persistent.execute(
         },
         {
             name: "req_with_callback_5000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/6",
+            url: "https://jsonresponser.herokuapp.com/api/json/user/1",
             method: "POST",
             headers: {},
             body: "body",
@@ -116,7 +116,7 @@ var persistentJobId2 = batchelor.persistent.execute(
     [
         {
             name: "req_with_callback_500000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/6",
+            url: "https://jsonresponser.herokuapp.com/api/json/user/1",
             method: "POST",
             headers: {},
             body: "body",
@@ -194,9 +194,9 @@ var persistentJobId2 = batchelor.persistent.execute(
 //console.error("\n***************END PERSITENT JOB MAP************");
 
 
-setTimeout(function () {
-    console.log("*********************STOPPING QUEUE*******************")
-//    batchelorPersistent.stop(per fstsistentJobMap["req_with_callback_1000"]);
-    batchelor.persistent.stop(persistentJobId, "req_with_callback_5000_persistent");
-    console.log("*********************END STOPPING QUEUE***************")
-}, 10000);
+//setTimeout(function () {
+//    console.log("*********************STOPPING QUEUE*******************")
+////    batchelorPersistent.stop(per fstsistentJobMap["req_with_callback_1000"]);
+//    batchelor.persistent.stop(persistentJobId, "req_with_callback_5000_persistent");
+//    console.log("*********************END STOPPING QUEUE***************")
+//}, 10000);
