@@ -58,8 +58,8 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 '',
 '',
 'exports.isPersistentRequest = function (req) {',
-'    var persistentReq = req && req.persistent && req.persistent === true || false;',
-'    config.logger.info("[validator] isPersistentReq: " + persistentReq);',
+'    var persistentReq = req && req.isPersistentRequest && req.isPersistentRequest === true || false;',
+'    config.logger.info("[validator] isPersistentRequest: " + persistentReq);',
 '    return persistentReq;',
 '};',
 '',
@@ -226,9 +226,9 @@ return req;
 _$jscoverage['utils/validator.js'][58]++;
 exports.isPersistentRequest = function (req) {
     _$jscoverage['utils/validator.js'][59]++;
-var persistentReq = req && req.persistent && req.persistent === true || false;
+var persistentReq = req && req.isPersistentRequest && req.isPersistentRequest === true || false;
     _$jscoverage['utils/validator.js'][60]++;
-config.logger.info("[validator] isPersistentReq: " + persistentReq);
+config.logger.info("[validator] isPersistentRequest: " + persistentReq);
     _$jscoverage['utils/validator.js'][61]++;
 return persistentReq;
 };

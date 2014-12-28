@@ -114,9 +114,9 @@ describe('utils', function () {
         });
 
         it('isPersistentRequest method', function () {
-            utils.validator.isPersistentRequest({name: "name", persistent: true}).should.be.a('boolean');
-            utils.validator.isPersistentRequest({name: "name", persistent: true}).should.equal(true);
-            utils.validator.isPersistentRequest({name: "name", persistent: false}).should.equal(false);
+            utils.validator.isPersistentRequest({name: "name", isPersistentRequest: true}).should.be.a('boolean');
+            utils.validator.isPersistentRequest({name: "name", isPersistentRequest: true}).should.equal(true);
+            utils.validator.isPersistentRequest({name: "name", isPersistentRequest: false}).should.equal(false);
         });
 
         it('isValidURL method', function () {

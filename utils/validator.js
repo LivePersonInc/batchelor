@@ -56,8 +56,8 @@ exports.cleanRequest = function (req) {
 
 
 exports.isPersistentRequest = function (req) {
-    var persistentReq = req && req.persistent && req.persistent === true || false;
-    config.logger.info("[validator] isPersistentReq: " + persistentReq);
+    var persistentReq = req && req.isPersistentRequest && req.isPersistentRequest === true || false;
+    config.logger.info("[validator] isPersistentRequest: " + persistentReq);
     return persistentReq;
 };
 
