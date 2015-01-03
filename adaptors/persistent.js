@@ -98,7 +98,7 @@ function _persist () {
 function _batchelorCallbackFirstRun(err, result, reqs) {
     var delays = [], minTime;
 
-    log.error("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
+    log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
     _.forEach(reqs, function (cReq) {
         var name = cReq.name;
@@ -107,7 +107,7 @@ function _batchelorCallbackFirstRun(err, result, reqs) {
             delays.push(cReq.persistentDelay || 2000);
         }
 
-        _runCallback(cReq.callback, err, result[name]);
+        _runCallback(cReq.callback, err, result);
     });
 
     // take the minimum timeout - the minimum is the one we will use in the timeout
@@ -174,7 +174,7 @@ exports.execute = function (job, callback) {
 
     eterator.addItems(allowReqs);
 
-    _process(reqs);
+    _process(allowReqs);
 
     return jobId;
 

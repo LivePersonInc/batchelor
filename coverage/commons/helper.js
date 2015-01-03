@@ -41,9 +41,7 @@ _$jscoverage['commons/helper.js'].source=['/*jslint node: true */',
 '',
 '    return arr;',
 '};',
-'exports.function = function () {',
 '',
-'};',
 'exports.getUniqueId = function (prefix) {',
 '    var id = ++idCounter + "";',
 '    return prefix ? prefix + id : id;',
@@ -51,34 +49,33 @@ _$jscoverage['commons/helper.js'].source=['/*jslint node: true */',
 'exports.isEmptyObject = function (obj) {',
 '    return Object.keys(obj).length === 0;',
 '};'];
-_$jscoverage['commons/helper.js'][28]=0;
+_$jscoverage['commons/helper.js'][23]=0;
 _$jscoverage['commons/helper.js'][2]=0;
-_$jscoverage['commons/helper.js'][22]=0;
+_$jscoverage['commons/helper.js'][28]=0;
 _$jscoverage['commons/helper.js'][7]=0;
 _$jscoverage['commons/helper.js'][4]=0;
 _$jscoverage['commons/helper.js'][6]=0;
-_$jscoverage['commons/helper.js'][34]=0;
+_$jscoverage['commons/helper.js'][32]=0;
 _$jscoverage['commons/helper.js'][11]=0;
 _$jscoverage['commons/helper.js'][9]=0;
 _$jscoverage['commons/helper.js'][8]=0;
-_$jscoverage['commons/helper.js'][33]=0;
+_$jscoverage['commons/helper.js'][37]=0;
 _$jscoverage['commons/helper.js'][14]=0;
-_$jscoverage['commons/helper.js'][40]=0;
+_$jscoverage['commons/helper.js'][33]=0;
 _$jscoverage['commons/helper.js'][24]=0;
-_$jscoverage['commons/helper.js'][19]=0;
 _$jscoverage['commons/helper.js'][15]=0;
-_$jscoverage['commons/helper.js'][23]=0;
+_$jscoverage['commons/helper.js'][22]=0;
 _$jscoverage['commons/helper.js'][16]=0;
+_$jscoverage['commons/helper.js'][19]=0;
 _$jscoverage['commons/helper.js'][25]=0;
 _$jscoverage['commons/helper.js'][31]=0;
-_$jscoverage['commons/helper.js'][32]=0;
-_$jscoverage['commons/helper.js'][37]=0;
-_$jscoverage['commons/helper.js'][42]=0;
+_$jscoverage['commons/helper.js'][34]=0;
+_$jscoverage['commons/helper.js'][40]=0;
+_$jscoverage['commons/helper.js'][43]=0;
+_$jscoverage['commons/helper.js'][44]=0;
 _$jscoverage['commons/helper.js'][45]=0;
-_$jscoverage['commons/helper.js'][46]=0;
 _$jscoverage['commons/helper.js'][47]=0;
-_$jscoverage['commons/helper.js'][49]=0;
-_$jscoverage['commons/helper.js'][50]=0;
+_$jscoverage['commons/helper.js'][48]=0;
 }/*jslint node: true */
 _$jscoverage['commons/helper.js'][2]++;
 'use strict';
@@ -142,19 +139,16 @@ arr.push(obj);
     _$jscoverage['commons/helper.js'][40]++;
 return arr;
 };
-_$jscoverage['commons/helper.js'][42]++;
-exports.function = function () {
 
-};
-_$jscoverage['commons/helper.js'][45]++;
+_$jscoverage['commons/helper.js'][43]++;
 exports.getUniqueId = function (prefix) {
-    _$jscoverage['commons/helper.js'][46]++;
+    _$jscoverage['commons/helper.js'][44]++;
 var id = ++idCounter + "";
-    _$jscoverage['commons/helper.js'][47]++;
+    _$jscoverage['commons/helper.js'][45]++;
 return prefix ? prefix + id : id;
 };
-_$jscoverage['commons/helper.js'][49]++;
+_$jscoverage['commons/helper.js'][47]++;
 exports.isEmptyObject = function (obj) {
-    _$jscoverage['commons/helper.js'][50]++;
+    _$jscoverage['commons/helper.js'][48]++;
 return Object.keys(obj).length === 0;
 };

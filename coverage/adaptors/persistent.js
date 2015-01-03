@@ -100,7 +100,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 'function _batchelorCallbackFirstRun(err, result, reqs) {',
 '    var delays = [], minTime;',
 '',
-'    log.error("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);',
+'    log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);',
 '',
 '    _.forEach(reqs, function (cReq) {',
 '        var name = cReq.name;',
@@ -109,7 +109,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '            delays.push(cReq.persistentDelay || 2000);',
 '        }',
 '',
-'        _runCallback(cReq.callback, err, result[name]);',
+'        _runCallback(cReq.callback, err, result);',
 '    });',
 '',
 '    // take the minimum timeout - the minimum is the one we will use in the timeout',
@@ -176,7 +176,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '',
 '    eterator.addItems(allowReqs);',
 '',
-'    _process(reqs);',
+'    _process(allowReqs);',
 '',
 '    return jobId;',
 '',
@@ -397,7 +397,7 @@ function _batchelorCallbackFirstRun(err, result, reqs) {
 var delays = [], minTime;
 
     _$jscoverage['adaptors/persistent.js'][101]++;
-log.error("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
+log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
     _$jscoverage['adaptors/persistent.js'][103]++;
 _.forEach(reqs, function (cReq) {
@@ -411,7 +411,7 @@ delays.push(cReq.persistentDelay || 2000);
         }
 
         _$jscoverage['adaptors/persistent.js'][110]++;
-_runCallback(cReq.callback, err, result[name]);
+_runCallback(cReq.callback, err, result);
     });
 
     // take the minimum timeout - the minimum is the one we will use in the timeout
@@ -504,7 +504,7 @@ log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cRe
 eterator.addItems(allowReqs);
 
     _$jscoverage['adaptors/persistent.js'][177]++;
-_process(reqs);
+_process(allowReqs);
 
     _$jscoverage['adaptors/persistent.js'][179]++;
 return jobId;

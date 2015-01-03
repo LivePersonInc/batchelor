@@ -50,7 +50,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '',
 '    // callback of the async.parallel method (async.parallel(reqs, function (err, _results) {...))',
 '    // in the callback expects two parameters - error and _results',
-'    callback(null, _result);',
+'    return callback(null, _result);',
 '}',
 '',
 '/**',
@@ -114,10 +114,10 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '    async.parallelLimit(_reqs, config.maxConcurrentJobs, function (err, results) {',
 '        if (err) {',
 '            log.error("[processor] Error in running the job, err: " + err);',
-'            cb(err);',
+'            return cb(err);',
 '        }',
 '        else {',
-'            cb(null, results);',
+'            return cb(null, results);',
 '        }',
 '    });',
 '',
@@ -233,7 +233,7 @@ _result.statusCode = response.statusCode;
     // callback of the async.parallel method (async.parallel(reqs, function (err, _results) {...))
     // in the callback expects two parameters - error and _results
     _$jscoverage['lib/processor.js'][51]++;
-callback(null, _result);
+return callback(null, _result);
 }
 
 /**
@@ -319,11 +319,11 @@ if (err) {
             _$jscoverage['lib/processor.js'][114]++;
 log.error("[processor] Error in running the job, err: " + err);
             _$jscoverage['lib/processor.js'][115]++;
-cb(err);
+return cb(err);
         }
         else {
             _$jscoverage['lib/processor.js'][118]++;
-cb(null, results);
+return cb(null, results);
         }
     });
 

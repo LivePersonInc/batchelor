@@ -108,7 +108,7 @@ describe('Adaptor Persistent', function () {
                         mimeType: "application/json",
                         body: "body",
                         timeout: 1000,
-                        persistent: false
+                        isPersistentRequest: false
                     },
                     function (err, result) {
                     });
@@ -119,7 +119,7 @@ describe('Adaptor Persistent', function () {
                 requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
                 jobId = persistent.execute(
                     {
-                        name: "NOT_PERSISTENT_REQ_TEST_2",
+                        name: "PERSISTENT_REQ_TEST_2",
                         url: "htp://www.kojo.com",
                         encoding: "UTF8",
                         method: "GET",
@@ -129,7 +129,7 @@ describe('Adaptor Persistent', function () {
                         mimeType: "application/json",
                         body: "body",
                         timeout: 1000,
-                        persistent: true,
+                        isPersistentRequest: true,
                         callback: "callback"
                     },
                     function (err, result) {
@@ -151,7 +151,7 @@ describe('Adaptor Persistent', function () {
                         mimeType: "application/json",
                         body: "body",
                         timeout: 1000,
-                        persistent: true,
+                        isPersistentRequest: true,
                         callback: function () {
                             throw {error: "error"};
                         }
@@ -178,7 +178,7 @@ describe('Adaptor Persistent', function () {
                         mimeType: "application/json",
                         body: "body",
                         timeout: 10000,
-                        persistent: true,
+                        isPersistentRequest: true,
                         persistentDelay: 5000
                     },
                     function (err, result) {

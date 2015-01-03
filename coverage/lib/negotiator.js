@@ -72,11 +72,11 @@ _$jscoverage['lib/negotiator.js'].source=['/*jslint node: true */',
 '',
 '    processor.run(_reqs.supported, function (err, result) {',
 '        if (err) {',
-'            callback(err);',
+'            return callback(err);',
 '        }',
 '        else {',
 '            result = commons.helper.merge(_reqs.unsupported, result);',
-'            callback(null, result);',
+'            return callback(null, result);',
 '        }',
 '    });',
 '',
@@ -213,13 +213,13 @@ processor.run(_reqs.supported, function (err, result) {
         _$jscoverage['lib/negotiator.js'][72]++;
 if (err) {
             _$jscoverage['lib/negotiator.js'][73]++;
-callback(err);
+return callback(err);
         }
         else {
             _$jscoverage['lib/negotiator.js'][76]++;
 result = commons.helper.merge(_reqs.unsupported, result);
             _$jscoverage['lib/negotiator.js'][77]++;
-callback(null, result);
+return callback(null, result);
         }
     });
 

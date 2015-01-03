@@ -39,9 +39,7 @@ exports.convert2Array = function(obj) {
 
     return arr;
 };
-exports.function = function () {
 
-};
 exports.getUniqueId = function (prefix) {
     var id = ++idCounter + "";
     return prefix ? prefix + id : id;
