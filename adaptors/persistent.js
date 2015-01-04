@@ -181,7 +181,7 @@ exports.execute = function (job, callback) {
                 persistent_requests.push(cReq);
             }
             else {
-                log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+                log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
             }
         }
     });
