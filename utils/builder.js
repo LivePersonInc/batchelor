@@ -39,12 +39,22 @@ var RESPONSE_TYPE = {
 
 };
 
+/**
+ * configure the object
+ * @param cfg
+ * @returns {{}}
+ */
+
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
     return config;
 };
 
-
+/**
+ * return the type of response of the given type
+ * @param type
+ * @returns {*}
+ */
 exports.buildResponse = function (type) {
     type = type || "DEFAULT";
     return RESPONSE_TYPE[type];

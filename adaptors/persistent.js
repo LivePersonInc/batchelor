@@ -75,6 +75,10 @@ function _processSingleItem (item) {
     }
 }
 
+/**
+ * start the persistent polling using eterator object
+ * @private
+ */
 function _startPersist() {
     setImmediate(function () {
         eterator.start(0, true,
@@ -84,6 +88,10 @@ function _startPersist() {
     });
 }
 
+/**
+ * start the persitent polling
+ * @private
+ */
 function _persist () {
     _startPersist();
 }
@@ -153,28 +161,34 @@ exports.configure = function (cfg) {
  */
 exports.execute = function (job, callback) {
     log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
-    var allowReqs = [];
-    var reqs = commons.helper.convert2Array(job);
-    var jobId = commons.helper.getUniqueId("jobName" + separator);
+    var persistent_requests = []
+        , all_requests = []
+        , reqs = commons.helper.convert2Array(job)
+        , jobId = commons.helper.getUniqueId("jobName" + separator);
 
     _.forEach(reqs, function (cReq) {
 
         cReq.callback = cReq.callback || callback;
 
-        if (utils.validator.isPersistentRequest(cReq) && utils.validator.isValidRequest(cReq)) {
-            cReq.jobId = jobId;
-            cReq.firedTime = Date.now();
-            cReq.ignoreResponse = cReq.ignoreResponse || false;
-            allowReqs.push(cReq);
-        }
-        else {
-            log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+        if (utils.validator.isValidRequest(cReq)) {
+
+            all_requests.push(cReq);
+
+            if (utils.validator.isPersistentRequest(cReq)) {
+                cReq.jobId = jobId;
+                cReq.firedTime = Date.now();
+                cReq.ignoreResponse = cReq.ignoreResponse || false;
+                persistent_requests.push(cReq);
+            }
+            else {
+                log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+            }
         }
     });
 
-    eterator.addItems(allowReqs);
+    eterator.addItems(persistent_requests);
 
-    _process(allowReqs);
+    _process(all_requests);
 
     return jobId;
 

@@ -88,7 +88,7 @@ var persistentJobId = batchelor.persistent.execute(
             headers: {},
             body: "body",
             timeout: 10000,
-            persistent: true,
+            isPersistentRequest: true,
             persistentDelay: 10000,
             ignoreResponse: true,
             callback: function (err, result) {
@@ -102,7 +102,7 @@ var persistentJobId = batchelor.persistent.execute(
             headers: {},
             body: "body",
             timeout: 10000,
-            persistent: true,
+            isPersistentRequest: true,
             persistentDelay: 5000,
             ignoreResponse: true,
             callback: function (err, result) {
@@ -112,24 +112,24 @@ var persistentJobId = batchelor.persistent.execute(
         console.log("\n3. CALLBACK GENERAL BATCHELOR PERSISTENT: " + JSON.stringify(result));
 });
 
-var persistentJobId2 = batchelor.persistent.execute(
-    [
-        {
-            name: "req_with_callback_500000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/1",
-            method: "POST",
-            headers: {},
-            body: "body",
-            timeout: 10000,
-            persistent: true,
-            persistentDelay: 5000,
-            ignoreResponse: true,
-            callback: function (err, result) {
-                console.log("4. req_with_callback_500000_persistent: " + JSON.stringify(result));
-            }
-        }], function (err, result) {
-        console.log("\n5.CALLBACK GENERAL BATCHELOR PERSISTENT: " + JSON.stringify(result));
-    });
+//var persistentJobId2 = batchelor.persistent.execute(
+//    [
+//        {
+//            name: "req_with_callback_500000_persistent",
+//            url: "https://jsonresponser.herokuapp.com/api/json/user/1",
+//            method: "POST",
+//            headers: {},
+//            body: "body",
+//            timeout: 10000,
+//            isPersistentRequest: true,
+//            persistentDelay: 5000,
+//            ignoreResponse: true,
+//            callback: function (err, result) {
+//                console.log("4. req_with_callback_500000_persistent: " + JSON.stringify(result));
+//            }
+//        }], function (err, result) {
+//        console.log("\n5.CALLBACK GENERAL BATCHELOR PERSISTENT: " + JSON.stringify(result));
+//    });
 
 
 // -------------------------------------------------------------------------------------------

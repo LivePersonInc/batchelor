@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">73.68</p>
+      <p class="stat">73.24</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">198</p>
+      <p class="stat">212</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">32.58</p>
+      <p class="stat">32.48</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">1.27</p>
+      <p class="stat">1.29</p>
     </div>
   </div>
 </div>
@@ -166,6 +166,10 @@ function _processSingleItem (item) {
     }
 }
 
+/**
+ * start the persistent polling using eterator object
+ * @private
+ */
 function _startPersist() {
     setImmediate(function () {
         eterator.start(0, true,
@@ -175,6 +179,10 @@ function _startPersist() {
     });
 }
 
+/**
+ * start the persitent polling
+ * @private
+ */
 function _persist () {
     _startPersist();
 }
@@ -244,28 +252,34 @@ exports.configure = function (cfg) {
  */
 exports.execute = function (job, callback) {
     log.info(&quot;[Persistent Adaptor] execute for job: &quot; + JSON.stringify(job));
-    var allowReqs = [];
-    var reqs = commons.helper.convert2Array(job);
-    var jobId = commons.helper.getUniqueId(&quot;jobName&quot; + separator);
+    var persistent_requests = []
+        , all_requests = []
+        , reqs = commons.helper.convert2Array(job)
+        , jobId = commons.helper.getUniqueId(&quot;jobName&quot; + separator);
 
     _.forEach(reqs, function (cReq) {
 
         cReq.callback = cReq.callback || callback;
 
-        if (utils.validator.isPersistentRequest(cReq) &amp;&amp; utils.validator.isValidRequest(cReq)) {
-            cReq.jobId = jobId;
-            cReq.firedTime = Date.now();
-            cReq.ignoreResponse = cReq.ignoreResponse || false;
-            allowReqs.push(cReq);
-        }
-        else {
-            log.error(&quot;[Persistent Adaptor] not a persistent request: &quot; + JSON.stringify(cReq));
+        if (utils.validator.isValidRequest(cReq)) {
+
+            all_requests.push(cReq);
+
+            if (utils.validator.isPersistentRequest(cReq)) {
+                cReq.jobId = jobId;
+                cReq.firedTime = Date.now();
+                cReq.ignoreResponse = cReq.ignoreResponse || false;
+                persistent_requests.push(cReq);
+            }
+            else {
+                log.error(&quot;[Persistent Adaptor] not a persistent request: &quot; + JSON.stringify(cReq));
+            }
         }
     });
 
-    eterator.addItems(allowReqs);
+    eterator.addItems(persistent_requests);
 
-    _process(allowReqs);
+    _process(all_requests);
 
     return jobId;
 

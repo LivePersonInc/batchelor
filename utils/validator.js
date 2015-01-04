@@ -16,6 +16,12 @@ function _getHost (url) {
 
     return host;
 }
+
+/**
+ * configure the object
+ * @param cfg
+ * @returns {{}}
+ */
 exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
     log = config.logger || console;
@@ -24,6 +30,12 @@ exports.configure = function (cfg) {
     return config;
 };
 
+/**
+ * validate the given request
+ * request to be valid must have: name, url, method
+ * @param req
+ * @returns {boolean}
+ */
 exports.isValidRequest = function (req) {
     req = req || {};
     var validReq = false;
@@ -35,6 +47,12 @@ exports.isValidRequest = function (req) {
     log.info("[validator] isValidReq: " + validReq);
     return validReq;
 };
+
+/**
+ * clean the given
+ * @param req
+ * @returns {*}
+ */
 exports.cleanRequest = function (req) {
     req = req || {};
     /**
@@ -55,12 +73,22 @@ exports.cleanRequest = function (req) {
 };
 
 
+/**
+ * check if the request if persistent
+ * @param req
+ * @returns {*|Function|Function|boolean|boolean}
+ */
 exports.isPersistentRequest = function (req) {
     var persistentReq = req && req.isPersistentRequest && req.isPersistentRequest === true || false;
     config.logger.info("[validator] isPersistentRequest: " + persistentReq);
     return persistentReq;
 };
 
+/**
+ * validate URL against the configuration
+ * @param _url
+ * @returns {*}
+ */
 exports.isValidURL = function (_url) {
     var valid
         , urlObj

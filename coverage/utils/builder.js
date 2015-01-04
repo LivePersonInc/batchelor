@@ -41,12 +41,22 @@ _$jscoverage['utils/builder.js'].source=['/*jslint node: true */',
 '',
 '};',
 '',
+'/**',
+' * configure the object',
+' * @param cfg',
+' * @returns {{}}',
+' */',
+'',
 'exports.configure = function (cfg) {',
 '    config = commons.helper.configure(cfg);',
 '    return config;',
 '};',
 '',
-'',
+'/**',
+' * return the type of response of the given type',
+' * @param type',
+' * @returns {*}',
+' */',
 'exports.buildResponse = function (type) {',
 '    type = type || "DEFAULT";',
 '    return RESPONSE_TYPE[type];',
@@ -54,12 +64,12 @@ _$jscoverage['utils/builder.js'].source=['/*jslint node: true */',
 _$jscoverage['utils/builder.js'][2]=0;
 _$jscoverage['utils/builder.js'][3]=0;
 _$jscoverage['utils/builder.js'][6]=0;
-_$jscoverage['utils/builder.js'][42]=0;
-_$jscoverage['utils/builder.js'][43]=0;
-_$jscoverage['utils/builder.js'][44]=0;
 _$jscoverage['utils/builder.js'][48]=0;
 _$jscoverage['utils/builder.js'][49]=0;
 _$jscoverage['utils/builder.js'][50]=0;
+_$jscoverage['utils/builder.js'][58]=0;
+_$jscoverage['utils/builder.js'][59]=0;
+_$jscoverage['utils/builder.js'][60]=0;
 }/*jslint node: true */
 _$jscoverage['utils/builder.js'][2]++;
 'use strict';
@@ -104,19 +114,29 @@ var RESPONSE_TYPE = {
 
 };
 
-_$jscoverage['utils/builder.js'][42]++;
+/**
+ * configure the object
+ * @param cfg
+ * @returns {{}}
+ */
+
+_$jscoverage['utils/builder.js'][48]++;
 exports.configure = function (cfg) {
-    _$jscoverage['utils/builder.js'][43]++;
+    _$jscoverage['utils/builder.js'][49]++;
 config = commons.helper.configure(cfg);
-    _$jscoverage['utils/builder.js'][44]++;
+    _$jscoverage['utils/builder.js'][50]++;
 return config;
 };
 
-
-_$jscoverage['utils/builder.js'][48]++;
+/**
+ * return the type of response of the given type
+ * @param type
+ * @returns {*}
+ */
+_$jscoverage['utils/builder.js'][58]++;
 exports.buildResponse = function (type) {
-    _$jscoverage['utils/builder.js'][49]++;
+    _$jscoverage['utils/builder.js'][59]++;
 type = type || "DEFAULT";
-    _$jscoverage['utils/builder.js'][50]++;
+    _$jscoverage['utils/builder.js'][60]++;
 return RESPONSE_TYPE[type];
 };
