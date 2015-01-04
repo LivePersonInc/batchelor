@@ -183,7 +183,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '                persistent_requests.push(cReq);',
 '            }',
 '            else {',
-'                log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));',
+'                log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));',
 '            }',
 '        }',
 '    });',
@@ -523,7 +523,7 @@ persistent_requests.push(cReq);
             }
             else {
                 _$jscoverage['adaptors/persistent.js'][184]++;
-log.error("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
             }
         }
     });
