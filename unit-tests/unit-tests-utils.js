@@ -5,8 +5,6 @@ var should  = require('chai').should()
     , commons = require('./../commons')
     , cfg = {
         "maxConcurrentJobs": 10,
-        "maxRequestsPerJob": 10,
-        "log": true,
         "logger": {
             debug: function () {
             },
@@ -17,7 +15,7 @@ var should  = require('chai').should()
             error: function () {
             }
         },
-        "request": {
+        "request_default_values": {
             "method": "GET",
             "timeout": 10000,
             "ip": "unknown",

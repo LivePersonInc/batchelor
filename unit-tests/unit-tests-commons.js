@@ -16,7 +16,7 @@ describe('commons', function () {
     it('helper', function () {
         commons.helper.configure.should.be.a('function');
         commons.helper.merge.should.be.a('function');
-        commons.helper.setAdditionalProps.should.be.a('function');
+        commons.helper.setDefaultValues.should.be.a('function');
         commons.helper.convert2Array.should.be.a('function');
     });
     it('helper configure method', function () {
@@ -46,14 +46,14 @@ describe('commons', function () {
         target.should.have.ownProperty("b");
     });
 
-    it('helper setAdditionalProps method', function () {
+    it('helper setDefaultValues method', function () {
         var source = {
             a: "a"
         };
         var target = {
             b: "b"
         }
-        target = commons.helper.setAdditionalProps(source, target);
+        target = commons.helper.setDefaultValues(source, target);
         target.should.have.ownProperty("a");
         target.should.have.ownProperty("b");
     });

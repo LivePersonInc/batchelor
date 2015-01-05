@@ -5,10 +5,10 @@ var async           = require("async")
     , _             = require("lodash")
     , commons       = require("./../commons")
     , utils         = require("./../utils")
-    , batchelor     = require("./../batchelor")
     , Eterator        = require("./../commons/eterator")
     , separator     = "_"
     , eterator      = new Eterator()
+    , batchelor
     , log
     , config;
 
@@ -151,6 +151,10 @@ exports.configure = function (cfg) {
     config = commons.helper.configure(cfg);
     log = config.logger || console;
     return batchelor.configure(cfg);
+};
+
+exports.setBatchelor = function (_batchelor) {
+    batchelor = _batchelor || {};
 };
 
 /**

@@ -9,7 +9,6 @@ var request     = require('request')
     , processor
     , cfg = {
     "maxConcurrentJobs": 10,
-    "maxRequestsPerJob": 10,
     "log" : true,
     "logger": {
         debug: function () {
@@ -21,7 +20,7 @@ var request     = require('request')
         error: function () {
         }
     },
-    "request": {
+    "request_default_values": {
         "method": "GET",
         "timeout": 5,
         "ip": "unknown",

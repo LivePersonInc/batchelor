@@ -110,7 +110,7 @@ exports.merge = function (source, target) {
     return target;
 };
 
-exports.setAdditionalProps = function (source, target) {
+exports.setDefaultValues = function (source, target) {
     for(var key in source) {
         if (!target.hasOwnProperty(key)) {
             target[key] = source[key];

@@ -1,14 +1,12 @@
 {
     "maxConcurrentJobs": 10,
-    "maxRequestsPerJob": 10,
-    "log" : true,
     "logger": "console",
-    "request": {
+    "request_default_values": {
         "method": "GET",
         "timeout": 10000,
         "ip": "unknown",
         "headers": {},
         "body": ""
     },
-    "whiteList": ["asas.com"]
+    "whiteList": ["*"]
 }

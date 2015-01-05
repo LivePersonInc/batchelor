@@ -1,17 +1,17 @@
-var request     = require('request')
-    , mockery   = require('mockery')
-    , sinon     = require('sinon')
-    , should    = require('chai').should()
-    , expect    = require('chai').expect
-    , assert    = require('chai').assert
-    , utils     = require('./../utils')
-    , commons   = require('./../commons')
+var request         = require('request')
+    , mockery       = require('mockery')
+    , sinon         = require('sinon')
+    , should        = require('chai').should()
+    , expect        = require('chai').expect
+    , assert        = require('chai').assert
+    , utils         = require('./../utils')
+    , commons       = require('./../commons')
+    , negotiator    = require("./../lib/negotiator")
+    , batchelor
     , persistent
     , jobId
     , cfg = {
         "maxConcurrentJobs": 10,
-        "maxRequestsPerJob": 10,
-        "log" : true,
         "logger": {
             debug: function () {
             },
@@ -22,7 +22,7 @@ var request     = require('request')
             error: function () {
             }
         },
-        "request": {
+        "request_default_values": {
             "method": "GET",
             "timeout": 5,
             "ip": "unknown",
@@ -59,8 +59,11 @@ describe('Adaptor Persistent', function () {
 
             // replace the module `request` with a stub object
             mockery.registerMock('request', requestStub);
-            persistent = require('./../adaptors/persistent');
+            batchelor = require('./../batchelor');
+//            persistent = require('./../adaptors/persistent');
+            persistent = batchelor.persistent;
             persistent.configure(cfg);
+//            persistent.setBatchelor(negotiator)
         });
 
         after(function(){

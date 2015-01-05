@@ -67,7 +67,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '            headers: req.headers || {},',
 '            method: req.method,',
 '            body: req.body,',
-'            timeout: (req.timeout <= config.request.timeout) ? req.timeout : config.request.timeout,',
+'            timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,',
 '            pool : {',
 '                maxSockets : 200',
 '            }',
@@ -254,7 +254,7 @@ var options = {
             headers: req.headers || {},
             method: req.method,
             body: req.body,
-            timeout: (req.timeout <= config.request.timeout) ? req.timeout : config.request.timeout,
+            timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,
             pool : {
                 maxSockets : 200
             }

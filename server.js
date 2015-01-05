@@ -69,9 +69,9 @@ config.logger = localLogger;
 // -------------------------------------------------------------------------------------------
 var batchelor = require('./batchelor');
 batchelor.configure(config);
-batchelor.persistent.configure(config);
+//batchelor.persistent.configure(config);
 
-var persistentJobId = batchelor.persistent.execute(
+var persistentJobId = batchelor.execute(
     [
         {
             name: "req_with_callback_0000_persistent",

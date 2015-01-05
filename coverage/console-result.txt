@@ -12,7 +12,7 @@
         ✓ execute persistent and stop 
 
   batchelor
-    batchelor functionality
+    functionality
       ✓ configure 
       ✓ execute method - INVALID_TASK - Missing URL 
       ✓ execute method - INVALID_TASK - Missing name 
@@ -25,7 +25,7 @@
     ✓ helper 
     ✓ helper configure method 
     ✓ helper merge method 
-    ✓ helper setAdditionalProps method 
+    ✓ helper setDefaultValues method 
     ✓ helper convert2Array method 
     ✓ helper isObjectEmpty method 
 
@@ -65,5 +65,5 @@
       ✓ getActiveJobs method 
 
 
-  44 passing (125ms)
+  44 passing (66ms)
 

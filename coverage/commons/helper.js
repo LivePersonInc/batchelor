@@ -21,7 +21,7 @@ _$jscoverage['commons/helper.js'].source=['/*jslint node: true */',
 '    return target;',
 '};',
 '',
-'exports.setAdditionalProps = function (source, target) {',
+'exports.setDefaultValues = function (source, target) {',
 '    for(var key in source) {',
 '        if (!target.hasOwnProperty(key)) {',
 '            target[key] = source[key];',
@@ -109,7 +109,7 @@ return target;
 };
 
 _$jscoverage['commons/helper.js'][22]++;
-exports.setAdditionalProps = function (source, target) {
+exports.setDefaultValues = function (source, target) {
     _$jscoverage['commons/helper.js'][23]++;
 for(var key in source) {
         _$jscoverage['commons/helper.js'][24]++;

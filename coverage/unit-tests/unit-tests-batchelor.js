@@ -10,8 +10,6 @@ var request     = require('request')
     , jobId
     , cfg = {
         "maxConcurrentJobs": 10,
-        "maxRequestsPerJob": 10,
-        "log": true,
         "logger": {
             debug: function () {
             },
@@ -22,7 +20,7 @@ var request     = require('request')
             error: function () {
             }
         },
-        "request": {
+        "request_default_values": {
             "method": "GET",
             "timeout": 5,
             "ip": "unknown",
@@ -36,7 +34,7 @@ utils.configure(cfg);
 
 describe('batchelor', function () {
 
-    describe('batchelor functionality', function(){
+    describe('functionality', function(){
         /**
          * In the batchelor utility we are using `request` module (https://github.com/request/request)
          * and in unit test we don't want to really make a request we use `mockery` && `sinon` to mock and stub
@@ -71,8 +69,8 @@ describe('batchelor', function () {
             batchelor.configure.should.be.a('function');
             var configuration = batchelor.configure(cfg);
             configuration.should.have.ownProperty("whiteList");
-            configuration.request.timeout.should.be.a('number');
-            configuration.request.timeout.should.be.equal(5);
+            configuration.request_default_values.timeout.should.be.a('number');
+            configuration.request_default_values.timeout.should.be.equal(5);
             done();
         });
 
