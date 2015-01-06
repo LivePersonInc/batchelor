@@ -1,5 +1,5 @@
 {
-    "name": "bachelor",
+    "name": "batchelor",
     "description": "Proxy utility to bundle a batch of calls in one request",
     "author": {
         "name": "Omer Herera",
@@ -47,7 +47,6 @@
             "url": ""
         }
     ],
-    "private": true,
     "main": "./batchelor.js",
     "scripts": {
         "start": "node ./batchelor"
