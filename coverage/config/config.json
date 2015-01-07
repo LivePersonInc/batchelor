@@ -1,0 +1,12 @@
+{
+    "maxConcurrentJobs": 10,
+    "logger": "console",
+    "request_default_values": {
+        "method": "GET",
+        "timeout": 10000,
+        "ip": "unknown",
+        "headers": {},
+        "body": ""
+    },
+    "whiteList": ["*"]
+}
