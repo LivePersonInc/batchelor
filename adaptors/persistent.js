@@ -5,7 +5,7 @@ var async           = require("async")
     , _             = require("lodash")
     , commons       = require("./../commons")
     , utils         = require("./../utils")
-    , Eterator        = require("./../commons/eterator")
+    , Eterator      = require("./../commons/eterator")
     , separator     = "_"
     , eterator      = new Eterator()
     , batchelor
@@ -69,6 +69,11 @@ function _processSingleItem (item) {
             if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 item.bodyTemp = result[name].body;
                 _runCallback(item.callback, err, result);
+
+                // this flag will stop/remove this request from the running requests
+                if (item.stop_persistent_once_change) {
+                    _stop({reqId: item.name});
+                }
             }
 
         });
@@ -141,6 +146,25 @@ function _process(allowReqs) {
     });
 }
 
+/**
+ * method to stop running job, if exist
+ * @param jobId - job to stop
+ * @returns {boolean}
+ */
+function _stop (options) {
+    options = options || {};
+    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);
+    var eteratorProp = eterator.getProperties();
+    eteratorProp.array = eteratorProp.array || [];
+    var index = _.findIndex(eteratorProp.array, { 'name': options.reqId });
+    if (index >= 0) {
+        eterator.removeItem(eteratorProp.array[index]);
+    }
+    else {
+        log.warn("[Persistent Adaptor] couldn't stop jobId : " + options.jobId + " request Id: " + options.reqId + " given values doesn't exist!");
+    }
+}
+
 
 /**
  * set the adaptor configuration + configure batchelor
@@ -203,15 +227,4 @@ exports.execute = function (job, callback) {
  * @param jobId - job to stop
  * @returns {boolean}
  */
-exports.stop = function (jobId, reqId) {
-    log.info("[Persistent Adaptor] stopping jobId : " + jobId + " request Id: " + reqId);
-    var eteratorProp = eterator.getProperties();
-    eteratorProp.array = eteratorProp.array || [];
-    var index = _.findIndex(eteratorProp.array, { 'name': reqId });
-    if (index >= 0) {
-        eterator.removeItem(eteratorProp.array[index]);
-    }
-    else {
-        log.warn("[Persistent Adaptor] couldn't stop jobId : " + jobId + " request Id: " + reqId + " given values doesn't exist!");
-    }
-};
+exports.stop = _stop;
