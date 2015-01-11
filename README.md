@@ -1,16 +1,17 @@
 Batchelor
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![coverage status](http://img.shields.io/badge/local%20coverage-94%25-green.svg)](http://img.shields.io/badge/local%20coverage-94%25-green.svg)
+[![coverage status](http://img.shields.io/badge/local%20coverage-93%25-green.svg)](http://img.shields.io/badge/local%20coverage-93%25-green.svg)
 
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
 Server side parallel request processing.
+Persistent request for Web Socket facade.
 
 
 ### Methods
 * [`configure(options)`](#configure)
-* [`process(job, callback)`](#process)
+* [`execute(job, callback)`](#execute)
 
 ### Methodology/Example
 
@@ -50,8 +51,8 @@ configure the batchelor object.
 }
 ```
 
-<a name="process" />
-## process(job, callback)
+<a name="execute" />
+## execute(job, callback)
 
 * `job` - A single request object or array of single requests [required]
 * `callback(err, results)` - callback method when finish processimg request/s [required]
@@ -64,7 +65,7 @@ configure the batchelor object.
 An object holding single or array of items, to be batch in the request
 
 <a name="request" />
-## item
+## request
 An object representing a single batch of request. The item must have the following
 
 * `name` - identifier of the item, the name is used as reference. Names must be UNIQUE! [required]
