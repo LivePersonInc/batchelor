@@ -153,10 +153,10 @@ function _process(allowReqs) {
  */
 function _stop (options) {
     options = options || {};
-    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);
+    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
     var eteratorProp = eterator.getProperties();
     eteratorProp.array = eteratorProp.array || [];
-    var index = _.findIndex(eteratorProp.array, { 'name': options.reqId });
+    var index = _.findIndex(eteratorProp.array, { 'name': options.reqName });
     if (index >= 0) {
         eterator.removeItem(eteratorProp.array[index]);
     }
