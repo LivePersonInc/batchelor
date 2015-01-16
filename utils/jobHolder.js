@@ -26,11 +26,15 @@ exports.configure = function (cfg) {
 exports.addJob = function (reqs) {
     var jobId = commons.helper.getUniqueId("job");
     jobs[jobId] = {};
-    jobs[jobId].reqs = reqs;
+    jobs[jobId].reqs = reqs.slice(0, reqs.length);
 
     _incrementCounters(jobs[jobId].reqs.length || 0);
 
     return jobId;
+};
+
+exports.getAllJobs = function () {
+   return jobs;
 };
 
 exports.getJob = function (jobId) {
@@ -38,11 +42,13 @@ exports.getJob = function (jobId) {
 };
 
 exports.clean = function (jobId) {
-    var job = this.getJob(jobId);
+    if (jobs[jobId]) {
+        _decrementCounters(jobs[jobId].reqs.length || 0);
+        jobs[jobId].reqs.length = 0;
+        delete jobs[jobId].reqs;
+        delete jobs[jobId];
+    }
 
-    _decrementCounters(job.reqs.length || 0);
-
-    delete jobs[jobId];
 };
 
 exports.getActiveJobs = function () {

@@ -52,6 +52,19 @@
 //    }
 //];
 
+var utils     = require("./utils")
+    , request = require("request")
+//    , winston = require('winston')
+    , memory_logger = require('memory-usage-logger');
+
+
+memory_logger.run(1000, "./memoryResults");
+//var logger = new (winston.Logger)({
+//    transports: [
+//        new (winston.transports.File)({ filename: './memoryResults.log' })
+//    ]
+//});
+
 var localLogger =  {
     debug: function () {
     },
@@ -71,47 +84,78 @@ var batchelor = require('./batchelor');
 batchelor.configure(config);
 //batchelor.persistent.configure(config);
 
-var persistentJobId = batchelor.execute(
-    [
-        {
-            name: "req_with_callback_0000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/4",
-            method: "GET",
-            headers: {},
-            body: "body",
-            timeout: 10000
-        },
-        {
-            name: "req_with_callback_10000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/5",
-            method: "GET",
-            headers: {},
-            body: "body",
-            timeout: 10000,
-            isPersistentRequest: true,
-            persistentDelay: 10000,
-            ignoreResponse: true,
-            callback: function (err, result) {
-                console.log("1. req_with_callback_10000_persistent: " + JSON.stringify(result));
-            }
-        },
-        {
-            name: "req_with_callback_5000_persistent",
-            url: "https://jsonresponser.herokuapp.com/api/json/user/1",
-            method: "POST",
-            headers: {},
-            body: "body",
-            timeout: 10000,
-            isPersistentRequest: true,
-            persistentDelay: 5000,
-            ignoreResponse: true,
-            callback: function (err, result) {
-                console.log("2. req_with_callback_5000_persistent: " + JSON.stringify(result));
-            }
-        }], function (err, result) {
-        console.log("\n3. CALLBACK GENERAL BATCHELOR PERSISTENT: " + JSON.stringify(result));
-});
+var cnt = 0
+    , forever = true
 
+delayReq();
+
+function delayReq() {
+    issueReq();
+    cnt= cnt+3;
+    if (forever || cnt<100000) {
+        setTimeout(delayReq, 3);
+    }
+    else {
+        setTimeout(function() {
+            console.dir(utils.jobHolder.getActiveJobs());
+            console.dir(utils.jobHolder.getAllJobs());
+        }, 1000);
+    }
+    var di = cnt/900;
+    if ( parseInt(di) == di) {
+        console.dir(utils.jobHolder.getActiveJobs());
+        console.log(cnt);
+//        if (cnt >= 100000) {
+////            memory_logger.stop();
+////            memory_logger.run(1000, "./memoryResults");
+//        }
+    }
+}
+
+function issueReq() {
+    var options = {
+        url: "http://localhost:7777?id=1",
+        headers: {},
+        method: "GET",
+        timeout: 10000,
+        pool : {
+            maxSockets : 200
+        }
+    };
+//    request(options, function(error, response, body) {
+//    });
+    var persistentJobId = batchelor.execute(
+        [
+            {
+                name: "req_with_callback_0000_persistent",
+                url: "http://localhost:7777?id=1",
+                method: "GET",
+                headers: {},
+                timeout: 10000
+            },
+            {
+                name: "req_with_callback_10000_persistent",
+                url: "http://localhost:7777?id=2",
+                method: "GET",
+                headers: {},
+                timeout: 10000,
+                callback: function (err, result) {
+                    //console.log("1. req_with_callback_10000_persistent: " + JSON.stringify(result));
+                }
+            },
+            {
+                name: "req_with_callback_5000_persistent",
+                url: "http://localhost:7777?id=3",
+                method: "GET",
+                headers: {},
+                timeout: 10000,
+                callback: function (err, result) {
+                    //console.log("2. req_with_callback_5000_persistent: " + JSON.stringify(result));
+                }
+            }], function (err, result) {
+            //console.log("\n3. CALLBACK GENERAL BATCHELOR PERSISTENT: " + JSON.stringify(result));
+    });
+}
 //var persistentJobId2 = batchelor.persistent.execute(
 //    [
 //        {

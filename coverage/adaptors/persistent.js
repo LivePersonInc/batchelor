@@ -155,10 +155,10 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' */',
 'function _stop (options) {',
 '    options = options || {};',
-'    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);',
+'    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);',
 '    var eteratorProp = eterator.getProperties();',
 '    eteratorProp.array = eteratorProp.array || [];',
-'    var index = _.findIndex(eteratorProp.array, { \'name\': options.reqId });',
+'    var index = _.findIndex(eteratorProp.array, { \'name\': options.reqName });',
 '    if (index >= 0) {',
 '        eterator.removeItem(eteratorProp.array[index]);',
 '    }',
@@ -506,13 +506,13 @@ function _stop (options) {
     _$jscoverage['adaptors/persistent.js'][155]++;
 options = options || {};
     _$jscoverage['adaptors/persistent.js'][156]++;
-log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);
+log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
     _$jscoverage['adaptors/persistent.js'][157]++;
 var eteratorProp = eterator.getProperties();
     _$jscoverage['adaptors/persistent.js'][158]++;
 eteratorProp.array = eteratorProp.array || [];
     _$jscoverage['adaptors/persistent.js'][159]++;
-var index = _.findIndex(eteratorProp.array, { 'name': options.reqId });
+var index = _.findIndex(eteratorProp.array, { 'name': options.reqName });
     _$jscoverage['adaptors/persistent.js'][160]++;
 if (index >= 0) {
         _$jscoverage['adaptors/persistent.js'][161]++;
