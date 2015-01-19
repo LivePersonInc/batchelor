@@ -70,6 +70,8 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '            // TODO[omher]: HOW TO REAL CHECK IF THERE IS CHANGED, WITH BODY ?????',
 '            if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {',
 '                item.bodyTemp = result[name].body;',
+'                // when processing single item, mark it - inin case some one wants to know',
+'                result.singlePersistenResponse = true;',
 '                _runCallback(item.callback, err, result);',
 '',
 '                // this flag will stop/remove this request from the running requests',
@@ -107,23 +109,25 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' * callback to be called once the batchelor finish processing the job',
 ' * @param err - error passed from batchelor',
 ' * @param result - result passed from batchelor',
-' * @param persistentJob - job to process again and again until its stopped',
+' * @param reqs - job to process again and again until its stopped',
+' * @param callback - job to process again and again until its stopped*',
 ' * @private',
 ' */',
-'function _batchelorCallbackFirstRun(err, result, reqs) {',
+'function _batchelorCallbackFirstRun(err, result, reqs, callback) {',
 '    var delays = [], minTime;',
 '',
 '    log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);',
 '',
 '    _.forEach(reqs, function (cReq) {',
-'        var name = cReq.name;',
 '',
 '        if (utils.validator.isPersistentRequest(cReq)) {',
 '            delays.push(cReq.persistentDelay || 2000);',
 '        }',
-'',
-'        _runCallback(cReq.callback, err, result);',
 '    });',
+'',
+'    // for the first time, even only one or all the request are persistent, we call the first time to the general callback',
+'    // after we start to persitent every request we will call to every callback from every request if exist',
+'    _runCallback(callback, err, result);',
 '',
 '    // take the minimum timeout - the minimum is the one we will use in the timeout',
 '    minTime = Math.min.apply(Math, delays);',
@@ -136,14 +140,15 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '',
 '/**',
 ' * process job calling to "batchelor.execute" and waiting for callback to be called from batchelor',
-' * @param _persistentJob',
+' * @param allowReqs - request to process',
+' * @param callback - general callback',
 ' * @private',
 ' */',
-'function _process(allowReqs) {',
+'function _process(allowReqs, callback) {',
 '    log.info("[Persistent Adaptor] _process calling batchelor.execute ...");',
 '',
 '    batchelor.execute(allowReqs, function(err, result) {',
-'        _batchelorCallbackFirstRun(err, result, allowReqs);',
+'        _batchelorCallbackFirstRun(err, result, allowReqs, callback);',
 '',
 '    });',
 '}',
@@ -155,10 +160,10 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' */',
 'function _stop (options) {',
 '    options = options || {};',
-'    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);',
+'    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);',
 '    var eteratorProp = eterator.getProperties();',
 '    eteratorProp.array = eteratorProp.array || [];',
-'    var index = _.findIndex(eteratorProp.array, { \'name\': options.reqId });',
+'    var index = _.findIndex(eteratorProp.array, { \'name\': options.reqName });',
 '    if (index >= 0) {',
 '        eterator.removeItem(eteratorProp.array[index]);',
 '    }',
@@ -218,7 +223,8 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '',
 '    eterator.addItems(persistent_requests);',
 '',
-'    _process(all_requests);',
+'    // pass request to process and general callback to call once we finish',
+'    _process(all_requests, callback);',
 '',
 '    return jobId;',
 '',
@@ -230,81 +236,81 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' * @returns {boolean}',
 ' */',
 'exports.stop = _stop;'];
-_$jscoverage['adaptors/persistent.js'][129]=0;
+_$jscoverage['adaptors/persistent.js'][133]=0;
 _$jscoverage['adaptors/persistent.js'][2]=0;
-_$jscoverage['adaptors/persistent.js'][111]=0;
+_$jscoverage['adaptors/persistent.js'][114]=0;
 _$jscoverage['adaptors/persistent.js'][23]=0;
 _$jscoverage['adaptors/persistent.js'][22]=0;
 _$jscoverage['adaptors/persistent.js'][4]=0;
-_$jscoverage['adaptors/persistent.js'][144]=0;
+_$jscoverage['adaptors/persistent.js'][149]=0;
 _$jscoverage['adaptors/persistent.js'][41]=0;
 _$jscoverage['adaptors/persistent.js'][37]=0;
 _$jscoverage['adaptors/persistent.js'][34]=0;
 _$jscoverage['adaptors/persistent.js'][33]=0;
 _$jscoverage['adaptors/persistent.js'][35]=0;
 _$jscoverage['adaptors/persistent.js'][38]=0;
-_$jscoverage['adaptors/persistent.js'][156]=0;
+_$jscoverage['adaptors/persistent.js'][161]=0;
 _$jscoverage['adaptors/persistent.js'][65]=0;
 _$jscoverage['adaptors/persistent.js'][45]=0;
 _$jscoverage['adaptors/persistent.js'][59]=0;
 _$jscoverage['adaptors/persistent.js'][64]=0;
 _$jscoverage['adaptors/persistent.js'][58]=0;
 _$jscoverage['adaptors/persistent.js'][63]=0;
-_$jscoverage['adaptors/persistent.js'][159]=0;
+_$jscoverage['adaptors/persistent.js'][164]=0;
 _$jscoverage['adaptors/persistent.js'][66]=0;
-_$jscoverage['adaptors/persistent.js'][161]=0;
-_$jscoverage['adaptors/persistent.js'][91]=0;
-_$jscoverage['adaptors/persistent.js'][88]=0;
-_$jscoverage['adaptors/persistent.js'][87]=0;
-_$jscoverage['adaptors/persistent.js'][89]=0;
+_$jscoverage['adaptors/persistent.js'][166]=0;
+_$jscoverage['adaptors/persistent.js'][76]=0;
 _$jscoverage['adaptors/persistent.js'][69]=0;
 _$jscoverage['adaptors/persistent.js'][70]=0;
-_$jscoverage['adaptors/persistent.js'][71]=0;
-_$jscoverage['adaptors/persistent.js'][75]=0;
-_$jscoverage['adaptors/persistent.js'][74]=0;
-_$jscoverage['adaptors/persistent.js'][176]=0;
+_$jscoverage['adaptors/persistent.js'][72]=0;
+_$jscoverage['adaptors/persistent.js'][73]=0;
+_$jscoverage['adaptors/persistent.js'][159]=0;
+_$jscoverage['adaptors/persistent.js'][102]=0;
+_$jscoverage['adaptors/persistent.js'][93]=0;
+_$jscoverage['adaptors/persistent.js'][91]=0;
+_$jscoverage['adaptors/persistent.js'][90]=0;
+_$jscoverage['adaptors/persistent.js'][89]=0;
+_$jscoverage['adaptors/persistent.js'][77]=0;
+_$jscoverage['adaptors/persistent.js'][179]=0;
+_$jscoverage['adaptors/persistent.js'][131]=0;
+_$jscoverage['adaptors/persistent.js'][128]=0;
+_$jscoverage['adaptors/persistent.js'][103]=0;
+_$jscoverage['adaptors/persistent.js'][115]=0;
 _$jscoverage['adaptors/persistent.js'][119]=0;
-_$jscoverage['adaptors/persistent.js'][116]=0;
-_$jscoverage['adaptors/persistent.js'][101]=0;
-_$jscoverage['adaptors/persistent.js'][100]=0;
-_$jscoverage['adaptors/persistent.js'][112]=0;
 _$jscoverage['adaptors/persistent.js'][117]=0;
-_$jscoverage['adaptors/persistent.js'][114]=0;
-_$jscoverage['adaptors/persistent.js'][180]=0;
-_$jscoverage['adaptors/persistent.js'][141]=0;
-_$jscoverage['adaptors/persistent.js'][140]=0;
-_$jscoverage['adaptors/persistent.js'][123]=0;
-_$jscoverage['adaptors/persistent.js'][120]=0;
-_$jscoverage['adaptors/persistent.js'][127]=0;
-_$jscoverage['adaptors/persistent.js'][130]=0;
-_$jscoverage['adaptors/persistent.js'][203]=0;
-_$jscoverage['adaptors/persistent.js'][158]=0;
-_$jscoverage['adaptors/persistent.js'][157]=0;
-_$jscoverage['adaptors/persistent.js'][143]=0;
-_$jscoverage['adaptors/persistent.js'][154]=0;
-_$jscoverage['adaptors/persistent.js'][155]=0;
-_$jscoverage['adaptors/persistent.js'][208]=0;
-_$jscoverage['adaptors/persistent.js'][175]=0;
-_$jscoverage['adaptors/persistent.js'][174]=0;
-_$jscoverage['adaptors/persistent.js'][164]=0;
-_$jscoverage['adaptors/persistent.js'][160]=0;
-_$jscoverage['adaptors/persistent.js'][212]=0;
-_$jscoverage['adaptors/persistent.js'][191]=0;
-_$jscoverage['adaptors/persistent.js'][190]=0;
-_$jscoverage['adaptors/persistent.js'][181]=0;
-_$jscoverage['adaptors/persistent.js'][177]=0;
+_$jscoverage['adaptors/persistent.js'][122]=0;
+_$jscoverage['adaptors/persistent.js'][121]=0;
 _$jscoverage['adaptors/persistent.js'][197]=0;
-_$jscoverage['adaptors/persistent.js'][207]=0;
-_$jscoverage['adaptors/persistent.js'][199]=0;
-_$jscoverage['adaptors/persistent.js'][192]=0;
-_$jscoverage['adaptors/persistent.js'][205]=0;
-_$jscoverage['adaptors/persistent.js'][201]=0;
+_$jscoverage['adaptors/persistent.js'][160]=0;
+_$jscoverage['adaptors/persistent.js'][134]=0;
+_$jscoverage['adaptors/persistent.js'][145]=0;
+_$jscoverage['adaptors/persistent.js'][148]=0;
+_$jscoverage['adaptors/persistent.js'][146]=0;
+_$jscoverage['adaptors/persistent.js'][211]=0;
+_$jscoverage['adaptors/persistent.js'][165]=0;
+_$jscoverage['adaptors/persistent.js'][162]=0;
+_$jscoverage['adaptors/persistent.js'][163]=0;
+_$jscoverage['adaptors/persistent.js'][213]=0;
+_$jscoverage['adaptors/persistent.js'][182]=0;
+_$jscoverage['adaptors/persistent.js'][181]=0;
+_$jscoverage['adaptors/persistent.js'][169]=0;
+_$jscoverage['adaptors/persistent.js'][180]=0;
+_$jscoverage['adaptors/persistent.js'][210]=0;
+_$jscoverage['adaptors/persistent.js'][196]=0;
+_$jscoverage['adaptors/persistent.js'][195]=0;
+_$jscoverage['adaptors/persistent.js'][185]=0;
+_$jscoverage['adaptors/persistent.js'][186]=0;
+_$jscoverage['adaptors/persistent.js'][202]=0;
+_$jscoverage['adaptors/persistent.js'][212]=0;
+_$jscoverage['adaptors/persistent.js'][208]=0;
+_$jscoverage['adaptors/persistent.js'][204]=0;
 _$jscoverage['adaptors/persistent.js'][206]=0;
-_$jscoverage['adaptors/persistent.js'][209]=0;
+_$jscoverage['adaptors/persistent.js'][214]=0;
 _$jscoverage['adaptors/persistent.js'][217]=0;
-_$jscoverage['adaptors/persistent.js'][219]=0;
-_$jscoverage['adaptors/persistent.js'][221]=0;
-_$jscoverage['adaptors/persistent.js'][230]=0;
+_$jscoverage['adaptors/persistent.js'][222]=0;
+_$jscoverage['adaptors/persistent.js'][225]=0;
+_$jscoverage['adaptors/persistent.js'][227]=0;
+_$jscoverage['adaptors/persistent.js'][236]=0;
 }/*jslint node: true */
 _$jscoverage['adaptors/persistent.js'][2]++;
 "use strict";
@@ -394,13 +400,16 @@ batchelor.execute(item, function (err, result) {
 if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 _$jscoverage['adaptors/persistent.js'][70]++;
 item.bodyTemp = result[name].body;
-                _$jscoverage['adaptors/persistent.js'][71]++;
+                // when processing single item, mark it - inin case some one wants to know
+                _$jscoverage['adaptors/persistent.js'][72]++;
+result.singlePersistenResponse = true;
+                _$jscoverage['adaptors/persistent.js'][73]++;
 _runCallback(item.callback, err, result);
 
                 // this flag will stop/remove this request from the running requests
-                _$jscoverage['adaptors/persistent.js'][74]++;
+                _$jscoverage['adaptors/persistent.js'][76]++;
 if (item.stop_persistent_once_change) {
-                    _$jscoverage['adaptors/persistent.js'][75]++;
+                    _$jscoverage['adaptors/persistent.js'][77]++;
 _stop({reqId: item.name});
                 }
             }
@@ -413,14 +422,14 @@ _stop({reqId: item.name});
  * start the persistent polling using eterator object
  * @private
  */
-_$jscoverage['adaptors/persistent.js'][87]++;
+_$jscoverage['adaptors/persistent.js'][89]++;
 function _startPersist() {
-    _$jscoverage['adaptors/persistent.js'][88]++;
+    _$jscoverage['adaptors/persistent.js'][90]++;
 setImmediate(function () {
-        _$jscoverage['adaptors/persistent.js'][89]++;
+        _$jscoverage['adaptors/persistent.js'][91]++;
 eterator.start(0, true,
             function (err, item) {
-                _$jscoverage['adaptors/persistent.js'][91]++;
+                _$jscoverage['adaptors/persistent.js'][93]++;
 _processSingleItem(item);
             });
     });
@@ -430,9 +439,9 @@ _processSingleItem(item);
  * start the persitent polling
  * @private
  */
-_$jscoverage['adaptors/persistent.js'][100]++;
+_$jscoverage['adaptors/persistent.js'][102]++;
 function _persist () {
-    _$jscoverage['adaptors/persistent.js'][101]++;
+    _$jscoverage['adaptors/persistent.js'][103]++;
 _startPersist();
 }
 
@@ -440,39 +449,40 @@ _startPersist();
  * callback to be called once the batchelor finish processing the job
  * @param err - error passed from batchelor
  * @param result - result passed from batchelor
- * @param persistentJob - job to process again and again until its stopped
+ * @param reqs - job to process again and again until its stopped
+ * @param callback - job to process again and again until its stopped*
  * @private
  */
-_$jscoverage['adaptors/persistent.js'][111]++;
-function _batchelorCallbackFirstRun(err, result, reqs) {
-    _$jscoverage['adaptors/persistent.js'][112]++;
+_$jscoverage['adaptors/persistent.js'][114]++;
+function _batchelorCallbackFirstRun(err, result, reqs, callback) {
+    _$jscoverage['adaptors/persistent.js'][115]++;
 var delays = [], minTime;
 
-    _$jscoverage['adaptors/persistent.js'][114]++;
+    _$jscoverage['adaptors/persistent.js'][117]++;
 log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
-    _$jscoverage['adaptors/persistent.js'][116]++;
+    _$jscoverage['adaptors/persistent.js'][119]++;
 _.forEach(reqs, function (cReq) {
-        _$jscoverage['adaptors/persistent.js'][117]++;
-var name = cReq.name;
 
-        _$jscoverage['adaptors/persistent.js'][119]++;
+        _$jscoverage['adaptors/persistent.js'][121]++;
 if (utils.validator.isPersistentRequest(cReq)) {
-            _$jscoverage['adaptors/persistent.js'][120]++;
+            _$jscoverage['adaptors/persistent.js'][122]++;
 delays.push(cReq.persistentDelay || 2000);
         }
-
-        _$jscoverage['adaptors/persistent.js'][123]++;
-_runCallback(cReq.callback, err, result);
     });
 
+    // for the first time, even only one or all the request are persistent, we call the first time to the general callback
+    // after we start to persitent every request we will call to every callback from every request if exist
+    _$jscoverage['adaptors/persistent.js'][128]++;
+_runCallback(callback, err, result);
+
     // take the minimum timeout - the minimum is the one we will use in the timeout
-    _$jscoverage['adaptors/persistent.js'][127]++;
+    _$jscoverage['adaptors/persistent.js'][131]++;
 minTime = Math.min.apply(Math, delays);
 
-    _$jscoverage['adaptors/persistent.js'][129]++;
+    _$jscoverage['adaptors/persistent.js'][133]++;
 setTimeout(function () {
-        _$jscoverage['adaptors/persistent.js'][130]++;
+        _$jscoverage['adaptors/persistent.js'][134]++;
 _persist();
     }, minTime);
 
@@ -480,18 +490,19 @@ _persist();
 
 /**
  * process job calling to "batchelor.execute" and waiting for callback to be called from batchelor
- * @param _persistentJob
+ * @param allowReqs - request to process
+ * @param callback - general callback
  * @private
  */
-_$jscoverage['adaptors/persistent.js'][140]++;
-function _process(allowReqs) {
-    _$jscoverage['adaptors/persistent.js'][141]++;
+_$jscoverage['adaptors/persistent.js'][145]++;
+function _process(allowReqs, callback) {
+    _$jscoverage['adaptors/persistent.js'][146]++;
 log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
 
-    _$jscoverage['adaptors/persistent.js'][143]++;
+    _$jscoverage['adaptors/persistent.js'][148]++;
 batchelor.execute(allowReqs, function(err, result) {
-        _$jscoverage['adaptors/persistent.js'][144]++;
-_batchelorCallbackFirstRun(err, result, allowReqs);
+        _$jscoverage['adaptors/persistent.js'][149]++;
+_batchelorCallbackFirstRun(err, result, allowReqs, callback);
 
     });
 }
@@ -501,25 +512,25 @@ _batchelorCallbackFirstRun(err, result, allowReqs);
  * @param jobId - job to stop
  * @returns {boolean}
  */
-_$jscoverage['adaptors/persistent.js'][154]++;
+_$jscoverage['adaptors/persistent.js'][159]++;
 function _stop (options) {
-    _$jscoverage['adaptors/persistent.js'][155]++;
-options = options || {};
-    _$jscoverage['adaptors/persistent.js'][156]++;
-log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqId);
-    _$jscoverage['adaptors/persistent.js'][157]++;
-var eteratorProp = eterator.getProperties();
-    _$jscoverage['adaptors/persistent.js'][158]++;
-eteratorProp.array = eteratorProp.array || [];
-    _$jscoverage['adaptors/persistent.js'][159]++;
-var index = _.findIndex(eteratorProp.array, { 'name': options.reqId });
     _$jscoverage['adaptors/persistent.js'][160]++;
+options = options || {};
+    _$jscoverage['adaptors/persistent.js'][161]++;
+log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
+    _$jscoverage['adaptors/persistent.js'][162]++;
+var eteratorProp = eterator.getProperties();
+    _$jscoverage['adaptors/persistent.js'][163]++;
+eteratorProp.array = eteratorProp.array || [];
+    _$jscoverage['adaptors/persistent.js'][164]++;
+var index = _.findIndex(eteratorProp.array, { 'name': options.reqName });
+    _$jscoverage['adaptors/persistent.js'][165]++;
 if (index >= 0) {
-        _$jscoverage['adaptors/persistent.js'][161]++;
+        _$jscoverage['adaptors/persistent.js'][166]++;
 eterator.removeItem(eteratorProp.array[index]);
     }
     else {
-        _$jscoverage['adaptors/persistent.js'][164]++;
+        _$jscoverage['adaptors/persistent.js'][169]++;
 log.warn("[Persistent Adaptor] couldn't stop jobId : " + options.jobId + " request Id: " + options.reqId + " given values doesn't exist!");
     }
 }
@@ -530,19 +541,19 @@ log.warn("[Persistent Adaptor] couldn't stop jobId : " + options.jobId + " reque
  * @param cfg - configuration object for the adaptor and batchelor
  * @returns {*} - batchelor configuration
  */
-_$jscoverage['adaptors/persistent.js'][174]++;
+_$jscoverage['adaptors/persistent.js'][179]++;
 exports.configure = function (cfg) {
-    _$jscoverage['adaptors/persistent.js'][175]++;
+    _$jscoverage['adaptors/persistent.js'][180]++;
 config = commons.helper.configure(cfg);
-    _$jscoverage['adaptors/persistent.js'][176]++;
+    _$jscoverage['adaptors/persistent.js'][181]++;
 log = config.logger || console;
-    _$jscoverage['adaptors/persistent.js'][177]++;
+    _$jscoverage['adaptors/persistent.js'][182]++;
 return batchelor.configure(cfg);
 };
 
-_$jscoverage['adaptors/persistent.js'][180]++;
+_$jscoverage['adaptors/persistent.js'][185]++;
 exports.setBatchelor = function (_batchelor) {
-    _$jscoverage['adaptors/persistent.js'][181]++;
+    _$jscoverage['adaptors/persistent.js'][186]++;
 batchelor = _batchelor || {};
 };
 
@@ -552,53 +563,54 @@ batchelor = _batchelor || {};
  * @param callback - method to call once the batchelor finish processing job
  * @returns {*} - job id - string
  */
-_$jscoverage['adaptors/persistent.js'][190]++;
+_$jscoverage['adaptors/persistent.js'][195]++;
 exports.execute = function (job, callback) {
-    _$jscoverage['adaptors/persistent.js'][191]++;
+    _$jscoverage['adaptors/persistent.js'][196]++;
 log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
-    _$jscoverage['adaptors/persistent.js'][192]++;
+    _$jscoverage['adaptors/persistent.js'][197]++;
 var persistent_requests = []
         , all_requests = []
         , reqs = commons.helper.convert2Array(job)
         , jobId = commons.helper.getUniqueId("jobName" + separator);
 
-    _$jscoverage['adaptors/persistent.js'][197]++;
+    _$jscoverage['adaptors/persistent.js'][202]++;
 _.forEach(reqs, function (cReq) {
 
-        _$jscoverage['adaptors/persistent.js'][199]++;
+        _$jscoverage['adaptors/persistent.js'][204]++;
 cReq.callback = cReq.callback || callback;
 
-        _$jscoverage['adaptors/persistent.js'][201]++;
+        _$jscoverage['adaptors/persistent.js'][206]++;
 if (utils.validator.isValidRequest(cReq)) {
 
-            _$jscoverage['adaptors/persistent.js'][203]++;
+            _$jscoverage['adaptors/persistent.js'][208]++;
 all_requests.push(cReq);
 
-            _$jscoverage['adaptors/persistent.js'][205]++;
+            _$jscoverage['adaptors/persistent.js'][210]++;
 if (utils.validator.isPersistentRequest(cReq)) {
-                _$jscoverage['adaptors/persistent.js'][206]++;
+                _$jscoverage['adaptors/persistent.js'][211]++;
 cReq.jobId = jobId;
-                _$jscoverage['adaptors/persistent.js'][207]++;
+                _$jscoverage['adaptors/persistent.js'][212]++;
 cReq.firedTime = Date.now();
-                _$jscoverage['adaptors/persistent.js'][208]++;
+                _$jscoverage['adaptors/persistent.js'][213]++;
 cReq.ignoreResponse = cReq.ignoreResponse || false;
-                _$jscoverage['adaptors/persistent.js'][209]++;
+                _$jscoverage['adaptors/persistent.js'][214]++;
 persistent_requests.push(cReq);
             }
             else {
-                _$jscoverage['adaptors/persistent.js'][212]++;
+                _$jscoverage['adaptors/persistent.js'][217]++;
 log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
             }
         }
     });
 
-    _$jscoverage['adaptors/persistent.js'][217]++;
+    _$jscoverage['adaptors/persistent.js'][222]++;
 eterator.addItems(persistent_requests);
 
-    _$jscoverage['adaptors/persistent.js'][219]++;
-_process(all_requests);
+    // pass request to process and general callback to call once we finish
+    _$jscoverage['adaptors/persistent.js'][225]++;
+_process(all_requests, callback);
 
-    _$jscoverage['adaptors/persistent.js'][221]++;
+    _$jscoverage['adaptors/persistent.js'][227]++;
 return jobId;
 
 };
@@ -608,5 +620,5 @@ return jobId;
  * @param jobId - job to stop
  * @returns {boolean}
  */
-_$jscoverage['adaptors/persistent.js'][230]++;
+_$jscoverage['adaptors/persistent.js'][236]++;
 exports.stop = _stop;

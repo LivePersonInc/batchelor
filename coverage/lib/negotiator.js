@@ -66,53 +66,63 @@ _$jscoverage['lib/negotiator.js'].source=['/*jslint node: true */',
 'exports.execute = function (job, callback) {',
 '    job = commons.helper.convert2Array(job);',
 '    var _reqs = _prepareRequests(job);',
-'    var jobId = utils.jobHolder.addJob(_reqs.supported);',
+'    var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));',
 '',
 '    log.info("[batchelor] Processing Job # " + jobId);',
 '',
 '    processor.run(_reqs.supported, function (err, result) {',
+'        utils.jobHolder.clean(jobId);',
 '        if (err) {',
 '            return callback(err);',
 '        }',
 '        else {',
 '            result = commons.helper.merge(_reqs.unsupported, result);',
+'            _reqs.supported.length = 0;',
+'            delete _reqs.supported;',
+'            _reqs.unsupported = null;',
+'            delete _reqs.unsupported;',
 '            return callback(null, result);',
 '        }',
 '    });',
 '',
 '    return jobId;',
 '};'];
-_$jscoverage['lib/negotiator.js'][52]=0;
+_$jscoverage['lib/negotiator.js'][55]=0;
 _$jscoverage['lib/negotiator.js'][2]=0;
-_$jscoverage['lib/negotiator.js'][53]=0;
+_$jscoverage['lib/negotiator.js'][50]=0;
 _$jscoverage['lib/negotiator.js'][17]=0;
 _$jscoverage['lib/negotiator.js'][16]=0;
 _$jscoverage['lib/negotiator.js'][3]=0;
-_$jscoverage['lib/negotiator.js'][55]=0;
+_$jscoverage['lib/negotiator.js'][66]=0;
 _$jscoverage['lib/negotiator.js'][33]=0;
 _$jscoverage['lib/negotiator.js'][27]=0;
 _$jscoverage['lib/negotiator.js'][28]=0;
 _$jscoverage['lib/negotiator.js'][26]=0;
 _$jscoverage['lib/negotiator.js'][32]=0;
-_$jscoverage['lib/negotiator.js'][66]=0;
+_$jscoverage['lib/negotiator.js'][72]=0;
 _$jscoverage['lib/negotiator.js'][43]=0;
 _$jscoverage['lib/negotiator.js'][34]=0;
-_$jscoverage['lib/negotiator.js'][39]=0;
-_$jscoverage['lib/negotiator.js'][36]=0;
 _$jscoverage['lib/negotiator.js'][35]=0;
-_$jscoverage['lib/negotiator.js'][73]=0;
+_$jscoverage['lib/negotiator.js'][36]=0;
+_$jscoverage['lib/negotiator.js'][39]=0;
+_$jscoverage['lib/negotiator.js'][78]=0;
 _$jscoverage['lib/negotiator.js'][54]=0;
-_$jscoverage['lib/negotiator.js'][50]=0;
+_$jscoverage['lib/negotiator.js'][53]=0;
+_$jscoverage['lib/negotiator.js'][52]=0;
 _$jscoverage['lib/negotiator.js'][51]=0;
+_$jscoverage['lib/negotiator.js'][80]=0;
 _$jscoverage['lib/negotiator.js'][64]=0;
+_$jscoverage['lib/negotiator.js'][81]=0;
+_$jscoverage['lib/negotiator.js'][69]=0;
 _$jscoverage['lib/negotiator.js'][65]=0;
 _$jscoverage['lib/negotiator.js'][67]=0;
-_$jscoverage['lib/negotiator.js'][69]=0;
 _$jscoverage['lib/negotiator.js'][71]=0;
-_$jscoverage['lib/negotiator.js'][72]=0;
-_$jscoverage['lib/negotiator.js'][76]=0;
+_$jscoverage['lib/negotiator.js'][73]=0;
+_$jscoverage['lib/negotiator.js'][74]=0;
 _$jscoverage['lib/negotiator.js'][77]=0;
-_$jscoverage['lib/negotiator.js'][81]=0;
+_$jscoverage['lib/negotiator.js'][79]=0;
+_$jscoverage['lib/negotiator.js'][82]=0;
+_$jscoverage['lib/negotiator.js'][86]=0;
 }/*jslint node: true */
 _$jscoverage['lib/negotiator.js'][2]++;
 'use strict';
@@ -203,7 +213,7 @@ job = commons.helper.convert2Array(job);
     _$jscoverage['lib/negotiator.js'][66]++;
 var _reqs = _prepareRequests(job);
     _$jscoverage['lib/negotiator.js'][67]++;
-var jobId = utils.jobHolder.addJob(_reqs.supported);
+var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));
 
     _$jscoverage['lib/negotiator.js'][69]++;
 log.info("[batchelor] Processing Job # " + jobId);
@@ -211,18 +221,28 @@ log.info("[batchelor] Processing Job # " + jobId);
     _$jscoverage['lib/negotiator.js'][71]++;
 processor.run(_reqs.supported, function (err, result) {
         _$jscoverage['lib/negotiator.js'][72]++;
+utils.jobHolder.clean(jobId);
+        _$jscoverage['lib/negotiator.js'][73]++;
 if (err) {
-            _$jscoverage['lib/negotiator.js'][73]++;
+            _$jscoverage['lib/negotiator.js'][74]++;
 return callback(err);
         }
         else {
-            _$jscoverage['lib/negotiator.js'][76]++;
-result = commons.helper.merge(_reqs.unsupported, result);
             _$jscoverage['lib/negotiator.js'][77]++;
+result = commons.helper.merge(_reqs.unsupported, result);
+            _$jscoverage['lib/negotiator.js'][78]++;
+_reqs.supported.length = 0;
+            _$jscoverage['lib/negotiator.js'][79]++;
+delete _reqs.supported;
+            _$jscoverage['lib/negotiator.js'][80]++;
+_reqs.unsupported = null;
+            _$jscoverage['lib/negotiator.js'][81]++;
+delete _reqs.unsupported;
+            _$jscoverage['lib/negotiator.js'][82]++;
 return callback(null, result);
         }
     });
 
-    _$jscoverage['lib/negotiator.js'][81]++;
+    _$jscoverage['lib/negotiator.js'][86]++;
 return jobId;
 };
