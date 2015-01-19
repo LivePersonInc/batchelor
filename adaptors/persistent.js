@@ -68,6 +68,8 @@ function _processSingleItem (item) {
             // TODO[omher]: HOW TO REAL CHECK IF THERE IS CHANGED, WITH BODY ?????
             if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 item.bodyTemp = result[name].body;
+                // when processing single item, mark it - inin case some one wants to know
+                result.singlePersistenResponse = true;
                 _runCallback(item.callback, err, result);
 
                 // this flag will stop/remove this request from the running requests
@@ -105,23 +107,25 @@ function _persist () {
  * callback to be called once the batchelor finish processing the job
  * @param err - error passed from batchelor
  * @param result - result passed from batchelor
- * @param persistentJob - job to process again and again until its stopped
+ * @param reqs - job to process again and again until its stopped
+ * @param callback - job to process again and again until its stopped*
  * @private
  */
-function _batchelorCallbackFirstRun(err, result, reqs) {
+function _batchelorCallbackFirstRun(err, result, reqs, callback) {
     var delays = [], minTime;
 
     log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
     _.forEach(reqs, function (cReq) {
-        var name = cReq.name;
 
         if (utils.validator.isPersistentRequest(cReq)) {
             delays.push(cReq.persistentDelay || 2000);
         }
-
-        _runCallback(cReq.callback, err, result);
     });
+
+    // for the first time, even only one or all the request are persistent, we call the first time to the general callback
+    // after we start to persitent every request we will call to every callback from every request if exist
+    _runCallback(callback, err, result);
 
     // take the minimum timeout - the minimum is the one we will use in the timeout
     minTime = Math.min.apply(Math, delays);
@@ -134,14 +138,15 @@ function _batchelorCallbackFirstRun(err, result, reqs) {
 
 /**
  * process job calling to "batchelor.execute" and waiting for callback to be called from batchelor
- * @param _persistentJob
+ * @param allowReqs - request to process
+ * @param callback - general callback
  * @private
  */
-function _process(allowReqs) {
+function _process(allowReqs, callback) {
     log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
 
     batchelor.execute(allowReqs, function(err, result) {
-        _batchelorCallbackFirstRun(err, result, allowReqs);
+        _batchelorCallbackFirstRun(err, result, allowReqs, callback);
 
     });
 }
@@ -216,7 +221,8 @@ exports.execute = function (job, callback) {
 
     eterator.addItems(persistent_requests);
 
-    _process(all_requests);
+    // pass request to process and general callback to call once we finish
+    _process(all_requests, callback);
 
     return jobId;
 
