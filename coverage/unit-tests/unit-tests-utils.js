@@ -189,6 +189,8 @@ describe('utils', function () {
             var jobObj = utils.jobHolder.getJob(jobId);
             jobObj.should.be.an('object');
 
+            utils.jobHolder.getAllJobs().should.be.an('object');
+
         });
 
         it('addJob/getJob/clean methods', function () {
