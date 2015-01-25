@@ -32,7 +32,7 @@ function _isResponseChanged(previous, current) {
  */
 function _runCallback(callback, err, result) {
     if (typeof callback === "function") {
-        log.info("[Persistent Adaptor] calling given callback");
+        log.debug("[Persistent Adaptor] calling given callback");
 
         try {
             callback(err, result);
@@ -42,7 +42,7 @@ function _runCallback(callback, err, result) {
         }
     }
     else {
-        log.info("[Persistent Adaptor] not a valid callback");
+        log.debug("[Persistent Adaptor] not a valid callback");
     }
 
 }
@@ -114,7 +114,7 @@ function _persist () {
 function _batchelorCallbackFirstRun(err, result, reqs, callback) {
     var delays = [], minTime;
 
-    log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
+    log.debug("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
     _.forEach(reqs, function (cReq) {
 
@@ -143,7 +143,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
  * @private
  */
 function _process(allowReqs, callback) {
-    log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
+    log.debug("[Persistent Adaptor] _process calling batchelor.execute ...");
 
     batchelor.execute(allowReqs, function(err, result) {
         _batchelorCallbackFirstRun(err, result, allowReqs, callback);
@@ -158,7 +158,7 @@ function _process(allowReqs, callback) {
  */
 function _stop (options) {
     options = options || {};
-    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
+    log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
     var eteratorProp = eterator.getProperties();
     eteratorProp.array = eteratorProp.array || [];
     var index = _.findIndex(eteratorProp.array, { 'name': options.reqName });
@@ -193,7 +193,7 @@ exports.setBatchelor = function (_batchelor) {
  * @returns {*} - job id - string
  */
 exports.execute = function (job, callback) {
-    log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
+    log.debug("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
     var persistent_requests = []
         , all_requests = []
         , reqs = commons.helper.convert2Array(job)
@@ -214,7 +214,7 @@ exports.execute = function (job, callback) {
                 persistent_requests.push(cReq);
             }
             else {
-                log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+                log.debug("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
             }
         }
     });

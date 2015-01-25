@@ -115,7 +115,7 @@ function _configure(obj, cfg) {
  * @private
  */
 function _prepareRequests(job) {
-    log.info(&quot;[batchelor] _prepareRequests&quot;);
+    log.debug(&quot;[batchelor] _prepareRequests&quot;);
     var _requests = {
         supported: [],
         unsupported: {}
@@ -157,7 +157,7 @@ exports.execute = function (job, callback) {
     var _reqs = _prepareRequests(job);
     var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));
 
-    log.info(&quot;[batchelor] Processing Job # &quot; + jobId);
+    log.debug(&quot;[batchelor] Processing Job # &quot; + jobId);
 
     processor.run(_reqs.supported, function (err, result) {
         utils.jobHolder.clean(jobId);

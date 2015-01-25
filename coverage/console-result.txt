@@ -65,5 +65,5 @@
       ✓ getActiveJobs method 
 
 
-  44 passing (66ms)
+  44 passing (59ms)
 

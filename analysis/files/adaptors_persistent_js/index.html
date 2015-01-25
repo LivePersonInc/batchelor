@@ -123,7 +123,7 @@ function _isResponseChanged(previous, current) {
  */
 function _runCallback(callback, err, result) {
     if (typeof callback === &quot;function&quot;) {
-        log.info(&quot;[Persistent Adaptor] calling given callback&quot;);
+        log.debug(&quot;[Persistent Adaptor] calling given callback&quot;);
 
         try {
             callback(err, result);
@@ -133,7 +133,7 @@ function _runCallback(callback, err, result) {
         }
     }
     else {
-        log.info(&quot;[Persistent Adaptor] not a valid callback&quot;);
+        log.debug(&quot;[Persistent Adaptor] not a valid callback&quot;);
     }
 
 }
@@ -205,7 +205,7 @@ function _persist () {
 function _batchelorCallbackFirstRun(err, result, reqs, callback) {
     var delays = [], minTime;
 
-    log.info(&quot;[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: &quot; + err);
+    log.debug(&quot;[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: &quot; + err);
 
     _.forEach(reqs, function (cReq) {
 
@@ -234,7 +234,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
  * @private
  */
 function _process(allowReqs, callback) {
-    log.info(&quot;[Persistent Adaptor] _process calling batchelor.execute ...&quot;);
+    log.debug(&quot;[Persistent Adaptor] _process calling batchelor.execute ...&quot;);
 
     batchelor.execute(allowReqs, function(err, result) {
         _batchelorCallbackFirstRun(err, result, allowReqs, callback);
@@ -249,7 +249,7 @@ function _process(allowReqs, callback) {
  */
 function _stop (options) {
     options = options || {};
-    log.info(&quot;[Persistent Adaptor] stopping jobId : &quot; + options.jobId + &quot; request Id: &quot; + options.reqName);
+    log.debug(&quot;[Persistent Adaptor] stopping jobId : &quot; + options.jobId + &quot; request Id: &quot; + options.reqName);
     var eteratorProp = eterator.getProperties();
     eteratorProp.array = eteratorProp.array || [];
     var index = _.findIndex(eteratorProp.array, { &#039;name&#039;: options.reqName });
@@ -284,7 +284,7 @@ exports.setBatchelor = function (_batchelor) {
  * @returns {*} - job id - string
  */
 exports.execute = function (job, callback) {
-    log.info(&quot;[Persistent Adaptor] execute for job: &quot; + JSON.stringify(job));
+    log.debug(&quot;[Persistent Adaptor] execute for job: &quot; + JSON.stringify(job));
     var persistent_requests = []
         , all_requests = []
         , reqs = commons.helper.convert2Array(job)
@@ -305,7 +305,7 @@ exports.execute = function (job, callback) {
                 persistent_requests.push(cReq);
             }
             else {
-                log.info(&quot;[Persistent Adaptor] not a persistent request: &quot; + JSON.stringify(cReq));
+                log.debug(&quot;[Persistent Adaptor] not a persistent request: &quot; + JSON.stringify(cReq));
             }
         }
     });

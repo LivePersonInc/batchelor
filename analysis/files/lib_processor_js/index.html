@@ -110,7 +110,7 @@ var async     = require(&quot;async&quot;)
  * @private
  */
 function _process(req, error, response, body, callback) {
-    log.info(&quot;[processor] _process called&quot;);
+    log.debug(&quot;[processor] _process called&quot;);
     var _result = {};
 
     if (!response) {
@@ -123,7 +123,7 @@ function _process(req, error, response, body, callback) {
             _result = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL);
         } else {
             try {
-                log.info(&quot;[processor] _process body: &quot; + body);
+                log.debug(&quot;[processor] _process body: &quot; + body);
                 _result.body = JSON.parse(body);
             } catch (err) {
                 log.error(commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT + &quot;, IP: &quot; + req.ip);
@@ -164,7 +164,7 @@ function _getReq(req) {
 
         options.headers.HTTP_X_FORWARDED_FOR = req.ip;
 
-        log.info(&quot;[processor] Requesting URL: &quot; + options.url + &quot;, headers: &quot; + options.headers + &quot;, method: &quot; + options.method + &quot;, body(when POST method): &quot; + options.body + &quot;, timeout: &quot;  + options.timeout);
+        log.debug(&quot;[processor] Requesting URL: &quot; + options.url + &quot;, headers: &quot; + options.headers + &quot;, method: &quot; + options.method + &quot;, body(when POST method): &quot; + options.body + &quot;, timeout: &quot;  + options.timeout);
 
         // request to the API host for every job
         request(options, function(error, response, body) {
@@ -192,7 +192,7 @@ exports.configure = function (cfg) {
  */
 exports.run = function (job, cb) {
 
-    log.info(&quot;[processor] running processor ...&quot;);
+    log.debug(&quot;[processor] running processor ...&quot;);
     var _reqs = {};
 
     // creates the collection of &#039;requests&#039; (holds a collection of getReq methods)

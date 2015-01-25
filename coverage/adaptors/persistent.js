@@ -34,7 +34,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' */',
 'function _runCallback(callback, err, result) {',
 '    if (typeof callback === "function") {',
-'        log.info("[Persistent Adaptor] calling given callback");',
+'        log.debug("[Persistent Adaptor] calling given callback");',
 '',
 '        try {',
 '            callback(err, result);',
@@ -44,7 +44,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '        }',
 '    }',
 '    else {',
-'        log.info("[Persistent Adaptor] not a valid callback");',
+'        log.debug("[Persistent Adaptor] not a valid callback");',
 '    }',
 '',
 '}',
@@ -116,7 +116,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 'function _batchelorCallbackFirstRun(err, result, reqs, callback) {',
 '    var delays = [], minTime;',
 '',
-'    log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);',
+'    log.debug("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);',
 '',
 '    _.forEach(reqs, function (cReq) {',
 '',
@@ -145,7 +145,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' * @private',
 ' */',
 'function _process(allowReqs, callback) {',
-'    log.info("[Persistent Adaptor] _process calling batchelor.execute ...");',
+'    log.debug("[Persistent Adaptor] _process calling batchelor.execute ...");',
 '',
 '    batchelor.execute(allowReqs, function(err, result) {',
 '        _batchelorCallbackFirstRun(err, result, allowReqs, callback);',
@@ -160,7 +160,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' */',
 'function _stop (options) {',
 '    options = options || {};',
-'    log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);',
+'    log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);',
 '    var eteratorProp = eterator.getProperties();',
 '    eteratorProp.array = eteratorProp.array || [];',
 '    var index = _.findIndex(eteratorProp.array, { \'name\': options.reqName });',
@@ -195,7 +195,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 ' * @returns {*} - job id - string',
 ' */',
 'exports.execute = function (job, callback) {',
-'    log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));',
+'    log.debug("[Persistent Adaptor] execute for job: " + JSON.stringify(job));',
 '    var persistent_requests = []',
 '        , all_requests = []',
 '        , reqs = commons.helper.convert2Array(job)',
@@ -216,7 +216,7 @@ _$jscoverage['adaptors/persistent.js'].source=['/*jslint node: true */',
 '                persistent_requests.push(cReq);',
 '            }',
 '            else {',
-'                log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));',
+'                log.debug("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));',
 '            }',
 '        }',
 '    });',
@@ -352,7 +352,7 @@ function _runCallback(callback, err, result) {
     _$jscoverage['adaptors/persistent.js'][34]++;
 if (typeof callback === "function") {
         _$jscoverage['adaptors/persistent.js'][35]++;
-log.info("[Persistent Adaptor] calling given callback");
+log.debug("[Persistent Adaptor] calling given callback");
 
         _$jscoverage['adaptors/persistent.js'][37]++;
 try {
@@ -366,7 +366,7 @@ log.error("[Persistent Adaptor], exception when calling given method e: " + e);
     }
     else {
         _$jscoverage['adaptors/persistent.js'][45]++;
-log.info("[Persistent Adaptor] not a valid callback");
+log.debug("[Persistent Adaptor] not a valid callback");
     }
 
 }
@@ -459,7 +459,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
 var delays = [], minTime;
 
     _$jscoverage['adaptors/persistent.js'][117]++;
-log.info("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
+log.debug("[Persistent Adaptor] _batchelorCallbackFirstRun called with  err: " + err);
 
     _$jscoverage['adaptors/persistent.js'][119]++;
 _.forEach(reqs, function (cReq) {
@@ -497,7 +497,7 @@ _persist();
 _$jscoverage['adaptors/persistent.js'][145]++;
 function _process(allowReqs, callback) {
     _$jscoverage['adaptors/persistent.js'][146]++;
-log.info("[Persistent Adaptor] _process calling batchelor.execute ...");
+log.debug("[Persistent Adaptor] _process calling batchelor.execute ...");
 
     _$jscoverage['adaptors/persistent.js'][148]++;
 batchelor.execute(allowReqs, function(err, result) {
@@ -517,7 +517,7 @@ function _stop (options) {
     _$jscoverage['adaptors/persistent.js'][160]++;
 options = options || {};
     _$jscoverage['adaptors/persistent.js'][161]++;
-log.info("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
+log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
     _$jscoverage['adaptors/persistent.js'][162]++;
 var eteratorProp = eterator.getProperties();
     _$jscoverage['adaptors/persistent.js'][163]++;
@@ -566,7 +566,7 @@ batchelor = _batchelor || {};
 _$jscoverage['adaptors/persistent.js'][195]++;
 exports.execute = function (job, callback) {
     _$jscoverage['adaptors/persistent.js'][196]++;
-log.info("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
+log.debug("[Persistent Adaptor] execute for job: " + JSON.stringify(job));
     _$jscoverage['adaptors/persistent.js'][197]++;
 var persistent_requests = []
         , all_requests = []
@@ -598,7 +598,7 @@ persistent_requests.push(cReq);
             }
             else {
                 _$jscoverage['adaptors/persistent.js'][217]++;
-log.info("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
+log.debug("[Persistent Adaptor] not a persistent request: " + JSON.stringify(cReq));
             }
         }
     });
