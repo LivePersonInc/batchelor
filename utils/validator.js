@@ -44,7 +44,7 @@ exports.isValidRequest = function (req) {
         (req.method && typeof req.method === "string")) {
         validReq = true;
     }
-    log.info("[validator] isValidReq: " + validReq);
+    log.debug("[validator] isValidReq: " + validReq);
     return validReq;
 };
 
@@ -80,7 +80,7 @@ exports.cleanRequest = function (req) {
  */
 exports.isPersistentRequest = function (req) {
     var persistentReq = (req && ((req.isPersistentRequest && req.isPersistentRequest === true) || (req.persistent && req.persistent === true))) || false;
-    config.logger.info("[validator] isPersistentRequest: " + persistentReq);
+    log.debug("[validator] isPersistentRequest: " + persistentReq);
     return persistentReq;
 };
 
@@ -105,11 +105,11 @@ exports.isValidURL = function (_url) {
             host = _getHost(urlObj.host);
             if (config.whiteList.indexOf(host) > -1) {
                 valid = true;
-                log.info('[validator] URL: ' + host + ' URL is valid -  !!!');
+                log.debug('[validator] URL: ' + host + ' URL is valid -  !!!');
             }
             else {
                 valid = false;
-                log.info("[validator] URL is not valid, host: " + host);
+                log.debug("[validator] URL is not valid, host: " + host);
             }
         }
         catch (e) {

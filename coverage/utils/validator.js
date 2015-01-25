@@ -46,7 +46,7 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 '        (req.method && typeof req.method === "string")) {',
 '        validReq = true;',
 '    }',
-'    log.info("[validator] isValidReq: " + validReq);',
+'    log.debug("[validator] isValidReq: " + validReq);',
 '    return validReq;',
 '};',
 '',
@@ -82,7 +82,7 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 ' */',
 'exports.isPersistentRequest = function (req) {',
 '    var persistentReq = (req && ((req.isPersistentRequest && req.isPersistentRequest === true) || (req.persistent && req.persistent === true))) || false;',
-'    config.logger.info("[validator] isPersistentRequest: " + persistentReq);',
+'    log.debug("[validator] isPersistentRequest: " + persistentReq);',
 '    return persistentReq;',
 '};',
 '',
@@ -107,11 +107,11 @@ _$jscoverage['utils/validator.js'].source=['/*jslint node: true */',
 '            host = _getHost(urlObj.host);',
 '            if (config.whiteList.indexOf(host) > -1) {',
 '                valid = true;',
-'                log.info(\'[validator] URL: \' + host + \' URL is valid -  !!!\');',
+'                log.debug(\'[validator] URL: \' + host + \' URL is valid -  !!!\');',
 '            }',
 '            else {',
 '                valid = false;',
-'                log.info("[validator] URL is not valid, host: " + host);',
+'                log.debug("[validator] URL is not valid, host: " + host);',
 '            }',
 '        }',
 '        catch (e) {',
@@ -232,7 +232,7 @@ if ((req.name && typeof req.name === "string") &&
 validReq = true;
     }
     _$jscoverage['utils/validator.js'][47]++;
-log.info("[validator] isValidReq: " + validReq);
+log.debug("[validator] isValidReq: " + validReq);
     _$jscoverage['utils/validator.js'][48]++;
 return validReq;
 };
@@ -279,7 +279,7 @@ exports.isPersistentRequest = function (req) {
     _$jscoverage['utils/validator.js'][82]++;
 var persistentReq = (req && ((req.isPersistentRequest && req.isPersistentRequest === true) || (req.persistent && req.persistent === true))) || false;
     _$jscoverage['utils/validator.js'][83]++;
-config.logger.info("[validator] isPersistentRequest: " + persistentReq);
+log.debug("[validator] isPersistentRequest: " + persistentReq);
     _$jscoverage['utils/validator.js'][84]++;
 return persistentReq;
 };
@@ -316,13 +316,13 @@ if (config.whiteList.indexOf(host) > -1) {
                 _$jscoverage['utils/validator.js'][107]++;
 valid = true;
                 _$jscoverage['utils/validator.js'][108]++;
-log.info('[validator] URL: ' + host + ' URL is valid -  !!!');
+log.debug('[validator] URL: ' + host + ' URL is valid -  !!!');
             }
             else {
                 _$jscoverage['utils/validator.js'][111]++;
 valid = false;
                 _$jscoverage['utils/validator.js'][112]++;
-log.info("[validator] URL is not valid, host: " + host);
+log.debug("[validator] URL is not valid, host: " + host);
             }
         }
         catch (e) {

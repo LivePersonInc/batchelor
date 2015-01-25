@@ -21,7 +21,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 ' * @private',
 ' */',
 'function _process(req, error, response, body, callback) {',
-'    log.info("[processor] _process called");',
+'    log.debug("[processor] _process called");',
 '    var _result = {};',
 '',
 '    if (!response) {',
@@ -34,7 +34,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '            _result = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL);',
 '        } else {',
 '            try {',
-'                log.info("[processor] _process body: " + body);',
+'                log.debug("[processor] _process body: " + body);',
 '                _result.body = JSON.parse(body);',
 '            } catch (err) {',
 '                log.error(commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT + ", IP: " + req.ip);',
@@ -75,7 +75,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '',
 '        options.headers.HTTP_X_FORWARDED_FOR = req.ip;',
 '',
-'        log.info("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);',
+'        log.debug("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);',
 '',
 '        // request to the API host for every job',
 '        request(options, function(error, response, body) {',
@@ -103,7 +103,7 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 ' */',
 'exports.run = function (job, cb) {',
 '',
-'    log.info("[processor] running processor ...");',
+'    log.debug("[processor] running processor ...");',
 '    var _reqs = {};',
 '',
 '    // creates the collection of \'requests\' (holds a collection of getReq methods)',
@@ -189,7 +189,7 @@ var async     = require("async")
 _$jscoverage['lib/processor.js'][21]++;
 function _process(req, error, response, body, callback) {
     _$jscoverage['lib/processor.js'][22]++;
-log.info("[processor] _process called");
+log.debug("[processor] _process called");
     _$jscoverage['lib/processor.js'][23]++;
 var _result = {};
 
@@ -211,7 +211,7 @@ _result = utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL)
             _$jscoverage['lib/processor.js'][34]++;
 try {
                 _$jscoverage['lib/processor.js'][35]++;
-log.info("[processor] _process body: " + body);
+log.debug("[processor] _process body: " + body);
                 _$jscoverage['lib/processor.js'][36]++;
 _result.body = JSON.parse(body);
             } catch (err) {
@@ -264,7 +264,7 @@ var options = {
 options.headers.HTTP_X_FORWARDED_FOR = req.ip;
 
         _$jscoverage['lib/processor.js'][76]++;
-log.info("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);
+log.debug("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);
 
         // request to the API host for every job
         _$jscoverage['lib/processor.js'][79]++;
@@ -301,7 +301,7 @@ _$jscoverage['lib/processor.js'][102]++;
 exports.run = function (job, cb) {
 
     _$jscoverage['lib/processor.js'][104]++;
-log.info("[processor] running processor ...");
+log.debug("[processor] running processor ...");
     _$jscoverage['lib/processor.js'][105]++;
 var _reqs = {};
 

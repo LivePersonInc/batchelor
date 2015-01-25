@@ -26,7 +26,7 @@ _$jscoverage['lib/negotiator.js'].source=['/*jslint node: true */',
 ' * @private',
 ' */',
 'function _prepareRequests(job) {',
-'    log.info("[batchelor] _prepareRequests");',
+'    log.debug("[batchelor] _prepareRequests");',
 '    var _requests = {',
 '        supported: [],',
 '        unsupported: {}',
@@ -68,7 +68,7 @@ _$jscoverage['lib/negotiator.js'].source=['/*jslint node: true */',
 '    var _reqs = _prepareRequests(job);',
 '    var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));',
 '',
-'    log.info("[batchelor] Processing Job # " + jobId);',
+'    log.debug("[batchelor] Processing Job # " + jobId);',
 '',
 '    processor.run(_reqs.supported, function (err, result) {',
 '        utils.jobHolder.clean(jobId);',
@@ -155,7 +155,7 @@ obj.configure(cfg);
 _$jscoverage['lib/negotiator.js'][26]++;
 function _prepareRequests(job) {
     _$jscoverage['lib/negotiator.js'][27]++;
-log.info("[batchelor] _prepareRequests");
+log.debug("[batchelor] _prepareRequests");
     _$jscoverage['lib/negotiator.js'][28]++;
 var _requests = {
         supported: [],
@@ -216,7 +216,7 @@ var _reqs = _prepareRequests(job);
 var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));
 
     _$jscoverage['lib/negotiator.js'][69]++;
-log.info("[batchelor] Processing Job # " + jobId);
+log.debug("[batchelor] Processing Job # " + jobId);
 
     _$jscoverage['lib/negotiator.js'][71]++;
 processor.run(_reqs.supported, function (err, result) {
