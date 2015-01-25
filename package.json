@@ -5,7 +5,8 @@
         "name": "Omer Herera",
         "email": "omer.herera@gmail.com"
     },
-    "version": "0.0.4",
+    "version": "0.0.5",
+    "version": "0.0.5",
     "dependencies": {
         "async": "0.7.x",
         "request": "2.34.x",
