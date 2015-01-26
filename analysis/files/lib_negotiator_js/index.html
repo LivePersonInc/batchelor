@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">69.70</p>
+      <p class="stat">68.95</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">86</p>
+      <p class="stat">89</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">18.81</p>
+      <p class="stat">18.80</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.59</p>
+      <p class="stat">0.66</p>
     </div>
   </div>
 </div>
@@ -92,11 +92,12 @@
     <textarea id="file-source" class="col-md-12">/*jslint node: true */
 &#039;use strict&#039;;
 var _           = require(&quot;lodash&quot;)
-    , config    = require(&#039;./../config/config.json&#039;)
-    , processor = require(&#039;./../lib/processor&#039;)
-    , commons   = require(&#039;./../commons&#039;)
-    , utils     = require(&#039;./../utils&#039;)
-    ,log;
+    , config    = require(&quot;./../config/config.json&quot;)
+    , processor = require(&quot;./../lib/processor&quot;)
+    , commons   = require(&quot;./../commons&quot;)
+    , utils     = require(&quot;./../utils&quot;)
+    , Media     = require(&quot;./../media&quot;)
+    , log;
 
 /**
  * helper method that configure the given object
@@ -156,11 +157,13 @@ exports.execute = function (job, callback) {
     job = commons.helper.convert2Array(job);
     var _reqs = _prepareRequests(job);
     var jobId = utils.jobHolder.addJob(_reqs.supported.slice(0));
+    Media.emit(&quot;processing&quot;, utils.jobHolder.getActiveJobs());
 
     log.debug(&quot;[batchelor] Processing Job # &quot; + jobId);
 
     processor.run(_reqs.supported, function (err, result) {
         utils.jobHolder.clean(jobId);
+        Media.emit(&quot;complete&quot;, utils.jobHolder.getActiveJobs());
         if (err) {
             return callback(err);
         }

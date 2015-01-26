@@ -4,7 +4,7 @@ module.exports = {
     },
     batchelor_analysis: {
         files: {
-            './analysis': ['./commons/*.js', './utils/*.js', './lib/*.js', './batchelor.js', './adaptors/*.js']
+            './analysis': ['./commons/*.js', './utils/*.js', './lib/*.js', './batchelor.js', './adaptors/*.js', './media/*.js']
         }
     }
 };

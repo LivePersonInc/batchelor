@@ -39,6 +39,9 @@
     ✓ Test functionality start and add items while running 
     ✓ Test functionality start and add item while running 
 
+  Media
+    ✓ object was created 
+
   processor
     processor functionality
       ✓ configure 
@@ -65,5 +68,5 @@
       ✓ getActiveJobs method 
 
 
-  44 passing (59ms)
+  45 passing (81ms)
 

@@ -18,6 +18,10 @@ module.exports = {
     adaptors: {
         src: ['./adaptors'],
         dest: 'coverage/adaptors'
+    },
+    media: {
+        src: ['./media'],
+        dest: 'coverage/media'
     }
 
 };
