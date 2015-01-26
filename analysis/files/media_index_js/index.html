@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Plato - batchelor.js</title>
+  <title>Plato - media/index.js</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -36,7 +36,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>batchelor.js</h1>
+    <h1>media/index.js</h1>
   </div>
 </div>
 
@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">64.56</p>
+      <p class="stat">78.83</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">12</p>
+      <p class="stat">20</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">4.29</p>
+      <p class="stat">6.16</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.07</p>
+      <p class="stat">0.11</p>
     </div>
   </div>
 </div>
@@ -90,18 +90,37 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">/*jslint node: true */
-&quot;use strict&quot;;
-var negotiator      = require(&quot;./lib/negotiator&quot;)
-    , persistent    = require(&quot;./adaptors/persistent&quot;)
-    , utils         = require(&quot;./utils&quot;)
-    , Media         = require(&quot;./media&quot;);
+&#039;use strict&#039;;
+var util        = require(&quot;util&quot;)
+    , events    = require(&quot;events&quot;);
 
-persistent.setBatchelor(negotiator);
-// Exports
-exports.configure   = negotiator.configure;
-exports.execute     = negotiator.execute;
-exports.persistent  = persistent;
-exports.Media       = Media;</textarea>
+(function () {
+    function Media () {
+        this.util   = util;
+        this.events = events;
+        events.EventEmitter.call(this);
+    }
+
+    var proto = Media.prototype;
+
+    proto.emit = function (event, data) {
+        this.emit(event, data);
+    };
+
+    util.inherits(Media, events.EventEmitter);
+    module.exports = new Media();
+})();
+
+
+//var stream = new MyStream();
+//
+//console.log(stream instanceof events.EventEmitter); // true
+//console.log(MyStream.super_ === events.EventEmitter); // true
+//
+//stream.on(&quot;data&quot;, function(data) {
+//    console.log(&#039;Received data: &quot;&#039; + data + &#039;&quot;&#039;);
+//})
+//stream.write(&quot;It works!&quot;); // Received data: &quot;It works!&quot;</textarea>
   </div>
 </div>
 
