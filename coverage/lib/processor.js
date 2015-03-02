@@ -61,26 +61,34 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 ' */',
 'function _getReq(req) {',
 '    return function (cb) {',
-'        req = req || {};',
-'        var options = {',
-'            url: req.url,',
-'            headers: req.headers || {},',
-'            method: req.method,',
-'            body: req.body,',
-'            timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,',
-'            pool : {',
-'                maxSockets : 200',
-'            }',
-'        };',
+'        try {',
+'            // body - entity body for PATCH, POST and PUT requests. Must be a Buffer or String, unless json is true. If json is true, then body must be a JSON-serializable object.',
+'            var body = JSON.stringify(req.body);',
+'            req = req || {};',
+'            var options = {',
+'                url: req.url,',
+'                headers: req.headers || {},',
+'                method: req.method,',
+'                body: body,',
+'                timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,',
+'                pool : {',
+'                    maxSockets : 200',
+'                }',
+'            };',
 '',
-'        options.headers.HTTP_X_FORWARDED_FOR = req.ip;',
+'            options.headers.HTTP_X_FORWARDED_FOR = req.ip;',
 '',
-'        log.debug("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);',
+'            log.debug("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);',
 '',
-'        // request to the API host for every job',
-'        request(options, function(error, response, body) {',
-'              _process(req, error, response, body, cb);',
-'        });',
+'            // request to the API host for every job',
+'            request(options, function(error, response, body) {',
+'                _process(req, error, response, body, cb);',
+'            });',
+'        }',
+'        catch (e) {',
+'            log.error("[processor] exception parsing the body or in request");',
+'        }',
+'',
 '    };',
 '}',
 '',
@@ -121,49 +129,53 @@ _$jscoverage['lib/processor.js'].source=['/*jslint node: true */',
 '        }',
 '    });',
 '',
-'};'];
-_$jscoverage['lib/processor.js'][74]=0;
+'};',
+''];
+_$jscoverage['lib/processor.js'][77]=0;
 _$jscoverage['lib/processor.js'][2]=0;
-_$jscoverage['lib/processor.js'][76]=0;
+_$jscoverage['lib/processor.js'][79]=0;
 _$jscoverage['lib/processor.js'][22]=0;
 _$jscoverage['lib/processor.js'][3]=0;
 _$jscoverage['lib/processor.js'][21]=0;
-_$jscoverage['lib/processor.js'][79]=0;
+_$jscoverage['lib/processor.js'][82]=0;
 _$jscoverage['lib/processor.js'][31]=0;
 _$jscoverage['lib/processor.js'][23]=0;
 _$jscoverage['lib/processor.js'][26]=0;
 _$jscoverage['lib/processor.js'][27]=0;
 _$jscoverage['lib/processor.js'][25]=0;
 _$jscoverage['lib/processor.js'][30]=0;
-_$jscoverage['lib/processor.js'][91]=0;
+_$jscoverage['lib/processor.js'][60]=0;
 _$jscoverage['lib/processor.js'][34]=0;
 _$jscoverage['lib/processor.js'][32]=0;
-_$jscoverage['lib/processor.js'][93]=0;
+_$jscoverage['lib/processor.js'][99]=0;
 _$jscoverage['lib/processor.js'][39]=0;
 _$jscoverage['lib/processor.js'][38]=0;
 _$jscoverage['lib/processor.js'][35]=0;
 _$jscoverage['lib/processor.js'][36]=0;
-_$jscoverage['lib/processor.js'][90]=0;
-_$jscoverage['lib/processor.js'][63]=0;
-_$jscoverage['lib/processor.js'][62]=0;
-_$jscoverage['lib/processor.js'][45]=0;
-_$jscoverage['lib/processor.js'][61]=0;
-_$jscoverage['lib/processor.js'][60]=0;
-_$jscoverage['lib/processor.js'][44]=0;
-_$jscoverage['lib/processor.js'][51]=0;
-_$jscoverage['lib/processor.js'][108]=0;
-_$jscoverage['lib/processor.js'][92]=0;
-_$jscoverage['lib/processor.js'][80]=0;
-_$jscoverage['lib/processor.js'][94]=0;
 _$jscoverage['lib/processor.js'][102]=0;
-_$jscoverage['lib/processor.js'][104]=0;
-_$jscoverage['lib/processor.js'][105]=0;
-_$jscoverage['lib/processor.js'][109]=0;
+_$jscoverage['lib/processor.js'][66]=0;
+_$jscoverage['lib/processor.js'][64]=0;
+_$jscoverage['lib/processor.js'][65]=0;
+_$jscoverage['lib/processor.js'][45]=0;
+_$jscoverage['lib/processor.js'][51]=0;
+_$jscoverage['lib/processor.js'][62]=0;
+_$jscoverage['lib/processor.js'][61]=0;
+_$jscoverage['lib/processor.js'][44]=0;
+_$jscoverage['lib/processor.js'][117]=0;
+_$jscoverage['lib/processor.js'][87]=0;
+_$jscoverage['lib/processor.js'][83]=0;
+_$jscoverage['lib/processor.js'][122]=0;
+_$jscoverage['lib/processor.js'][101]=0;
+_$jscoverage['lib/processor.js'][98]=0;
+_$jscoverage['lib/processor.js'][100]=0;
+_$jscoverage['lib/processor.js'][110]=0;
 _$jscoverage['lib/processor.js'][112]=0;
 _$jscoverage['lib/processor.js'][113]=0;
-_$jscoverage['lib/processor.js'][114]=0;
-_$jscoverage['lib/processor.js'][115]=0;
-_$jscoverage['lib/processor.js'][118]=0;
+_$jscoverage['lib/processor.js'][116]=0;
+_$jscoverage['lib/processor.js'][120]=0;
+_$jscoverage['lib/processor.js'][121]=0;
+_$jscoverage['lib/processor.js'][123]=0;
+_$jscoverage['lib/processor.js'][126]=0;
 }/*jslint node: true */
 _$jscoverage['lib/processor.js'][2]++;
 'use strict';
@@ -247,31 +259,42 @@ function _getReq(req) {
     _$jscoverage['lib/processor.js'][61]++;
 return function (cb) {
         _$jscoverage['lib/processor.js'][62]++;
+try {
+            // body - entity body for PATCH, POST and PUT requests. Must be a Buffer or String, unless json is true. If json is true, then body must be a JSON-serializable object.
+            _$jscoverage['lib/processor.js'][64]++;
+var body = JSON.stringify(req.body);
+            _$jscoverage['lib/processor.js'][65]++;
 req = req || {};
-        _$jscoverage['lib/processor.js'][63]++;
+            _$jscoverage['lib/processor.js'][66]++;
 var options = {
-            url: req.url,
-            headers: req.headers || {},
-            method: req.method,
-            body: req.body,
-            timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,
-            pool : {
-                maxSockets : 200
-            }
-        };
+                url: req.url,
+                headers: req.headers || {},
+                method: req.method,
+                body: body,
+                timeout: (req.timeout <= config.request_default_values.timeout) ? req.timeout : config.request_default_values.timeout,
+                pool : {
+                    maxSockets : 200
+                }
+            };
 
-        _$jscoverage['lib/processor.js'][74]++;
+            _$jscoverage['lib/processor.js'][77]++;
 options.headers.HTTP_X_FORWARDED_FOR = req.ip;
 
-        _$jscoverage['lib/processor.js'][76]++;
+            _$jscoverage['lib/processor.js'][79]++;
 log.debug("[processor] Requesting URL: " + options.url + ", headers: " + options.headers + ", method: " + options.method + ", body(when POST method): " + options.body + ", timeout: "  + options.timeout);
 
-        // request to the API host for every job
-        _$jscoverage['lib/processor.js'][79]++;
+            // request to the API host for every job
+            _$jscoverage['lib/processor.js'][82]++;
 request(options, function(error, response, body) {
-              _$jscoverage['lib/processor.js'][80]++;
+                _$jscoverage['lib/processor.js'][83]++;
 _process(req, error, response, body, cb);
-        });
+            });
+        }
+        catch (e) {
+            _$jscoverage['lib/processor.js'][87]++;
+log.error("[processor] exception parsing the body or in request");
+        }
+
     };
 }
 
@@ -280,15 +303,15 @@ _process(req, error, response, body, cb);
  * @param cfg
  * @returns {*}
  */
-_$jscoverage['lib/processor.js'][90]++;
+_$jscoverage['lib/processor.js'][98]++;
 exports.configure = function (cfg) {
-    _$jscoverage['lib/processor.js'][91]++;
+    _$jscoverage['lib/processor.js'][99]++;
 config = commons.helper.configure(cfg);
-    _$jscoverage['lib/processor.js'][92]++;
+    _$jscoverage['lib/processor.js'][100]++;
 utils.configure(cfg);
-    _$jscoverage['lib/processor.js'][93]++;
+    _$jscoverage['lib/processor.js'][101]++;
 log = config.logger || console;
-    _$jscoverage['lib/processor.js'][94]++;
+    _$jscoverage['lib/processor.js'][102]++;
 return config;
 };
 
@@ -297,32 +320,32 @@ return config;
  * @param job - job containing one or more requests
  * @param cb - callback method to call once finish processing job
  */
-_$jscoverage['lib/processor.js'][102]++;
+_$jscoverage['lib/processor.js'][110]++;
 exports.run = function (job, cb) {
 
-    _$jscoverage['lib/processor.js'][104]++;
+    _$jscoverage['lib/processor.js'][112]++;
 log.debug("[processor] running processor ...");
-    _$jscoverage['lib/processor.js'][105]++;
+    _$jscoverage['lib/processor.js'][113]++;
 var _reqs = {};
 
     // creates the collection of 'requests' (holds a collection of getReq methods)
-    _$jscoverage['lib/processor.js'][108]++;
+    _$jscoverage['lib/processor.js'][116]++;
 _.forEach(job, function (cReq) {
-        _$jscoverage['lib/processor.js'][109]++;
+        _$jscoverage['lib/processor.js'][117]++;
 _reqs[cReq.name] =_getReq(cReq);
     });
 
-    _$jscoverage['lib/processor.js'][112]++;
+    _$jscoverage['lib/processor.js'][120]++;
 async.parallelLimit(_reqs, config.maxConcurrentJobs, function (err, results) {
-        _$jscoverage['lib/processor.js'][113]++;
+        _$jscoverage['lib/processor.js'][121]++;
 if (err) {
-            _$jscoverage['lib/processor.js'][114]++;
+            _$jscoverage['lib/processor.js'][122]++;
 log.error("[processor] Error in running the job, err: " + err);
-            _$jscoverage['lib/processor.js'][115]++;
+            _$jscoverage['lib/processor.js'][123]++;
 return cb(err);
         }
         else {
-            _$jscoverage['lib/processor.js'][118]++;
+            _$jscoverage['lib/processor.js'][126]++;
 return cb(null, results);
         }
     });
