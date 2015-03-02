@@ -20,18 +20,7 @@ _$jscoverage['media/index.js'].source=['/*jslint node: true */',
 '',
 '    util.inherits(Media, events.EventEmitter);',
 '    module.exports = new Media();',
-'})();',
-'',
-'',
-'//var stream = new MyStream();',
-'//',
-'//console.log(stream instanceof events.EventEmitter); // true',
-'//console.log(MyStream.super_ === events.EventEmitter); // true',
-'//',
-'//stream.on("data", function(data) {',
-'//    console.log(\'Received data: "\' + data + \'"\');',
-'//})',
-'//stream.write("It works!"); // Received data: "It works!"'];
+'})();'];
 _$jscoverage['media/index.js'][13]=0;
 _$jscoverage['media/index.js'][2]=0;
 _$jscoverage['media/index.js'][3]=0;
@@ -77,14 +66,3 @@ util.inherits(Media, events.EventEmitter);
     _$jscoverage['media/index.js'][20]++;
 module.exports = new Media();
 })();
-
-
-//var stream = new MyStream();
-//
-//console.log(stream instanceof events.EventEmitter); // true
-//console.log(MyStream.super_ === events.EventEmitter); // true
-//
-//stream.on("data", function(data) {
-//    console.log('Received data: "' + data + '"');
-//})
-//stream.write("It works!"); // Received data: "It works!"
