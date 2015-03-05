@@ -74,7 +74,7 @@ describe('utils', function () {
             utils.builder.buildResponse("ERROR_API_URL").statusCode.should.equal(commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
             utils.builder.buildResponse("NO_JSON_OBJECT").body.should.equal(commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT);
-            utils.builder.buildResponse("NO_JSON_OBJECT").statusCode.should.equal(commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR);
+            utils.builder.buildResponse("NO_JSON_OBJECT").statusCode.should.equal(commons.CONST.HTTP_STATUS.BAD_REQUEST);
 
             utils.builder.buildResponse("DEFAULT").body.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
             utils.builder.buildResponse("DEFAULT").statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);

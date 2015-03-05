@@ -28,7 +28,7 @@ _$jscoverage['utils/builder.js'].source=['/*jslint node: true */',
 '    },',
 '    NO_JSON_OBJECT: {',
 '        body: commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT,',
-'        statusCode: commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR',
+'        statusCode: commons.CONST.HTTP_STATUS.BAD_REQUEST',
 '    },',
 '    NON_PERSISTENT_REQUEST: {',
 '        body: commons.CONST.BODY_RESPONSE.NON_PERSISTENT_REQUEST,',
@@ -101,7 +101,7 @@ var RESPONSE_TYPE = {
     },
     NO_JSON_OBJECT: {
         body: commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT,
-        statusCode: commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR
+        statusCode: commons.CONST.HTTP_STATUS.BAD_REQUEST
     },
     NON_PERSISTENT_REQUEST: {
         body: commons.CONST.BODY_RESPONSE.NON_PERSISTENT_REQUEST,
