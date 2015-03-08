@@ -41,12 +41,7 @@
         "batchelor"
     ],
     "readme": "README.md",
-    "licenses": [
-        {
-            "type": "LP",
-            "url": ""
-        }
-    ],
+    "license"       : "MIT",
     "main": "./batchelor.js",
     "scripts": {
         "start": "node ./batchelor"
