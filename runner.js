@@ -8,6 +8,11 @@ var utils     = require("./utils")
 //memory_logger.run(60000, "./memoryResults");
 memory_logger.run(600000, "./memoryResults");
 
+var memwatch = require('memwatch');
+memwatch.on('leak', function(info) {
+    console.log(JSON.stringify(info));
+});
+
 var localLogger =  {
     debug: function () {
     },
@@ -23,7 +28,7 @@ config.logger = localLogger;
 
 // -------------------------------------------------------------------------------------------
 var batchelor = require('./batchelor');
-batchelor.configure(config);
+batchelor.persistent.configure(config);
 
 var cnt = 0
     , forever = true
@@ -34,7 +39,7 @@ function delayReq() {
     issueReq();
     cnt= cnt+3;
     if (forever || cnt<100000) {
-        setTimeout(delayReq, 3);
+        setTimeout(delayReq, 1000);
     }
     else {
         setTimeout(function() {
@@ -63,7 +68,7 @@ function issueReq() {
         }
     };
 
-    var persistentJobId = batchelor.execute(
+    var persistentJobId = batchelor.persistent.execute(
         [
             {
                 name: "req_with_callback_0000_persistent",
