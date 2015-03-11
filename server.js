@@ -59,6 +59,12 @@ var utils     = require("./utils")
 
 
 memory_logger.run(1000, "./memoryResults");
+
+var memwatch = require('memwatch');
+memwatch.on('leak', function(info) {
+    console.log(JSON.stringify(info));
+});
+
 //var logger = new (winston.Logger)({
 //    transports: [
 //        new (winston.transports.File)({ filename: './memoryResults.log' })
