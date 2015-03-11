@@ -65,7 +65,6 @@ function _processSingleItem (item) {
         item.bodyTemp = item.bodyTemp || {};
         batchelor.execute(item, function (err, result) {
 
-            // TODO[omher]: HOW TO REAL CHECK IF THERE IS CHANGED, WITH BODY ?????
             if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 item.bodyTemp = result[name].body;
                 // when processing single item, mark it - inin case some one wants to know
