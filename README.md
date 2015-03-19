@@ -1,4 +1,4 @@
-Batchelor
+![Alt text](/batchelorJS.logo.jpg)
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![coverage status](http://img.shields.io/badge/local%20coverage-92%25-green.svg)](http://img.shields.io/badge/local%20coverage-92%25-green.svg)
