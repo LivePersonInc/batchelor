@@ -1,11 +1,11 @@
 {
-    "name": "batchelorJS",
+    "name": "batchelor",
     "description": "Proxy utility to bundle a batch of calls in one request",
     "author": {
         "name": "Omer Herera",
         "email": "omer.herera@gmail.com"
     },
-    "version": "0.8.4",
+    "version": "0.8.3",
     "dependencies": {
         "async": "0.7.x",
         "request": "2.34.x",
