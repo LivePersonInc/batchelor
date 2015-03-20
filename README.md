@@ -120,7 +120,7 @@ var bodyParser = require('body-parser');
 var exp_router = express.Router();
 exp_app.use(compression());
 exp_app.use(bodyParser());
-var batchelor = require('batchelor');
+var batchelor = require('batchelorJS');
 var configuration = {
     "maxConcurrentJobs": 10,
     "logger": console,
@@ -154,7 +154,7 @@ exp_app.listen(5050);
 ```
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: 5050});
-var batchelor = require('batchelor');
+var batchelor = require('batchelorJS');
 var configuration = {
     "maxConcurrentJobs": 10,
     "logger": "console",
