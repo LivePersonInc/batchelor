@@ -37,6 +37,7 @@ configure the batchelor object.
 * ip - string of the client that request the batching job. (default: "unknown").
 * headers - object containing the headers of the client that request the batching job
 * body - string that will be pass in case of POST request
+* strictSSL - requires SSL certificates be valid, used in request module (optional - default:true) 
 
 #### options  example:
 ```

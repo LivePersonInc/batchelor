@@ -8,5 +8,6 @@
         "headers": {},
         "body": ""
     },
+    "strictSSL" : true,
     "whiteList": ["*"]
 }
