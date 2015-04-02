@@ -52,7 +52,8 @@
   "license": "MIT",
   "main": "./batchelor.js",
   "scripts": {
-    "start": "node ./batchelor"
+    "start": "node ./batchelor",
+    "test": "grunt default --verbose"
   },
   "engines": {
     "node": ">= 0.10.x"
