@@ -2,6 +2,8 @@
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![coverage status](http://img.shields.io/badge/local%20coverage-92%25-green.svg)](http://img.shields.io/badge/local%20coverage-92%25-green.svg)
+[![Code Climate](https://codeclimate.com/github/LivePersonInc/batchelor/badges/gpa.svg)](https://codeclimate.com/github/LivePersonInc/batchelor)
+[![npm version](https://badge.fury.io/js/batchelorjs.svg)](http://badge.fury.io/js/batchelorjs)
 
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
@@ -9,7 +11,7 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
- 
+
 
 
 
