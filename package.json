@@ -5,7 +5,7 @@
     "name": "Omer Herera",
     "email": "omer.herera@gmail.com"
   },
-  "version": "0.9.7",
+  "version": "0.9.8",
   "dependencies": {
     "async": "0.7.x",
     "request": "2.34.x",
@@ -52,7 +52,8 @@
   "license": "MIT",
   "main": "./batchelor.js",
   "scripts": {
-    "start": "node ./batchelor"
+    "start": "node ./batchelor",
+    "test": "grunt default --verbose"
   },
   "engines": {
     "node": ">= 0.10.x"
