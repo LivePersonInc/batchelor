@@ -8,13 +8,14 @@
 
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
+
 ###Features:
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
 
-
-
+### NMP Package
+npm install batchelorjs
 
 ### Methods
 * [`configure(options)`](#configure)

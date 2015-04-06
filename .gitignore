@@ -33,3 +33,6 @@ node_modules
 
 # use this folder only for coverage porpoise
 batchelor
+
+coverage
+analysis
