@@ -7,7 +7,6 @@
 [![npm version](https://badge.fury.io/js/batchelorjs.svg)](http://badge.fury.io/js/batchelorjs)
 [![Dependency Status](https://david-dm.org/LivePersonInc/batchelor.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor)
 [![devDependency Status](https://david-dm.org/LivePersonInc/batchelor/dev-status.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor#info=devDependencies)
-[![npm version](https://badge.fury.io/js/batchelorjs.svg)](http://badge.fury.io/js/batchelorjs)
 [![npm downloads](https://img.shields.io/npm/dm/batchelorjs.svg)](https://img.shields.io/npm/dm/batchelorjs.svg)
 [![NPM](https://nodei.co/npm/batchelorjs.png)](https://nodei.co/npm/batchelorjs/)
 
