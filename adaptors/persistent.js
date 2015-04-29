@@ -103,6 +103,30 @@ function _persist () {
 }
 
 /**
+ * get persistent item from the eterator array
+ * @param name: string identifier
+ * @returns {{item: *, index: *}}
+ * @private
+ */
+function _getPersistentItem (name) {
+    var eteratorProp = eterator.getProperties();
+    eteratorProp.array = eteratorProp.array || [];
+    var index = _.findIndex(eteratorProp.array, { 'name': name });
+    return (index >= 0) ? {item: eteratorProp.array[index], index: index}: null;
+}
+
+/**
+ * set the persistent item with the first response we pass
+ * @param name
+ * @param result
+ * @private
+ */
+function _setPersistentBody2Item (name, result) {
+    var obj = _getPersistentItem(name);
+    obj.item.bodyTemp = result.body;
+}
+
+/**
  * callback to be called once the batchelor finish processing the job
  * @param err - error passed from batchelor
  * @param result - result passed from batchelor
@@ -119,6 +143,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
 
         if (utils.validator.isPersistentRequest(cReq)) {
             delays.push(cReq.persistentDelay || 2000);
+            _setPersistentBody2Item(cReq.name, result[cReq.name]);
         }
     });
 
@@ -158,11 +183,9 @@ function _process(allowReqs, callback) {
 function _stop (options) {
     options = options || {};
     log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
-    var eteratorProp = eterator.getProperties();
-    eteratorProp.array = eteratorProp.array || [];
-    var index = _.findIndex(eteratorProp.array, { 'name': options.reqName });
-    if (index >= 0) {
-        eterator.removeItem(eteratorProp.array[index]);
+    var result = _getPersistentItem(options.reqName);
+    if (result) {
+        eterator.removeItem(result.item);
     }
     else {
         log.warn("[Persistent Adaptor] couldn't stop jobId : " + options.jobId + " request Id: " + options.reqId + " given values doesn't exist!");
