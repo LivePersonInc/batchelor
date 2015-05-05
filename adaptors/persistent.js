@@ -68,7 +68,8 @@ function _processSingleItem (item) {
             if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 item.bodyTemp = result[name].body;
                 // when processing single item, mark it - inin case some one wants to know
-                result.singlePersistenResponse = true;
+                result[name].singlePersistenResponse = true;
+                result[name].persistent = true;
                 _runCallback(item.callback, err, result);
 
                 // this flag will stop/remove this request from the running requests
