@@ -9,7 +9,13 @@ module.exports = {
         }
     },
     coverage: {
-        src: ['./unit-tests/*.js'],
-        dest: 'coverage/'
+        files: [
+            {
+                expand: true,
+                flatten: true,
+                filter: 'isFile',
+                src: ["./unit-tests/*.js"], dest: "./coverage/unit-tests/"
+            }
+        ]
     }
 };
