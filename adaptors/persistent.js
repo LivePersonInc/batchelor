@@ -144,6 +144,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
         if (utils.validator.isPersistentRequest(cReq)) {
             delays.push(cReq.persistentDelay || 2000);
             _setPersistentBody2Item(cReq.name, result[cReq.name]);
+            result[cReq.name].persistent = true; // set the result with persistent type, in case the client want to do something with it
         }
     });
 
