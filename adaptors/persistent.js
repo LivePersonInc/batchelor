@@ -92,6 +92,7 @@ function _startPersist() {
             function (err, item) {
                 _processSingleItem(item);
             },
+            null,
             config.useImmediate
         );
     });
