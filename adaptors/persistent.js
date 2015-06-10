@@ -91,7 +91,9 @@ function _startPersist() {
         eterator.start(0, true,
             function (err, item) {
                 _processSingleItem(item);
-            });
+            },
+            config.useImmediate
+        );
     });
 }
 

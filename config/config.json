@@ -9,5 +9,6 @@
         "body": ""
     },
     "strictSSL" : true,
-    "whiteList": ["*"]
+    "whiteList": ["*"],
+    "useImmediate": true
 }

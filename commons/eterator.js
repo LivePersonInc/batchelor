@@ -2,14 +2,18 @@
 "use strict";
 (function() {
     function Eterator (array) {
-        this.state      = null;
-        this.array      = array ? array.slice(0) : [];
-        this.processing = false;
+        this.state          = null;
+        this.array          = array ? array.slice(0) : [];
+        this.processing     = false;
+        this.useImmediate   = true;
     }
 
     var proto = Eterator.prototype;
 
-    proto.start = function (index, endless, callback, complete) {
+    proto.start = function (index, endless, callback, complete, useImmediate) {
+
+        this.useImmediate = useImmediate || true;
+
         if (this.processing) {
             return;
         }
@@ -17,7 +21,7 @@
         this.processing = true;
         this.state = _buildStateObj(index, endless, callback, complete);
         if (0 < this.array.length) {
-            setImmediate(_iterate.bind(this, index < this.array.length ? index : 0, this.array, endless, callback, complete));
+            this._setImmediate(_iterate, index < this.array.length ? index : 0, this.array, endless, callback, complete);
         }
 
         return true;
@@ -85,6 +89,19 @@
         }
     };
 
+    proto._setImmediate = function (func, index, array, endless, callback, complete) {
+
+        if (this.useImmediate) {
+            setImmediate(func.bind(this, index, array, endless, callback, complete));
+        }
+        else {
+            setTimeout(function () {
+                func.bind(this, index, array, endless, callback, complete);
+            }.bind(this), 0);
+        }
+
+    };
+
     function _addItems(items) {
         /*jshint validthis:true */
         for (var i = 0; i < items.length; i++) {
@@ -105,7 +122,7 @@
 
         /*jshint validthis:true */
         if (this.processing) {
-            setImmediate(_iterate.bind(this, index, array, endless, callback, complete));
+            this._setImmediate(_iterate, index, array, endless, callback, complete);
         }
     }
 
@@ -124,7 +141,7 @@
                 runCallBack(complete);
             }
             if (endless) {
-                setImmediate(this.start.bind(this, 0, endless, callback, complete));
+                this._setImmediate(this.start, 0, endless, callback, complete);
             }
             return;
         }
