@@ -12,7 +12,7 @@
 
     proto.start = function (index, endless, callback, complete, useImmediate) {
 
-        this.useImmediate = useImmediate || true;
+        this.useImmediate = (typeof useImmediate !== "undefined") ? useImmediate : true;
 
         if (this.processing) {
             return;
