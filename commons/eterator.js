@@ -95,9 +95,10 @@
             setImmediate(func.bind(this, index, array, endless, callback, complete));
         }
         else {
+            var _self = this;
             setTimeout(function () {
-                func.bind(this, index, array, endless, callback, complete);
-            }.bind(this), 0);
+                func.call(_self, index, array, endless, callback, complete);
+            }, 1000);
         }
 
     };
