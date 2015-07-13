@@ -20,7 +20,7 @@ var should  = require('chai').should()
             "timeout": 10000,
             "ip": "unknown",
             "headers": {},
-            "body": ""
+            "data": ""
         },
         "whiteList": ["*"]
 };
@@ -58,28 +58,28 @@ describe('utils', function () {
             utils.builder.buildResponse.should.be.a('function');
 
 
-            utils.builder.buildResponse("INVALID_TASK").body.should.equal(commons.CONST.BODY_RESPONSE.INVALID_TASK);
+            utils.builder.buildResponse("INVALID_TASK").data.should.equal(commons.CONST.BODY_RESPONSE.INVALID_TASK);
             utils.builder.buildResponse("INVALID_TASK").statusCode.should.equal(commons.CONST.HTTP_STATUS.BAD_REQUEST);
 
-            utils.builder.buildResponse("ETIMEDOUT").body.should.equal(commons.CONST.BODY_RESPONSE.ETIMEDOUT);
+            utils.builder.buildResponse("ETIMEDOUT").data.should.equal(commons.CONST.BODY_RESPONSE.ETIMEDOUT);
             utils.builder.buildResponse("ETIMEDOUT").statusCode.should.equal(commons.CONST.HTTP_STATUS.GATEWAY_TIMEOUT);
 
-            utils.builder.buildResponse("ECONNREFUSED").body.should.equal(commons.CONST.BODY_RESPONSE.ECONNREFUSED);
+            utils.builder.buildResponse("ECONNREFUSED").data.should.equal(commons.CONST.BODY_RESPONSE.ECONNREFUSED);
             utils.builder.buildResponse("ECONNREFUSED").statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
 
-            utils.builder.buildResponse("ENOTFOUND").body.should.equal(commons.CONST.BODY_RESPONSE.ENOTFOUND);
+            utils.builder.buildResponse("ENOTFOUND").data.should.equal(commons.CONST.BODY_RESPONSE.ENOTFOUND);
             utils.builder.buildResponse("ENOTFOUND").statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
 
-            utils.builder.buildResponse("ERROR_API_URL").body.should.equal(commons.CONST.BODY_RESPONSE.ERROR_API_URL);
+            utils.builder.buildResponse("ERROR_API_URL").data.should.equal(commons.CONST.BODY_RESPONSE.ERROR_API_URL);
             utils.builder.buildResponse("ERROR_API_URL").statusCode.should.equal(commons.CONST.HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-            utils.builder.buildResponse("NO_JSON_OBJECT").body.should.equal(commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT);
+            utils.builder.buildResponse("NO_JSON_OBJECT").data.should.equal(commons.CONST.BODY_RESPONSE.NO_JSON_OBJECT);
             utils.builder.buildResponse("NO_JSON_OBJECT").statusCode.should.equal(commons.CONST.HTTP_STATUS.BAD_REQUEST);
 
-            utils.builder.buildResponse("DEFAULT").body.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
+            utils.builder.buildResponse("DEFAULT").data.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
             utils.builder.buildResponse("DEFAULT").statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
 
-            utils.builder.buildResponse().body.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
+            utils.builder.buildResponse().data.should.equal(commons.CONST.BODY_RESPONSE.DEFAULT);
             utils.builder.buildResponse().statusCode.should.equal(commons.CONST.HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -160,7 +160,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 
@@ -179,7 +179,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 
@@ -203,7 +203,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 

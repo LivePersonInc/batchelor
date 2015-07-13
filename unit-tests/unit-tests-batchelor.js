@@ -25,7 +25,7 @@ var request     = require('request')
             "timeout": 5,
             "ip": "unknown",
             "headers": {},
-            "body": ""
+            "data": ""
         },
         "whiteList": ["*"]
     }
@@ -85,10 +85,10 @@ describe('batchelor', function () {
                     doNotMergeHeaders: false,
                     query: "/user1",
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 10000
                 }, function (err, result) {
-                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+                    result["INVALID_TASK"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).data);
                     done();
 
                 });
@@ -105,10 +105,10 @@ describe('batchelor', function () {
                     doNotMergeHeaders: false,
                     query: "/user1",
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 10000
                 }, function (err, result) {
-                    result["missingName"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
+                    result["missingName"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).data);
                     done();
 
                 });
@@ -127,10 +127,10 @@ describe('batchelor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 100
                 }, function (err, result) {
-                    result["ETIMEDOUT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).body);
+                    result["ETIMEDOUT"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).data);
                     done();
 
                 });
@@ -149,31 +149,10 @@ describe('batchelor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 1000
                 }, function (err, result) {
-                    result["ERROR_API_URL"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).body);
-                    done();
-                });
-
-            jobId.should.be.a('string');
-        });
-
-        it('execute method - NO_JSON_OBJECT', function (done) {
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
-            jobId = batchelor.execute(
-                {
-                    name: "NO_JSON_OBJECT",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000
-                }, function (err, result) {
-                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
+                    result["ERROR_API_URL"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).data);
                     done();
                 });
 
