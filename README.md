@@ -45,7 +45,7 @@ configure the batchelor object.
 * timeout - integer containing the number of milliseconds to wait for a request to respond before aborting the request (default: 1000).
 * ip - string of the client that request the batching job. (default: "unknown").
 * headers {} - object containing the headers of the client that request the batching job
-* body - string that will be pass in case of POST request
+* body || data - string that will be pass in case of POST request
 * strictSSL - requires SSL certificates be valid, used in request module (optional - default:true)
 
 
@@ -59,7 +59,7 @@ configure the batchelor object.
         timeout: 10000,
         ip: "unknown",
         headers: {},
-        body: ""
+        data: ""
     },
     whiteList: ["*"]
 }
@@ -88,7 +88,7 @@ An object representing a single batch of request. The item must have the followi
 * `encoding` - the encoding of the item (default:UTF8) [optional]
 * `retries` - number of retries if the timeout is reach (default:2) [optional]
 * `headers` - the headers that the item uses [optional]
-* `body` - the parameters that the item uses when the method is POST are given here [optional]
+* `body || data` - the parameters that the item uses when the method is POST are given here [optional]
 * `timeout` - number of milliseconds to wait for a request from the API to respond before aborting the request, if this parameters is not provided we use timeout from the config.json file [optional]
 * `isOnCloseRequest` - flag indicating if the item should be called when the connection is droped (default:false) [optional]
 * `persistent` - flag indicating if the item should be called in persistent way(default:false) [optional]
@@ -119,7 +119,7 @@ var configuration = {
 
 batchelor.configure(configuration);
 exp_router.post('/', function (req, res, next) {
-    batchelor.execute(req.body, function (err, results) {
+    batchelor.execute(req.data, function (err, results) {
         if (err) {
             console.log("Error occur");
         }
@@ -189,12 +189,12 @@ ws.onmessage = function (event) {
 ```json
     {
         item1:{
-            body: {name: "myname1", id: 1},
+            data: {name: "myname1", id: 1},
             statusCode: 200,
             headers: {"content-type":"application/json"}
         },
         item2:{
-            body: {name: "myname2", id: 2},
+            data: {name: "myname2", id: 2},
             statusCode: 200,
             headers: {"content-type":"application/json"}
         }
