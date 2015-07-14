@@ -27,7 +27,7 @@ var request         = require('request')
             "timeout": 5,
             "ip": "unknown",
             "headers": {},
-            "body": ""
+            "data": ""
         },
         "whiteList": ["*"]
     }
@@ -44,7 +44,7 @@ describe('Adaptor Persistent', function () {
          * require('mockery') && require('sinon')
          * mockery hijacks the require function and replaces modules with our mocks.
          * In the below code we register a sinon stub to be returned when require('request') is called.
-         * Then we configure the mock in the test using the method .yield on the stub to a call the callback function passed to request with null/code for the error, an object for the response and another object for the body.
+         * Then we configure the mock in the test using the method .yield on the stub to a call the callback function passed to request with null/code for the error, an object for the response and another object for the data.
          * */
         var requestStub;
 
@@ -90,7 +90,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        body: "body",
+                        data: "data",
                         timeout: 1000
                     },
                     function (err, result) {
@@ -109,7 +109,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        body: "body",
+                        data: "data",
                         timeout: 1000,
                         isPersistentRequest: false
                     },
@@ -130,7 +130,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        body: "body",
+                        data: "data",
                         timeout: 1000,
                         isPersistentRequest: true,
                         callback: "callback"
@@ -152,7 +152,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        body: "body",
+                        data: "data",
                         timeout: 1000,
                         isPersistentRequest: true,
                         callback: function () {
@@ -179,7 +179,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        body: "body",
+                        data: "data",
                         timeout: 10000,
                         isPersistentRequest: true,
                         persistentDelay: 5000
