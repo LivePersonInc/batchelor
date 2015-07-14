@@ -159,27 +159,6 @@ describe('batchelor', function () {
             jobId.should.be.a('string');
         });
 
-        it('execute method - NO_JSON_OBJECT', function (done) {
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
-            jobId = batchelor.execute(
-                {
-                    name: "NO_JSON_OBJECT",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    mimeType: "application/json",
-                    body: "body",
-                    timeout: 1000
-                }, function (err, result) {
-                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
-                    done();
-                });
-
-            jobId.should.be.a('string');
-        });
-
     });
 
 });
