@@ -27,7 +27,7 @@ var request         = require('request')
             "timeout": 5,
             "ip": "unknown",
             "headers": {},
-            "data": ""
+            "body": ""
         },
         "whiteList": ["*"]
     }
@@ -90,7 +90,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        data: "data",
+                        body: "body",
                         timeout: 1000
                     },
                     function (err, result) {
@@ -109,7 +109,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        data: "data",
+                        body: "body",
                         timeout: 1000,
                         isPersistentRequest: false
                     },
@@ -130,7 +130,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        data: "data",
+                        body: "body",
                         timeout: 1000,
                         isPersistentRequest: true,
                         callback: "callback"
@@ -152,7 +152,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        data: "data",
+                        body: "body",
                         timeout: 1000,
                         isPersistentRequest: true,
                         callback: function () {
@@ -179,7 +179,7 @@ describe('Adaptor Persistent', function () {
                         headers: {},
                         query: "/user1",
                         mimeType: "application/json",
-                        data: "data",
+                        body: "body",
                         timeout: 10000,
                         isPersistentRequest: true,
                         persistentDelay: 5000

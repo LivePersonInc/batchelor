@@ -25,7 +25,7 @@ var request     = require('request')
         "timeout": 5,
         "ip": "unknown",
         "headers": {},
-        "data": ""
+        "body": ""
     },
     "whiteList": ["*"]
     }
@@ -80,11 +80,11 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    data: "body",
+                    body: "body",
                     timeout: 10000
                 }], function (err, result) {
                     console.log(JSON.stringify(result));
-                    result["INVALID_TASK"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).data);
+                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
                 });
         });
 
@@ -99,10 +99,10 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    data: "data",
+                    body: "body",
                     timeout: 100
                 }], function (err, result) {
-                    result["ETIMEDOUT"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).data);
+                    result["ETIMEDOUT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).body);
                 });
         });
 
@@ -117,10 +117,10 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    data: "data",
+                    body: "body",
                     timeout: 1000
                 }], function (err, result) {
-                    result["ERROR_API_URL"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).data);
+                    result["ERROR_API_URL"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).body);
                 });
 
         });
@@ -136,10 +136,10 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    data: "data",
+                    body: "body",
                     timeout: 1000
                 }], function (err, result) {
-                    result["NO_JSON_OBJECT"].data.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).data);
+                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
                 });
 
         });
