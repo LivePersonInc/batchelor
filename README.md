@@ -44,7 +44,7 @@ configure the batchelor object.
 * timeout - integer containing the number of milliseconds to wait for a request to respond before aborting the request (default: 1000).
 * ip - string of the client that request the batching job. (default: "unknown").
 * headers - object containing the headers of the client that request the batching job
-* body - string that will be pass in case of POST request
+* body || data - string that will be pass in case of POST request
 * strictSSL - requires SSL certificates be valid, used in request module (optional - default:true) 
 
 #### options  example:
@@ -58,7 +58,7 @@ configure the batchelor object.
         timeout: 10000,
         ip: "unknown",
         headers: {},
-        body: ""
+        data: ""
     },
     whiteList: ["*"]
 }
@@ -112,7 +112,7 @@ An object representing a single batch of request. The request must have the foll
 * `encoding` - the encoding of the item (default:UTF8) [optional]
 * `retries` - number of retries if the timeout is reach (default:2) [optional]
 * `headers` - the headers that the item uses [optional]
-* `body` - the parameters that the item uses when the method is POST are given here [optional]
+* `body || data` - the parameters that the item uses when the method is POST are given here [optional]
 * `timeout` - number of milliseconds to wait for a request from the API to respond before aborting the request, if this parameters is not provided we use timeout from the config.json file [optional]
 * `isOnCloseRequest` - flag indicating if the item should be called when the connection is droped, used when using web socket facade (default:false) [optional]
 * `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
@@ -138,7 +138,7 @@ var configuration = {
         "timeout": 10000,
         "ip": "unknown",
         "headers": {},
-        "body": ""
+        "data": ""
     },
     "whiteList": ["*"]
 };
@@ -172,7 +172,7 @@ var configuration = {
         "timeout": 10000,
         "ip": "unknown",
         "headers": {},
-        "body": ""
+        "data": ""
     },
     "whiteList": ["*"]
 };
@@ -232,13 +232,13 @@ ws.onmessage = function (event) {
 ```
     {
         regular_request:{
-            body: {name: "myname1", id: 1},
+            data: {name: "myname1", id: 1},
             statusCode: 200,
             headers: {"content-type":"application/json"}
 	},
 	{
 		persistentRequest:{
-		body: "",
+		data: "",
 		headers:{"server":"Cowboy","connection":"keep-alive","x-powered-by":"Express","content-type":"application/json; charset=utf-8","content-length":"116","etag":"W/\"74-1635811801\"","date":"Mon, 12 Jan 2015 09:53:37 GMT","via":"1.1 vegur"
 		},
 		"statusCode":200,

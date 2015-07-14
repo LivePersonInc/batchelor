@@ -20,7 +20,7 @@ var should  = require('chai').should()
             "timeout": 10000,
             "ip": "unknown",
             "headers": {},
-            "body": ""
+            "data": ""
         },
         "whiteList": ["*"]
 };
@@ -160,7 +160,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 
@@ -179,7 +179,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 
@@ -203,7 +203,7 @@ describe('utils', function () {
                 headers: {},
                 query: "/user1",
                 mimeType: "application/json",
-                body: "body",
+                data: "data",
                 timeout: 10000
             }];
 

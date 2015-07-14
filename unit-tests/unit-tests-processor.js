@@ -25,7 +25,7 @@ var request     = require('request')
         "timeout": 5,
         "ip": "unknown",
         "headers": {},
-        "body": ""
+        "data": ""
     },
     "whiteList": ["*"]
     }
@@ -80,7 +80,7 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 10000
                 }], function (err, result) {
                     console.log(JSON.stringify(result));
@@ -99,7 +99,7 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 100
                 }], function (err, result) {
                     result["ETIMEDOUT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).body);
@@ -117,7 +117,7 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 1000
                 }], function (err, result) {
                     result["ERROR_API_URL"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).body);
@@ -136,7 +136,7 @@ describe('processor', function () {
                     retries: 3,
                     headers: {},
                     mimeType: "application/json",
-                    body: "body",
+                    data: "data",
                     timeout: 1000
                 }], function (err, result) {
                     result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
