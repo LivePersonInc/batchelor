@@ -185,7 +185,7 @@ describe('processor', function () {
                     data: "data",
                     timeout: 1000
                 }], function (err, result) {
-                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.undefine;
+                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.undefined;
                 });
 
         });
