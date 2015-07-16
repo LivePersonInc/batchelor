@@ -144,5 +144,51 @@ describe('processor', function () {
 
         });
 
+        it('using param originalHeader', function () {
+            before(function () {
+                cfg.originalHeader = true;
+                processor.configure(cfg);
+            });
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
+            jobId = processor.run(
+                [{
+                    name: "ORIGINAL_HEADERS",
+                    url: "htp://www.kojo.com",
+                    encoding: "UTF8",
+                    method: "GET",
+                    retries: 3,
+                    headers: {},
+                    mimeType: "application/json",
+                    data: "data",
+                    timeout: 1000
+                }], function (err, result) {
+                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.a('string');
+                });
+
+        });
+
+        it('using param originalHeader - false', function () {
+            before(function () {
+                cfg.originalHeader = false;
+                processor.configure(cfg);
+            });
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
+            jobId = processor.run(
+                [{
+                    name: "ORIGINAL_HEADERS",
+                    url: "htp://www.kojo.com",
+                    encoding: "UTF8",
+                    method: "GET",
+                    retries: 3,
+                    headers: {},
+                    mimeType: "application/json",
+                    data: "data",
+                    timeout: 1000
+                }], function (err, result) {
+                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.undefined;
+                });
+
+        });
+
     });
 });
