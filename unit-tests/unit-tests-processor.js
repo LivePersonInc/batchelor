@@ -162,7 +162,7 @@ describe('processor', function () {
                     data: "data",
                     timeout: 1000
                 }], function (err, result) {
-                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.define;
+                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.a('string');
                 });
 
         });
