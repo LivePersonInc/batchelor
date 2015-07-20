@@ -36,7 +36,7 @@
             return false;
         }
 
-        return this.start(++this.state.index, this.state.endless, this.state.callback, this.state.complete);
+        return this.start(++this.state.index, this.state.endless, this.state.callback, this.state.complete, this.useImmediate);
     };
 
     proto.getProperties = function () {
@@ -62,7 +62,7 @@
             this.stop();
             this.array.push(item);
             if (1 === this.array.length) {
-                this.start(0, this.state.endless, this.state.callback, this.state.complete);
+                this.start(0, this.state.endless, this.state.callback, this.state.complete, this.useImmediate);
             }
             else {
                 this.resume();
@@ -142,7 +142,7 @@
                 runCallBack(complete);
             }
             if (endless) {
-                this._setImmediate(this.start, 0, endless, callback, complete);
+                this._setImmediate(this.start, 0, endless, callback, complete, this.useImmediate);
             }
             return;
         }
