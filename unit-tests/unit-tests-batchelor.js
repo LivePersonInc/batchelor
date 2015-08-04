@@ -28,7 +28,7 @@ var request     = require('request')
             "data": ""
         },
         "whiteList": ["*"]
-    }
+    };
 
 utils.configure(cfg);
 
@@ -174,6 +174,31 @@ describe('batchelor', function () {
                     timeout: 1000
                 }, function (err, result) {
                     result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
+                    done();
+                });
+
+            jobId.should.be.a('string');
+        });
+
+        it('execute method - array in response', function (done) {
+            var body = [{
+                "id": 0,
+                "something": "some value"
+            }, {"id": 1, "something": "some value"}];
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, body);
+            jobId = batchelor.execute(
+                {
+                    name: "MY_ARRAY",
+                    url: "htp://www.kojo.com",
+                    encoding: "UTF8",
+                    method: "GET",
+                    retries: 3,
+                    headers: {},
+                    mimeType: "application/json",
+                    data: "data",
+                    timeout: 1000
+                }, function (err, result) {
+                    result["MY_ARRAY"].body.should.equal(body);
                     done();
                 });
 
