@@ -7,6 +7,7 @@ var commons = require("./../commons")
 
 
 function _getHost (url) {
+    log.debug("[validator] _getHost URL: " + url);
     var arr = url.split(".")
         , host;
 
@@ -94,6 +95,8 @@ exports.isValidURL = function (_url) {
         , urlObj
         , host;
 
+    log.debug("[validator] URL to validate: " + _url);
+
     // if in the whiteList exist "*" all domains allow
     if (config.whiteList.indexOf("*") > -1) {
         log.debug("[validator] Allow all URLS");
@@ -105,16 +108,16 @@ exports.isValidURL = function (_url) {
             host = _getHost(urlObj.host);
             if (config.whiteList.indexOf(host) > -1) {
                 valid = true;
-                log.debug('[validator] URL: ' + host + ' URL is valid -  !!!');
+                log.debug('[validator] URL: ' + _url + ' URL is valid -  !!!');
             }
             else {
                 valid = false;
-                log.debug("[validator] URL is not valid, host: " + host);
+                log.debug("[validator] URL is not valid, host: " + _url);
             }
         }
         catch (e) {
             valid = false;
-            log.error("[validator] validateURL, exception e: " + e);
+            log.error("[validator] isValidURL, exception e: " + e + " url: " + _url);
         }
     }
 
