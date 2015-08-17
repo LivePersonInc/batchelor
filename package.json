@@ -5,10 +5,10 @@
     "name": "Omer Herera",
     "email": "omer.herera@gmail.com"
   },
-  "version": "0.10.5",
+  "version": "0.10.6",
   "dependencies": {
     "async": "0.9.x",
-    "request": "2.60.x",
+    "request": "~2.45.0",
     "lodash": "3.8.x"
   },
   "devDependencies": {
