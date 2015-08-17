@@ -8,7 +8,7 @@
   "version": "0.10.5",
   "dependencies": {
     "async": "0.9.x",
-    "request": "2.55.x",
+    "request": "2.60.x",
     "lodash": "3.8.x"
   },
   "devDependencies": {
