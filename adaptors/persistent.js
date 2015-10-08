@@ -1,22 +1,21 @@
 /*jslint node: true */
 "use strict";
 
-var async           = require("async")
-    , _             = require("lodash")
-    , commons       = require("./../commons")
-    , utils         = require("./../utils")
-    , Eterator      = require("./../commons/eterator")
-    , separator     = "_"
-    , eterator      = new Eterator()
-    , batchelor
-    , log
-    , config;
+var _ = require("lodash");
+var commons = require("./../commons");
+var utils = require("./../utils");
+var Eterator = require("./../commons/eterator");
+var separator = "_";
+var eterator = new Eterator();
+var batchelor;
+var log;
+var config;
 
 
 /**
  * check if the response was changed, currently using JSON.stringify
- * @param _previous - object of previous request
- * @param _current object of current request
+ * @param previous - object of previous request
+ * @param current object of current request
  * @returns {boolean} - true is changed, false otherwise
  */
 function _isResponseChanged(previous, current) {
@@ -50,12 +49,10 @@ function _runCallback(callback, err, result) {
 /**
  * method for taking care of a single persistent request
  * it will run the callback for the given request only if the response from the current response and previous is different
- * @param err
- * @param result
- * @param persistentReq
+ * @param item
  * @private
  */
-function _processSingleItem (item) {
+function _processSingleItem(item) {
     var currTime = Date.now()
         , delta = currTime - item.firedTime
         , name = item.name;
@@ -102,7 +99,7 @@ function _startPersist() {
  * start the persitent polling
  * @private
  */
-function _persist () {
+function _persist() {
     _startPersist();
 }
 
@@ -112,11 +109,11 @@ function _persist () {
  * @returns {{item: *, index: *}}
  * @private
  */
-function _getPersistentItem (name) {
+function _getPersistentItem(name) {
     var eteratorProp = eterator.getProperties();
     eteratorProp.array = eteratorProp.array || [];
-    var index = _.findIndex(eteratorProp.array, { 'name': name });
-    return (index >= 0) ? {item: eteratorProp.array[index], index: index}: null;
+    var index = _.findIndex(eteratorProp.array, {'name': name});
+    return (index >= 0) ? {item: eteratorProp.array[index], index: index} : null;
 }
 
 /**
@@ -125,7 +122,7 @@ function _getPersistentItem (name) {
  * @param result
  * @private
  */
-function _setPersistentBody2Item (name, result) {
+function _setPersistentBody2Item(name, result) {
     var obj = _getPersistentItem(name);
     obj.item.bodyTemp = result.body;
 }
@@ -174,7 +171,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
 function _process(allowReqs, callback) {
     log.debug("[Persistent Adaptor] _process calling batchelor.execute ...");
 
-    batchelor.execute(allowReqs, function(err, result) {
+    batchelor.execute(allowReqs, function (err, result) {
         _batchelorCallbackFirstRun(err, result, allowReqs, callback);
 
     });
@@ -185,7 +182,7 @@ function _process(allowReqs, callback) {
  * @param jobId - job to stop
  * @returns {boolean}
  */
-function _stop (options) {
+function _stop(options) {
     options = options || {};
     log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
     var result = _getPersistentItem(options.reqName);
