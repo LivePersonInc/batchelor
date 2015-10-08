@@ -8,6 +8,7 @@ var request     = require('request')
     , commons   = require('./../commons')
     , processor
     , cfg = {
+    "originalHeader": true,
     "maxConcurrentJobs": 10,
     "log" : true,
     "logger": {
@@ -71,24 +72,7 @@ describe('processor', function () {
             done();
         });
 
-        it('execute method - INVALID_TASK - Missing URL', function () {
-            processor.run(
-                [{
-                    name: "INVALID_TASK",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    mimeType: "application/json",
-                    data: "data",
-                    timeout: 10000
-                }], function (err, result) {
-                    console.log(JSON.stringify(result));
-                    result["INVALID_TASK"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.INVALID_TASK).body);
-                });
-        });
-
-        it('execute method - ETIMEDOUT', function () {
+        it('execute method - ETIMEDOUT', function (done) {
             requestStub.yields({code: "ETIMEDOUT"}, null, null);
             processor.run(
                 [{
@@ -103,10 +87,11 @@ describe('processor', function () {
                     timeout: 100
                 }], function (err, result) {
                     result["ETIMEDOUT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ETIMEDOUT).body);
+                    done();
                 });
         });
-
-        it('run method - ERROR_API_URL', function () {
+        
+        it('run method - ERROR_API_URL', function (done) {
             requestStub.yields({error: "error"}, {response: "response"}, null);
             processor.run(
                 [{
@@ -121,35 +106,17 @@ describe('processor', function () {
                     timeout: 1000
                 }], function (err, result) {
                     result["ERROR_API_URL"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.ERROR_API_URL).body);
+                    done();
                 });
 
         });
 
-        it('run method - NO_JSON_OBJECT', function () {
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
-            jobId = processor.run(
-                [{
-                    name: "NO_JSON_OBJECT",
-                    url: "htp://www.kojo.com",
-                    encoding: "UTF8",
-                    method: "GET",
-                    retries: 3,
-                    headers: {},
-                    mimeType: "application/json",
-                    data: "data",
-                    timeout: 1000
-                }], function (err, result) {
-                    result["NO_JSON_OBJECT"].body.should.equal(utils.builder.buildResponse(commons.CONST.RESPONSE_TYPE.NO_JSON_OBJECT).body);
-                });
-
-        });
-
-        it('using param originalHeader', function () {
+        it('using param originalHeader', function (done) {
             before(function () {
                 cfg.originalHeader = true;
                 processor.configure(cfg);
             });
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, {"name":"myname","id":1});
             jobId = processor.run(
                 [{
                     name: "ORIGINAL_HEADERS",
@@ -162,20 +129,19 @@ describe('processor', function () {
                     data: "data",
                     timeout: 1000
                 }], function (err, result) {
-                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.a('string');
+                    result["ORIGINAL_HEADERS"].originalHeader.should.be.a('string');
+                    done();
                 });
-
+        
         });
 
-        it('using param originalHeader - false', function () {
-            before(function () {
-                cfg.originalHeader = false;
-                processor.configure(cfg);
-            });
-            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "string");
+        it('using param originalHeader false', function (done) {
+            requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, {"name":"myname","id":1});
+            cfg.originalHeader = false;
+            processor.configure(cfg);
             jobId = processor.run(
                 [{
-                    name: "ORIGINAL_HEADERS",
+                    name: "ORIGINAL_HEADERS_FALSE",
                     url: "htp://www.kojo.com",
                     encoding: "UTF8",
                     method: "GET",
@@ -185,7 +151,8 @@ describe('processor', function () {
                     data: "data",
                     timeout: 1000
                 }], function (err, result) {
-                    result["ORIGINAL_HEADERS"].headers.originalHeader.should.be.undefined;
+                    should.not.exist(result["ORIGINAL_HEADERS_FALSE"].originalHeader);
+                    done();
                 });
 
         });
