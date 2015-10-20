@@ -79,7 +79,7 @@ describe('Adaptor Persistent', function () {
         });
 
         describe('execute method', function () {
-            it('execute not persistent request', function () {
+            it('execute not persistent request', function (done) {
                 var jobId = persistent.execute(
                     {
                         name: "NOT_PERSISTENT_REQ_TEST_1",
@@ -96,9 +96,10 @@ describe('Adaptor Persistent', function () {
                     function (err, result) {
                     });
                 jobId.should.be.a('string');
+                done();
             });
 
-            it('execute not persistent request, persistent=false', function () {
+            it('execute not persistent request, persistent=false', function (done) {
                 var jobId = persistent.execute(
                     {
                         name: "NOT_PERSISTENT_REQ_TEST_2",
@@ -116,9 +117,10 @@ describe('Adaptor Persistent', function () {
                     function (err, result) {
                     });
                 jobId.should.be.a('string');
+                done();
             });
 
-            it('execute persistent request not valid callback', function () {
+            it('execute persistent request not valid callback', function (done) {
                 requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
                 jobId = persistent.execute(
                     {
@@ -136,6 +138,7 @@ describe('Adaptor Persistent', function () {
                         callback: "callback"
                     },
                     function (err, result) {
+                        done();
                     });
 
             });
@@ -157,6 +160,7 @@ describe('Adaptor Persistent', function () {
                         isPersistentRequest: true,
                         callback: function () {
                             throw {error: "error"};
+
                         }
                     },
                     function (err, result) {
@@ -165,7 +169,7 @@ describe('Adaptor Persistent', function () {
             });
         });
 
-        describe('stop method', function () {
+        describe('Stop Persistent', function (done) {
             it('execute persistent and stop', function () {
                 requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
                 persistent.stop.should.be.a('function');
@@ -185,12 +189,33 @@ describe('Adaptor Persistent', function () {
                         persistentDelay: 5000
                     },
                     function (err, result) {
-                        persistent.stop("notExistId", "PERSISTENT_STOP");
-                        persistent.stop(jobId, "PERSISTENT_STOP");
+                        persistent.stop({uniqueId: "PERSISTENT_STOP"});
+                        done();
+                    });
+            });
+
+            it('stop_persistent_once_change', function () {
+                requestStub.yields(null, {statusCode: 200, headers: {bigHead: "bigHead"}}, "{\"user\":\"omher\"}");
+                var jobId = persistent.execute(
+                    {
+                        name: "PERSISTENT_STOP_ONCE_CHANGE",
+                        url: "http://mockURL",
+                        method: "GET",
+                        headers: {},
+                        mimeType: "application/json",
+                        data: "data",
+                        timeout: 10000,
+                        isPersistentRequest: true,
+                        persistentDelay: 5000,
+                        stop_persistent_once_change: true
+                    },
+                    function (err, result) {
+                        done();
                     });
             });
 
         });
+
     });
 
 });
