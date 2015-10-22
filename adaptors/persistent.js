@@ -64,14 +64,14 @@ function _processSingleItem(item) {
 
             if (item.ignoreResponse || (!commons.helper.isEmptyObject(result) && result[name] && result[name].body && _isResponseChanged(result[name].body, item.bodyTemp))) {
                 item.bodyTemp = result[name].body;
-                // when processing single item, mark it - inin case some one wants to know
+                // when processing single item, mark it - in the case some one wants to know
                 result[name].singlePersistenResponse = true;
                 result[name].persistent = true;
                 _runCallback(item.callback, err, result);
 
                 // this flag will stop/remove this request from the running requests
                 if (item.stop_persistent_once_change) {
-                    _stop({reqId: item.name});
+                    _stop({uniqueId: item.uniqueId});
                 }
             }
 
@@ -112,7 +112,7 @@ function _persist() {
 function _getPersistentItem(name) {
     var eteratorProp = eterator.getProperties();
     eteratorProp.array = eteratorProp.array || [];
-    var index = _.findIndex(eteratorProp.array, {'name': name});
+    var index = _.findIndex(eteratorProp.array, {'uniqueId': name});
     return (index >= 0) ? {item: eteratorProp.array[index], index: index} : null;
 }
 
@@ -144,7 +144,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
 
         if (utils.validator.isPersistentRequest(cReq)) {
             delays.push(cReq.persistentDelay || 2000);
-            _setPersistentBody2Item(cReq.name, result[cReq.name]);
+            _setPersistentBody2Item(cReq.uniqueId, result[cReq.name]);
             result[cReq.name].persistent = true; // set the result with persistent type, in case the client want to do something with it
         }
     });
@@ -184,13 +184,13 @@ function _process(allowReqs, callback) {
  */
 function _stop(options) {
     options = options || {};
-    log.debug("[Persistent Adaptor] stopping jobId : " + options.jobId + " request Id: " + options.reqName);
-    var result = _getPersistentItem(options.reqName);
+    log.debug("[Persistent Adaptor] stopping uniqueId: " + options.uniqueId);
+    var result = _getPersistentItem(options.uniqueId);
     if (result) {
         eterator.removeItem(result.item);
     }
     else {
-        log.warn("[Persistent Adaptor] couldn't stop jobId : " + options.jobId + " request Id: " + options.reqId + " given values doesn't exist!");
+        log.warn("[Persistent Adaptor] couldn't stop uniqueId : " + options.uniqueId + " given value doesn't exist!");
     }
 }
 
@@ -235,6 +235,7 @@ exports.execute = function (job, callback) {
                 cReq.jobId = jobId;
                 cReq.firedTime = Date.now();
                 cReq.ignoreResponse = cReq.ignoreResponse || false;
+                cReq.uniqueId = cReq.uniqueId || commons.helper.getUniqueId("uId" + separator);
                 persistent_requests.push(cReq);
             }
             else {
