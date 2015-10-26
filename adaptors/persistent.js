@@ -123,8 +123,9 @@ function _getPersistentItem(name) {
  * @private
  */
 function _setPersistentBody2Item(name, result) {
+    result = result || {};
     var obj = _getPersistentItem(name);
-    obj.item.bodyTemp = result.body;
+    obj.item.bodyTemp = result.body || {};
 }
 
 /**
@@ -144,6 +145,7 @@ function _batchelorCallbackFirstRun(err, result, reqs, callback) {
 
         if (utils.validator.isPersistentRequest(cReq)) {
             delays.push(cReq.persistentDelay || 2000);
+            result[cReq.name] = result[cReq.name] || {};
             _setPersistentBody2Item(cReq.uniqueId, result[cReq.name]);
             result[cReq.name].persistent = true; // set the result with persistent type, in case the client want to do something with it
         }

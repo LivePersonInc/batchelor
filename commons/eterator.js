@@ -98,7 +98,7 @@
             var _self = this;
             setTimeout(function () {
                 func.call(_self, index, array, endless, callback, complete);
-            }, 1000);
+            }, 0);
         }
 
     };
