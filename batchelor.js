@@ -1,13 +1,14 @@
-/*jslint node: true */
 "use strict";
-var negotiator      = require("./lib/negotiator")
-    , persistent    = require("./adaptors/persistent")
-    , utils         = require("./utils")
-    , Media         = require("./media");
+var negotiator      = require("./lib/negotiator");
+var persistent    = require("./lib/adaptors/persistent");
+var utils         = require("./lib/utils");
+var Media         = require("./lib/media");
 
 persistent.setBatchelor(negotiator);
-// Exports
-exports.configure   = negotiator.configure;
-exports.execute     = negotiator.execute;
-exports.persistent  = persistent;
-exports.Media       = Media;
+
+module.exports = {
+    configure: negotiator.configure,
+    execute: negotiator.execute,
+    persistent: persistent,
+    Media: Media
+};

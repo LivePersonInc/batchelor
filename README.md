@@ -1,8 +1,8 @@
-![Alt text](/resources/batchelorJS.logo.jpg)
+![Alt text](/img/batchelorJS.logo.jpg)
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Build Status](https://travis-ci.org/LivePersonInc/batchelor.svg)](https://travis-ci.org/LivePersonInc/batchelor)
-[![coverage status](http://img.shields.io/badge/local%20coverage-92%25-green.svg)](http://img.shields.io/badge/local%20coverage-92%25-green.svg)
+[![Test Coverage](https://codeclimate.com/github/LivePersonInc/batchelor/badges/coverage.svg)](https://codeclimate.com/github/LivePersonInc/batchelor/coverage)
 [![Code Climate](https://codeclimate.com/github/LivePersonInc/batchelor/badges/gpa.svg)](https://codeclimate.com/github/LivePersonInc/batchelor)
 [![npm version](https://badge.fury.io/js/batchelorjs.svg)](http://badge.fury.io/js/batchelorjs)
 [![Dependency Status](https://david-dm.org/LivePersonInc/batchelor.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor)
@@ -47,7 +47,7 @@ configure the batchelor object.
 * body || data - string that will be pass in case of POST request
 * strictSSL - requires SSL certificates be valid, used in request module (optional - default:true) 
 
-#### options  example:
+#### options example:
 ```
 {
     maxConcurrentJobs: 10,
@@ -67,7 +67,7 @@ configure the batchelor object.
 ## execute(job, callback)
 
 * `job` - A single request object or array of single requests [required]
-* `callback(err, results)` - callback method when finish processimg job [required]
+* `callback(err, results)` - callback method when finish processing job [required]
 - The callback argument gets 2 arguments:
 - `err` - error object, if an error occur, null otherwise
 - `results` - an JSON object containing the result/s of the job
@@ -189,7 +189,7 @@ ws.on("message", function (data) {
 
 * The following requests example, will send the 3 requests
 * batchelor will process the 3 request and will return the response when:
-* reqular request - its reqturned from given URL
+* regular request - its returned from given URL
 * persistent requests - every `persistentDelay` milliseconds, if there is a cahnge in the response
 * onClose request - once the connection is dropped from client 
 
@@ -259,7 +259,7 @@ ws.send(JSON.stringify(cancelMessage));
 
 ```
 
-### Example - Sendind a persitent job (all the request are persistents)
+### Example - Sending a persistent job (all the request are persistent)
 
 ```
 var job = {

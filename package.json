@@ -1,37 +1,48 @@
 {
   "name": "batchelorjs",
+  "version": "1.0.0",
   "description": "Proxy utility to bundle a batch of calls in one request",
   "author": {
-    "name": "Omer Herera",
-    "email": "omer.herera@gmail.com"
+    "name": "LivePersonInc",
+    "email": "fe-infra-lp@liveperson.com"
   },
-  "version": "0.11.1",
+  "contributors": [
+    {
+      "name": "Omer Herera",
+      "email": "omer.herera@gmail.com"
+    },
+    {
+      "name": "Michael Dimenshtein",
+      "email": "michaeld@liveperson.com"
+    },
+    {
+      "name": "Itai Koren",
+      "email": "itaik@liveperson.com"
+    },
+    {
+      "name": "Itai Chejanovsky",
+      "email": "itaic@liveperson.com"
+    }
+  ],
   "dependencies": {
-    "async": "0.9.x",
+    "async": "~1.5.0",
     "request": "~2.45.0",
-    "lodash": "3.8.x"
+    "lodash": "~3.10.1"
   },
   "devDependencies": {
-    "grunt": "0.4.x",
-    "grunt-cli": "0.1.x",
-    "grunt-contrib-jshint": "0.11.x",
-    "time-grunt": "1.1.x",
-    "load-grunt-config": "0.17.x",
-    "grunt-mocha-cli": "1.13.x",
-    "grunt-blanket": "0.0.x",
-    "chai": "2.3.x",
-    "should": "6.0.x",
-    "grunt-mocha-test": "0.12.x",
-    "grunt-contrib-clean": "0.6.x",
-    "grunt-contrib-copy": "0.8.x",
-    "grunt-string-replace": "1.2.x",
-    "travis-cov": "0.2.x",
-    "load-grunt-tasks": "3.1.x",
-    "grunt-mustache-render": "1.7.x",
-    "grunt-concurrent": "1.0.x",
-    "grunt-plato": "1.3.x",
-    "mockery": "1.4.x",
-    "sinon": "1.14.x"
+    "chai": "~3.4.1",
+    "grunt": "~0.4.5",
+    "grunt-available-tasks": "~0.5.7",
+    "grunt-contrib-jshint": "~0.11.3",
+    "grunt-env": "^0.4.4",
+    "grunt-istanbul": "^0.5.0",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-node-version": "~1.0.0",
+    "load-grunt-config": "~0.19.1",
+    "time-grunt": "~1.3.0",
+    "mockery": "~1.4.0",
+    "mocha": "~2.3.4",
+    "sinon": "~1.17.2"
   },
   "repository": {
     "type": "git",
@@ -56,6 +67,7 @@
     "test": "grunt default --verbose"
   },
   "engines": {
-    "node": ">= 0.10.x"
+    "node": ">=0.10.36",
+    "npm": ">=1.4"
   }
 }

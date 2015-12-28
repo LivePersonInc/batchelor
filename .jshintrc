@@ -6,7 +6,7 @@
     "eqnull":true,
     "noarg":true,
     "nonew":false,
-    "browser":true,
+    "node":true,
     "jquery":true,
     "evil":true,
     "laxcomma":true,
