@@ -1,0 +1,14 @@
+{
+    "maxConcurrentJobs": 50,
+    "request": {
+        "method": "GET",
+        "timeout": 10000,
+        "ip": "unknown",
+        "headers": {},
+        "strictSSL" : true,
+        "pool": {
+            "maxSockets": 200
+        }
+    },
+    "whiteList": ["*"]
+}

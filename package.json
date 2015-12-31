@@ -61,7 +61,7 @@
     "request"
   ],
   "license": "MIT",
-  "main": "./batchelor.js",
+  "main": "./index.js",
   "scripts": {
     "start": "node ./batchelor",
     "test": "grunt default --verbose"
