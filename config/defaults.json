@@ -9,6 +9,5 @@
         "pool": {
             "maxSockets": 200
         }
-    },
-    "whiteList": ["*"]
+    }
 }
