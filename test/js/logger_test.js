@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var requireHelper = require('./util/require_helper');
-var log = requireHelper('Logger');
+var log = requireHelper('util/Logger');
 
 describe('Logger Tests', function () {
 
