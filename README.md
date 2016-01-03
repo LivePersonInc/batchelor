@@ -68,7 +68,7 @@ configure the batchelor object.
 * `callback(err, results)` - callback function when finish processing batch [required]
 - The callback argument gets 2 arguments:
 - `err` - error object, if an error occur, null otherwise
-- `results` - an JSON object containing the result/s of the job
+- `results` - an JSON object containing the result/s of the batch
 
 ## batch
 An object holding a single or array of requests, to be batch in the request
@@ -208,7 +208,7 @@ ws.on("message", function (data) {
 * onClose request - once the connection is dropped from client 
 
 ```
-var job = [
+var batch = [
 	{
         name: "regular_request",
         url: "jsonresponser.herokuapp.com/api/json/users"
@@ -235,14 +235,14 @@ var job = [
 var ws = new WebSocket("wss://yourdomain/path");
 ws.onopen = function (ws) {
     document.getElementById("connectionStatus").innerHTML = "Connected";
-    ws.send(JSON.stringify(job));
+    ws.send(JSON.stringify(batch));
 };
 ws.onmessage = function (event) {
     document.getElementById("responseFromServer").value = event.data;
 };
 ```
 
-## Response from previoius request
+## Response from previous request
 ```
     {
         regular_request:{
@@ -268,41 +268,6 @@ Having in the response in the client `cancelId` we can send another request to t
 var cancelMessage = {
 	"cancelId":"jobName_1",
 	"requestName": "persistentRequest"
-};
-ws.send(JSON.stringify(cancelMessage));
-
-```
-
-### Example - Sending a persistent job (all the request are persistent)
-
-```
-var job = {
-	persistentJob: true,
-	requests: [
-		{
-        	name: "persistent_request_1",
-        	url: "https://jsonresponser.herokuapp.com/api/json/users",
-        	method: "GET",
-        	timeout: 5000
-    	},
-    	{
-        	name: "persistent_request_2",
-        	url: "https://jsonresponser.herokuapp.com/api/json/users",
-        	method: "GET",
-        	timeout: 5000
-    	}
-	]};
-
-ws.send(JSON.stringify(job));
-
-```
-
-#### Canceling job (all request)
-* In order to cancel job, we need to pass only the cancelId withou any requestName, like:
-
-```
-var cancelMessage = {
-	"cancelId":"jobName_1",
 };
 ws.send(JSON.stringify(cancelMessage));
 
