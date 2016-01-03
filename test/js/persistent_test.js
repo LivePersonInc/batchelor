@@ -2,7 +2,6 @@ var expect = require('chai').expect;
 var mockery = require('mockery');
 var sinon = require('sinon');
 var requireHelper = require('./util/require_helper');
-var CONST = requireHelper("util/Const");
 var persistent;
 
 describe('Persistent Tests', function () {
