@@ -15,6 +15,7 @@ describe('Validator Tests', function () {
         expect(validator.isValidRequest({shmoop: "myName"})).to.be.false;
         expect(validator.isValidRequest({name: "myName"})).to.be.false;
         expect(validator.isValidRequest({url: "http://www.mySite.com"})).to.be.false;
+        expect(validator.isValidRequest({name: "sfddsf", url: 3})).to.be.false;
     });
 
     it('should validate a valid request', function () {
@@ -27,6 +28,26 @@ describe('Validator Tests', function () {
         });
         expect(validator.isValidRequest({name: "myName", url: "http://www.mySite.com"})).to.be.false;
         expect(validator.isValidRequest({name: "myName", url: "http://www.myOtherSite.com"})).to.be.true;
+    });
+
+    it('should headers as expected', function () {
+        var request = {
+            name: "ddg",
+            url: "www.myurl.com",
+            headers: {
+                "Content-Length": "12344",
+                "Accept-Encoding": "utf-8",
+                "connection": "what?",
+                "host": "thishost",
+                "other" : "stillHere"
+            }
+        };
+        var clean = validator.cleanRequest(request);
+        expect(clean.headers["Content-Length"]).to.not.exist;
+        expect(clean.headers["Accept-Encoding"]).to.not.exist;
+        expect(clean.headers["connection"]).to.not.exist;
+        expect(clean.headers["host"]).to.not.exist;
+        expect(clean.headers["other"]).to.equal("stillHere");
     });
 
 });

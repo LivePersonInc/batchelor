@@ -1,6 +1,6 @@
 module.exports = function (grunt, options) {
 
-    var tasks = ['node_version', 'jshint', 'env', 'instrument', 'mochaTest', 'storeCoverage', 'makeReport'];
+    var tasks = ['node_version', 'jshint', 'env', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport'];
     return {
         'tasks': ['availabletasks'],
         'default': tasks,
