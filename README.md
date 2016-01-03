@@ -17,17 +17,18 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
-
 ### NMP Package
-npm install batchelorjs
+npm install batchelorjs --save
 
-### Methods
+### API
 * [`configure(options)`](#configure)
-* [`execute(job, callback)`](#execute)
+* [`execute(batch, callback)`](#execute)
+* [`stop(options)`](#stop)
+* [`Events`](#events)
 
 ### Methodology/Examples
 
-* [`job`](#job)
+* [`batch`](#batch)
 * [`request`](#request)
 * [`examples`](#examples)
 
@@ -36,45 +37,42 @@ npm install batchelorjs
 
 configure the batchelor object.
 
-* maxConcurrentJobs - integer containing the number of maximum concurrent jobs (default:50)
-* logger - object for logging porpouse (default: empty logger).
-* whiteList - an array containing a list of allow host for processing the request (default: *, meaning allow all host/urls).
-* request_default_values - Object containing the default values per request in case they are not passed
-* method - string containing default HTTP method for the request - Possible values "GET" or "POST"
-* timeout - integer containing the number of milliseconds to wait for a request to respond before aborting the request (default: 1000).
-* ip - string of the client that request the batching job. (default: "unknown").
-* headers - object containing the headers of the client that request the batching job
-* body || data - string that will be pass in case of POST request
-* strictSSL - requires SSL certificates be valid, used in request module (optional - default:true) 
+* log - a logger object containing debug,info and error function (default: empty logger).
+* transport - a transport object implementing issueCalls function (default: internal transport using async and request).
+* maxConcurrentBatches - maximum concurrent batch requests (default:50)
+* whiteList - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
+* request - Object containing the default values per request
 
 #### options example:
 ```
 {
-    maxConcurrentJobs: 10,
-    logger: "console"      
-    },
-    request_default_values: {
+    maxConcurrentBatches: 100,
+    logger: console,
+    request: {
         method: "GET",
-        timeout: 10000,
+        timeout": 10000,
         ip: "unknown",
         headers: {},
-        data: ""
-    },
+        strictSSL" : true,
+        pool: {
+            "maxSockets": 200
+        }
+    }
     whiteList: ["*"]
 }
 ```
 
-## execute(job, callback)
+## execute(batch, callback)
 
-* `job` - A single request object or array of single requests [required]
-* `callback(err, results)` - callback method when finish processing job [required]
+* `batch` - A single request object or array of single requests [required]
+* `callback(err, results)` - callback function when finish processing batch [required]
 - The callback argument gets 2 arguments:
 - `err` - error object, if an error occur, null otherwise
 - `results` - an JSON object containing the result/s of the job
 
-## job
-An object holding a single or array of requets, to be batch in the request
-#### Job with single request
+## batch
+An object holding a single or array of requests, to be batch in the request
+#### Batch with single request
 ```
 {
 	"name": "REQUEST_1",
@@ -84,7 +82,7 @@ An object holding a single or array of requets, to be batch in the request
 }
 ```
 
-#### Job with array of requests
+#### Batch with array of requests
 ```
 [
 	{
@@ -118,6 +116,22 @@ An object representing a single batch of request. The request must have the foll
 * `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
 * `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
 
+## stop(options)
+
+* `options` - an object contianing the unique id to be stopped, the id provided on persistent requests [required]
+```
+options = {
+    uniqueId: "uuid"
+}
+```
+returns an array of the requests stopped (empty if not found).
+
+## Events
+EventEmitter API - will emit the following events:
+- `processing` with batchId data 
+- `complete` with batchId data 
+- `persistent_processed` with uniqueId data 
+- `persistent_stopped` with uniqueId data 
 
 ## Examples
 
@@ -131,9 +145,9 @@ exp_app.use(compression());
 exp_app.use(bodyParser());
 var batchelor = require('batchelorjs');
 var configuration = {
-    "maxConcurrentJobs": 10,
+    "maxConcurrentBatches": 100,
     "logger": console,
-    "request_default_values": {
+    "request": {
         "method": "GET",
         "timeout": 10000,
         "ip": "unknown",
@@ -165,9 +179,9 @@ var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: 5050});
 var batchelor = require('batchelorjs');
 var configuration = {
-    "maxConcurrentJobs": 10,
-    "logger": "console",
-    "request_default_values": {
+    "maxConcurrentBatches": 100,
+    "logger": console,
+    "request": {
         "method": "GET",
         "timeout": 10000,
         "ip": "unknown",

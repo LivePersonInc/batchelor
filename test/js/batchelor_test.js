@@ -61,7 +61,7 @@ describe('Batchelor Tests', function () {
         batchelor.configure({
             log: newLog,
             conf: {
-                "maxConcurrentJobs": 10,
+                "maxConcurrentBatches": 10,
                 "request": {
                     "method": "POST",
                     "timeout": 10000,
@@ -81,7 +81,7 @@ describe('Batchelor Tests', function () {
         log.error();
         expect(counter).to.equal(3);
         var cfg = conf.getConf();
-        expect(cfg.maxConcurrentJobs).to.equal(10);
+        expect(cfg.maxConcurrentBatches).to.equal(10);
         expect(cfg.request.method).to.equal("POST");
         expect(cfg.request.headers["some-header"]).to.equal("zzz");
         expect(cfg.request.pool.maxSockets).to.equal(200);

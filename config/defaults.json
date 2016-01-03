@@ -1,5 +1,5 @@
 {
-    "maxConcurrentJobs": 50,
+    "maxConcurrentBatches": 50,
     "request": {
         "method": "GET",
         "timeout": 10000,
