@@ -66,12 +66,15 @@ describe('Persistent Tests', function () {
                 timeout: 1000
             }], function () {
         });
+        var ids = [];
         expect(filtered).to.have.length(2);
 
         for (var i = 0; i < filtered.length; i++) {
-            var reqs = persistent.stop(filtered[i].uniqueId);
-            expect(reqs).to.have.length(1);
+            ids.push(filtered[i].uniqueId);
         }
+
+        var reqs = persistent.stop(ids);
+        expect(reqs).to.have.length(2);
     });
 
 

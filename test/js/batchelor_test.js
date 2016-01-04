@@ -39,7 +39,7 @@ describe('Batchelor Tests', function () {
 
     it('should stop and proxy behaviour to persistent', function () {
         batchelor.stop({
-            uniqueId: "id"
+            ids: "id"
         });
         expect(persistent.stop.calledOnce).to.be.true;
         expect(persistent.stop.firstCall.args[0]).to.equal("id");
