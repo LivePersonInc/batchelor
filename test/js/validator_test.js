@@ -24,10 +24,10 @@ describe('Validator Tests', function () {
 
     it('should validate url against white list', function () {
         conf.setConf({
-            whiteList: ["myothersite.com"]
+            whiteList: ["*.myothersite.com"]
         });
-        expect(validator.isValidRequest({name: "myName", url: "http://www.mySite.com"})).to.be.false;
-        expect(validator.isValidRequest({name: "myName", url: "http://www.myOtherSite.com"})).to.be.true;
+        expect(validator.isValidRequest({name: "myName", url: "http://www.mysite.com"})).to.be.false;
+        expect(validator.isValidRequest({name: "myName", url: "http://www.myothersite.com"})).to.be.true;
     });
 
     it('should headers as expected', function () {
