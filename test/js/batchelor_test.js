@@ -79,7 +79,7 @@ describe('Batchelor Tests', function () {
         log.debug();
         log.info();
         log.error();
-        expect(counter).to.equal(3);
+        expect(counter).to.equal(4); //extra log in configure
         var cfg = conf.getConf();
         expect(cfg.maxConcurrentBatches).to.equal(10);
         expect(cfg.request.method).to.equal("POST");
