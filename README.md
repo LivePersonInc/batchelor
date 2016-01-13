@@ -1,8 +1,8 @@
-![Alt text](/resources/batchelorJS.logo.jpg)
+![Alt text](/img/batchelorJS.logo.jpg)
 ===================
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Build Status](https://travis-ci.org/LivePersonInc/batchelor.svg)](https://travis-ci.org/LivePersonInc/batchelor)
-[![coverage status](http://img.shields.io/badge/local%20coverage-92%25-green.svg)](http://img.shields.io/badge/local%20coverage-92%25-green.svg)
+[![Test Coverage](https://codeclimate.com/github/LivePersonInc/batchelor/badges/coverage.svg)](https://codeclimate.com/github/LivePersonInc/batchelor/coverage)
 [![Code Climate](https://codeclimate.com/github/LivePersonInc/batchelor/badges/gpa.svg)](https://codeclimate.com/github/LivePersonInc/batchelor)
 [![npm version](https://badge.fury.io/js/batchelorjs.svg)](http://badge.fury.io/js/batchelorjs)
 [![Dependency Status](https://david-dm.org/LivePersonInc/batchelor.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor)
@@ -17,17 +17,18 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
-
 ### NMP Package
-npm install batchelorjs
+npm install batchelorjs --save
 
-### Methods
+### API
 * [`configure(options)`](#configure)
-* [`execute(job, callback)`](#execute)
+* [`execute(batch, callback)`](#execute)
+* [`stop(options)`](#stop)
+* [`Events`](#events)
 
 ### Methodology/Examples
 
-* [`job`](#job)
+* [`batch`](#batch)
 * [`request`](#request)
 * [`examples`](#examples)
 
@@ -36,45 +37,42 @@ npm install batchelorjs
 
 configure the batchelor object.
 
-* maxConcurrentJobs - integer containing the number of maximum concurrent jobs (default:50)
-* logger - object for logging porpouse (default: empty logger).
-* whiteList - an array containing a list of allow host for processing the request (default: *, meaning allow all host/urls).
-* request_default_values - Object containing the default values per request in case they are not passed
-* method - string containing default HTTP method for the request - Possible values "GET" or "POST"
-* timeout - integer containing the number of milliseconds to wait for a request to respond before aborting the request (default: 1000).
-* ip - string of the client that request the batching job. (default: "unknown").
-* headers - object containing the headers of the client that request the batching job
-* body || data - string that will be pass in case of POST request
-* strictSSL - requires SSL certificates be valid, used in request module (optional - default:true) 
+* log - a logger object containing debug,info and error function (default: empty logger).
+* transport - a transport object implementing issueCalls function (default: internal transport using async and request).
+* maxConcurrentBatches - maximum concurrent batch requests (default:50)
+* whiteList - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
+* request - Object containing the default values per request
 
-#### options  example:
+#### options example:
 ```
 {
-    maxConcurrentJobs: 10,
-    logger: "console"      
-    },
-    request_default_values: {
+    maxConcurrentBatches: 100,
+    logger: console,
+    request: {
         method: "GET",
-        timeout: 10000,
+        timeout": 10000,
         ip: "unknown",
         headers: {},
-        data: ""
-    },
+        strictSSL" : true,
+        pool: {
+            "maxSockets": 200
+        }
+    }
     whiteList: ["*"]
 }
 ```
 
-## execute(job, callback)
+## execute(batch, callback)
 
-* `job` - A single request object or array of single requests [required]
-* `callback(err, results)` - callback method when finish processimg job [required]
+* `batch` - A single request object or array of single requests [required]
+* `callback(err, results)` - callback function when finish processing batch [required]
 - The callback argument gets 2 arguments:
 - `err` - error object, if an error occur, null otherwise
-- `results` - an JSON object containing the result/s of the job
+- `results` - an JSON object containing the result/s of the batch
 
-## job
-An object holding a single or array of requets, to be batch in the request
-#### Job with single request
+## batch
+An object holding a single or array of requests, to be batch in the request
+#### Batch with single request
 ```
 {
 	"name": "REQUEST_1",
@@ -84,7 +82,7 @@ An object holding a single or array of requets, to be batch in the request
 }
 ```
 
-#### Job with array of requests
+#### Batch with array of requests
 ```
 [
 	{
@@ -118,6 +116,22 @@ An object representing a single batch of request. The request must have the foll
 * `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
 * `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
 
+## stop(options)
+
+* `options` - an object contianing the unique id to be stopped, the id provided on persistent requests [required]
+```
+options = {
+    uniqueId: "uuid"
+}
+```
+returns an array of the requests stopped (empty if not found).
+
+## Events
+EventEmitter API - will emit the following events:
+- `processing` with batchId data 
+- `complete` with batchId data 
+- `persistent_processed` with uniqueId data 
+- `persistent_stopped` with uniqueId data 
 
 ## Examples
 
@@ -131,9 +145,9 @@ exp_app.use(compression());
 exp_app.use(bodyParser());
 var batchelor = require('batchelorjs');
 var configuration = {
-    "maxConcurrentJobs": 10,
+    "maxConcurrentBatches": 100,
     "logger": console,
-    "request_default_values": {
+    "request": {
         "method": "GET",
         "timeout": 10000,
         "ip": "unknown",
@@ -165,9 +179,9 @@ var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: 5050});
 var batchelor = require('batchelorjs');
 var configuration = {
-    "maxConcurrentJobs": 10,
-    "logger": "console",
-    "request_default_values": {
+    "maxConcurrentBatches": 100,
+    "logger": console,
+    "request": {
         "method": "GET",
         "timeout": 10000,
         "ip": "unknown",
@@ -189,12 +203,12 @@ ws.on("message", function (data) {
 
 * The following requests example, will send the 3 requests
 * batchelor will process the 3 request and will return the response when:
-* reqular request - its reqturned from given URL
+* regular request - its returned from given URL
 * persistent requests - every `persistentDelay` milliseconds, if there is a cahnge in the response
 * onClose request - once the connection is dropped from client 
 
 ```
-var job = [
+var batch = [
 	{
         name: "regular_request",
         url: "jsonresponser.herokuapp.com/api/json/users"
@@ -221,14 +235,14 @@ var job = [
 var ws = new WebSocket("wss://yourdomain/path");
 ws.onopen = function (ws) {
     document.getElementById("connectionStatus").innerHTML = "Connected";
-    ws.send(JSON.stringify(job));
+    ws.send(JSON.stringify(batch));
 };
 ws.onmessage = function (event) {
     document.getElementById("responseFromServer").value = event.data;
 };
 ```
 
-## Response from previoius request
+## Response from previous request
 ```
     {
         regular_request:{
@@ -254,41 +268,6 @@ Having in the response in the client `cancelId` we can send another request to t
 var cancelMessage = {
 	"cancelId":"jobName_1",
 	"requestName": "persistentRequest"
-};
-ws.send(JSON.stringify(cancelMessage));
-
-```
-
-### Example - Sendind a persitent job (all the request are persistents)
-
-```
-var job = {
-	persistentJob: true,
-	requests: [
-		{
-        	name: "persistent_request_1",
-        	url: "https://jsonresponser.herokuapp.com/api/json/users",
-        	method: "GET",
-        	timeout: 5000
-    	},
-    	{
-        	name: "persistent_request_2",
-        	url: "https://jsonresponser.herokuapp.com/api/json/users",
-        	method: "GET",
-        	timeout: 5000
-    	}
-	]};
-
-ws.send(JSON.stringify(job));
-
-```
-
-#### Canceling job (all request)
-* In order to cancel job, we need to pass only the cancelId withou any requestName, like:
-
-```
-var cancelMessage = {
-	"cancelId":"jobName_1",
 };
 ws.send(JSON.stringify(cancelMessage));
 
