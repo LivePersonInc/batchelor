@@ -49,12 +49,12 @@ configure the batchelor object.
     maxConcurrentBatches: 100,
     logger: console,
     request: {
-        method: "GET",
-        timeout": 10000,
-        ip: "unknown",
-        headers: {},
-        strictSSL" : true,
-        pool: {
+        "method": "GET",
+        "timeout": 10000,
+        "ip": "unknown",
+        "headers": {},
+        "strictSSL" : true,
+        "pool": {
             "maxSockets": 200
         }
     }
