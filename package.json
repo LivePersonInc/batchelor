@@ -69,7 +69,7 @@
     "test": "grunt default --verbose"
   },
   "engines": {
-    "node": ">=0.10.36",
+    "node": ">=0.12.6",
     "npm": ">=1.4"
   }
 }
