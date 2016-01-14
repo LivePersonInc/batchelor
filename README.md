@@ -118,10 +118,10 @@ An object representing a single batch of request. The request must have the foll
 
 ## stop(options)
 
-* `options` - an object contianing the unique id to be stopped, the id provided on persistent requests [required]
+* `options` - an object containing the ids to be stopped, the ids provided on persistent requests [required]
 ```
 options = {
-    uniqueId: "uuid"
+    ids: ["id1", "id2"] || "id1"
 }
 ```
 returns an array of the requests stopped (empty if not found).
