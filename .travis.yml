@@ -7,7 +7,7 @@ addons:
 before_install: npm install -g grunt-cli
 after_script:
   - npm install -g codeclimate-test-reporter
-  - codeclimate < test/coverage/reports/lcov.info
+  - codeclimate-test-reporter < test/coverage/reports/lcov.info
 exclude_paths:
 - "Gruntfile.js"
 - "build/*"
