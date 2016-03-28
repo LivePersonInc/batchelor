@@ -1,6 +1,6 @@
 {
   "name": "batchelorjs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Proxy utility to bundle a batch of calls in one request",
   "author": {
     "name": "LivePersonInc",
