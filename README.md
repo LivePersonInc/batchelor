@@ -13,27 +13,27 @@
 Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
 
-###Features:
+
+## Features
+
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
-### NMP Package
-npm install batchelorjs --save
 
-### API
-* [`configure(options)`](#configure)
-* [`execute(batch, callback)`](#execute)
-* [`stop(options)`](#stop)
+## Installation
+
+    npm install batchelorjs --save
+
+
+## API
+
+* [`configure(options)`](#configureoptions)
+* [`execute(batch, callback)`](#executebatch-callback)
+* [`stop(options)`](#stopoptions)
 * [`Events`](#events)
 
-### Methodology/Examples
 
-* [`batch`](#batch)
-* [`request`](#request)
-* [`examples`](#examples)
-
-
-### configure(options)
+### `configure(options)`
 
 configure the batchelor object.
 
@@ -62,7 +62,7 @@ configure the batchelor object.
 }
 ```
 
-## execute(batch, callback)
+### `execute(batch, callback)`
 
 * `batch` - A single request object or array of single requests [required]
 * `callback(err, results)` - callback function when finish processing batch [required]
@@ -70,9 +70,12 @@ configure the batchelor object.
 - `err` - error object, if an error occur, null otherwise
 - `results` - an JSON object containing the result/s of the batch
 
-## batch
+
+#### batch
+
 An object holding a single or array of requests, to be batch in the request
-#### Batch with single request
+
+##### Batch with single request
 ```
 {
 	"name": "REQUEST_1",
@@ -82,7 +85,7 @@ An object holding a single or array of requests, to be batch in the request
 }
 ```
 
-#### Batch with array of requests
+##### Batch with array of requests
 ```
 [
 	{
@@ -101,7 +104,9 @@ An object holding a single or array of requests, to be batch in the request
 ]
 ```
 
-## request
+
+##### request
+
 An object representing a single batch of request. The request must have the following
 
 * `name` - identifier of the item, the name is used as reference. Names must be UNIQUE! [required]
@@ -116,7 +121,8 @@ An object representing a single batch of request. The request must have the foll
 * `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
 * `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
 
-## stop(options)
+
+### `stop(options)`
 
 * `options` - an object containing the ids to be stopped, the ids provided on persistent requests [required]
 ```
@@ -126,16 +132,20 @@ options = {
 ```
 returns an array of the requests stopped (empty if not found).
 
-## Events
+
+### `Events`
+
 EventEmitter API - will emit the following events:
 - `processing` with batchId data 
 - `complete` with batchId data 
 - `persistent_processed` with uniqueId data 
 - `persistent_stopped` with uniqueId data 
 
+
 ## Examples
 
-## REST using ExpressJS Version 4.5.x
+### REST using ExpressJS Version 4.5.x
+
 ```
 var exp_app = express();
 var compression = require('compression');
@@ -173,7 +183,9 @@ exp_router.post("/", function (req, res, next) {
 exp_app.use("/", exp_router);
 exp_app.listen(5050);
 ```
-## WebSocket - Server
+
+### WebSocket - Server
+
 ```
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: 5050});
@@ -199,6 +211,7 @@ ws.on("message", function (data) {
         });
 });
 ```
+
 ### Request - WebSocket Client - sending 3 types of request regular, persisten, onclose
 
 * The following requests example, will send the 3 requests
@@ -242,7 +255,8 @@ ws.onmessage = function (event) {
 };
 ```
 
-## Response from previous request
+### Response from previous request
+
 ```
     {
         regular_request:{
