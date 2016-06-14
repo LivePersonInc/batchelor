@@ -1,5 +1,6 @@
+
 ![Alt text](/img/batchelorJS.logo.jpg)
-===================
+
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Build Status](https://travis-ci.org/LivePersonInc/batchelor.svg)](https://travis-ci.org/LivePersonInc/batchelor)
 [![Test Coverage](https://codeclimate.com/github/LivePersonInc/batchelor/badges/coverage.svg)](https://codeclimate.com/github/LivePersonInc/batchelor/coverage)
@@ -16,42 +17,40 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [*](#)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [API](#api)
-    - [`configure(options)`](#configureoptions)
-      - [options example:](#options-example)
-    - [`execute(batch, callback)`](#executebatch-callback)
-      - [batch](#batch)
-        - [Batch with single request](#batch-with-single-request)
-        - [Batch with array of requests](#batch-with-array-of-requests)
-        - [request](#request)
-    - [`stop(options)`](#stopoptions)
-    - [`Events`](#events)
-  - [Examples](#examples)
-    - [REST using ExpressJS Version 4.5.x](#rest-using-expressjs-version-45x)
-    - [WebSocket - Server](#websocket---server)
-    - [Request - WebSocket Client - sending 3 types of request regular, persisten, onclose](#request---websocket-client---sending-3-types-of-request-regular-persisten-onclose)
-    - [Response from previous request](#response-from-previous-request)
+- [Features](#features)
+- [Installation](#installation)
+- [API](#api)
+  - [`configure(options)`](#configureoptions)
+    - [options example:](#options-example)
+  - [`execute(batch, callback)`](#executebatch-callback)
+    - [batch](#batch)
+      - [Batch with single request](#batch-with-single-request)
+      - [Batch with array of requests](#batch-with-array-of-requests)
+      - [request](#request)
+  - [`stop(options)`](#stopoptions)
+  - [`Events`](#events)
+- [Examples](#examples)
+  - [REST using ExpressJS Version 4.5.x](#rest-using-expressjs-version-45x)
+  - [WebSocket - Server](#websocket---server)
+  - [Request - WebSocket Client - sending 3 types of request regular, persisten, onclose](#request---websocket-client---sending-3-types-of-request-regular-persisten-onclose)
+  - [Response from previous request](#response-from-previous-request)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
-## Features
+# Features
 
 * Server side parallel request processing.
 * Persistent request for Web Socket facade.
 
 
-## Installation
+# Installation
 
     npm install batchelorjs --save
 
 
-## API
+# API
 
 * [`configure(options)`](#configureoptions)
 * [`execute(batch, callback)`](#executebatch-callback)
@@ -59,7 +58,7 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 * [`Events`](#events)
 
 
-### `configure(options)`
+## `configure(options)`
 
 configure the batchelor object.
 
@@ -69,7 +68,7 @@ configure the batchelor object.
 * whiteList - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
 * request - Object containing the default values per request
 
-#### options example:
+### options example:
 ```
 {
     maxConcurrentBatches: 100,
@@ -88,7 +87,7 @@ configure the batchelor object.
 }
 ```
 
-### `execute(batch, callback)`
+## `execute(batch, callback)`
 
 * `batch` - A single request object or array of single requests [required]
 * `callback(err, results)` - callback function when finish processing batch [required]
@@ -97,11 +96,11 @@ configure the batchelor object.
 - `results` - an JSON object containing the result/s of the batch
 
 
-#### batch
+### batch
 
 An object holding a single or array of requests, to be batch in the request
 
-##### Batch with single request
+#### Batch with single request
 ```
 {
 	"name": "REQUEST_1",
@@ -111,7 +110,7 @@ An object holding a single or array of requests, to be batch in the request
 }
 ```
 
-##### Batch with array of requests
+#### Batch with array of requests
 ```
 [
 	{
@@ -131,7 +130,7 @@ An object holding a single or array of requests, to be batch in the request
 ```
 
 
-##### request
+#### request
 
 An object representing a single batch of request. The request must have the following
 
@@ -148,7 +147,7 @@ An object representing a single batch of request. The request must have the foll
 * `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
 
 
-### `stop(options)`
+## `stop(options)`
 
 * `options` - an object containing the ids to be stopped, the ids provided on persistent requests [required]
 ```
@@ -159,7 +158,7 @@ options = {
 returns an array of the requests stopped (empty if not found).
 
 
-### `Events`
+## `Events`
 
 EventEmitter API - will emit the following events:
 - `processing` with batchId data 
@@ -168,9 +167,9 @@ EventEmitter API - will emit the following events:
 - `persistent_stopped` with uniqueId data 
 
 
-## Examples
+# Examples
 
-### REST using ExpressJS Version 4.5.x
+## REST using ExpressJS Version 4.5.x
 
 ```
 var exp_app = express();
@@ -210,7 +209,7 @@ exp_app.use("/", exp_router);
 exp_app.listen(5050);
 ```
 
-### WebSocket - Server
+## WebSocket - Server
 
 ```
 var WebSocketServer = require('ws').Server;
@@ -238,7 +237,7 @@ ws.on("message", function (data) {
 });
 ```
 
-### Request - WebSocket Client - sending 3 types of request regular, persisten, onclose
+## Request - WebSocket Client - sending 3 types of request regular, persisten, onclose
 
 * The following requests example, will send the 3 requests
 * batchelor will process the 3 request and will return the response when:
@@ -281,7 +280,7 @@ ws.onmessage = function (event) {
 };
 ```
 
-### Response from previous request
+## Response from previous request
 
 ```
     {
