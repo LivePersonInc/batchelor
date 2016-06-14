@@ -236,7 +236,7 @@ Batchelor will process these requests and return a response when:
 - **persistent**: every `persistentDelay` milliseconds, if there is a change in the response
 - **on-close**: once the connection is dropped from client
 
-<!-- comment to fix merging of code blocks with list items -->
+<!-- comment to fix merging of code blocks with list items, wtf github markdown!? -->
 
     var batch = [
     	{
@@ -305,7 +305,7 @@ Batchelor will process these requests and return a response when:
 Having in the response in the client `cancelId` we can send another request to the server and cancel the specific persistent request like:
 
     var cancelMessage = {
-    	"cancelId":"jobName_1",
+    	"cancelId": "jobName_1",
     	"requestName": "persistentRequest"
     };
     ws.send(JSON.stringify(cancelMessage));
