@@ -237,6 +237,7 @@ EventEmitter API - will emit the following events:
     - on-close request - once the connection is dropped from client 
 
   
+
     var batch = [
     	{
             name: "regular_request",
