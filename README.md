@@ -9,6 +9,7 @@
 [![Dependency Status](https://david-dm.org/LivePersonInc/batchelor.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor)
 [![devDependency Status](https://david-dm.org/LivePersonInc/batchelor/dev-status.svg?theme=shields.io)](https://david-dm.org/LivePersonInc/batchelor#info=devDependencies)
 [![npm downloads](https://img.shields.io/npm/dm/batchelorjs.svg)](https://img.shields.io/npm/dm/batchelorjs.svg)
+
 [![NPM](https://nodei.co/npm/batchelorjs.png)](https://nodei.co/npm/batchelorjs/)
 
 Proxy utility to bundle a batch of calls in one request.
