@@ -14,6 +14,32 @@ Proxy utility to bundle a batch of calls in one request.
 Using the batchelor utility reduces HTTP overhead, network round-trip delay time and helps to keep your API design clean.
 
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [*](#)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [API](#api)
+    - [`configure(options)`](#configureoptions)
+      - [options example:](#options-example)
+    - [`execute(batch, callback)`](#executebatch-callback)
+      - [batch](#batch)
+        - [Batch with single request](#batch-with-single-request)
+        - [Batch with array of requests](#batch-with-array-of-requests)
+        - [request](#request)
+    - [`stop(options)`](#stopoptions)
+    - [`Events`](#events)
+  - [Examples](#examples)
+    - [REST using ExpressJS Version 4.5.x](#rest-using-expressjs-version-45x)
+    - [WebSocket - Server](#websocket---server)
+    - [Request - WebSocket Client - sending 3 types of request regular, persisten, onclose](#request---websocket-client---sending-3-types-of-request-regular-persisten-onclose)
+    - [Response from previous request](#response-from-previous-request)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 ## Features
 
 * Server side parallel request processing.
