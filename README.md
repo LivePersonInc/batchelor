@@ -52,12 +52,6 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 
 # API
 
-* [`configure(options)`](#configureoptions)
-* [`execute(batch, callback)`](#executebatch-callback)
-* [`stop(options)`](#stopoptions)
-* [`Events`](#events)
-
-
 ## `configure(options)`
 
 configure the batchelor object.
