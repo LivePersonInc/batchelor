@@ -230,11 +230,11 @@ EventEmitter API - will emit the following events:
 
 ## Request - WebSocket Client - sending 3 types of request
 
-The following example will send the 3 requests; `regular`, `persistent`, and `onclose`.
-Batchelor will process these 3 requests and return the response with:
-- regular request - its returned from given URL
-- persistent requests - every `persistentDelay` milliseconds, if there is a change in the response
-- on-close request - once the connection is dropped from client
+The following example will send 3 types of requests; regular, persistent, and on-close.
+Batchelor will process these requests and return a response when:
+- **regular** - a response is returned from the given URL
+- **persistent** - every `persistentDelay` milliseconds, if there is a change in the response
+- **on-close** - once the connection is dropped from client
 
 
     var batch = [
