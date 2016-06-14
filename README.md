@@ -236,7 +236,7 @@ EventEmitter API - will emit the following events:
     - persistent requests - every `persistentDelay` milliseconds, if there is a change in the response
     - on-close request - once the connection is dropped from client 
 
-
+  
     var batch = [
     	{
             name: "regular_request",
