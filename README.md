@@ -56,11 +56,11 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 
 configure the batchelor object.
 
-- log - a logger object containing debug,info and error function (default: empty logger).
-- transport - a transport object implementing issueCalls function (default: internal transport using async and request).
-- maxConcurrentBatches - maximum concurrent batch requests (default:50)
-- whiteList - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
-- request - Object containing the default values per request
+- `log` - a logger object containing debug,info and error function (default: empty logger).
+- `transport` - a transport object implementing issueCalls function (default: internal transport using async and request).
+- `maxConcurrentBatches` - maximum concurrent batch requests (default:50)
+- `whiteList` - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
+- `request` - Object containing the default values per request
 
 ### options example:
 
@@ -143,10 +143,10 @@ An object representing a single batch of request. The request must have the foll
 ## `stop(options)`
 
 - `options` - an object containing the ids to be stopped, the ids provided on persistent requests [required]
-
-    options = {
-        ids: ["id1", "id2"] || "id1"
-    }
+    
+        options = {
+            ids: ["id1", "id2"] || "id1"
+        }
 
 returns an array of the requests stopped (empty if not found).
 
