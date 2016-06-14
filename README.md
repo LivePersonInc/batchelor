@@ -236,6 +236,7 @@ Batchelor will process these requests and return a response when:
 - **persistent**: every `persistentDelay` milliseconds, if there is a change in the response
 - **on-close**: once the connection is dropped from client
 
+<!-- comment to fix merging of code blocks with list items -->
 
     var batch = [
     	{
