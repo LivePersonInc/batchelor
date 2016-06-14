@@ -22,18 +22,18 @@ Using the batchelor utility reduces HTTP overhead, network round-trip delay time
 - [Installation](#installation)
 - [API](#api)
   - [`configure(options)`](#configureoptions)
-    - [options example:](#options-example)
+    - [Example options](#example-options)
   - [`execute(batch, callback)`](#executebatch-callback)
-    - [batch](#batch)
-      - [Batch with single request](#batch-with-single-request)
-      - [Batch with array of requests](#batch-with-array-of-requests)
-      - [request](#request)
+    - [`request`](#request)
+    - [Example batches](#example-batches)
+      - [Single request](#single-request)
+      - [Array of requests](#array-of-requests)
   - [`stop(options)`](#stopoptions)
   - [`Events`](#events)
 - [Examples](#examples)
   - [REST using ExpressJS Version 4.5.x](#rest-using-expressjs-version-45x)
   - [WebSocket - Server](#websocket---server)
-  - [Request - WebSocket Client - sending 3 types of request regular, persisten, onclose](#request---websocket-client---sending-3-types-of-request-regular-persisten-onclose)
+  - [Request - WebSocket Client - sending 3 types of requests](#request---websocket-client---sending-3-types-of-requests)
   - [Response from previous request](#response-from-previous-request)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -83,18 +83,33 @@ configure the batchelor object.
 
 ## `execute(batch, callback)`
 
-- `batch` - A single request object or array of single requests (see below) [required]
+- `batch` - A single request object (see below) or an array of single requests [required]
 - `callback(err, results)` - A callback function to notify the batch processing has finished [required]  
     The callback function gets 2 arguments:
     - `err` - error object, if an error occur, null otherwise
     - `results` - an JSON object containing the result/s of the batch
 
 
-### batch
+### `request`
 
-An object holding a single request, or array of requests, to be batched in the request
+An object representing a single request in the batch, in the form:
 
-#### Batch with single request
+- `name` - identifier of the item, the name is used as reference. Names must be UNIQUE! [required]
+- `url` - URL that calls the item. Possible GET parameters are also given here [required]
+- `method` - possible values are `GET` or `POST` or whatever methods the called API supports [required]
+- `encoding` - the encoding of the item (default:UTF8) [optional]
+- `retries` - number of retries if the timeout is reach (default:2) [optional]
+- `headers` - the headers that the item uses [optional]
+- `body || data` - the parameters that the item uses when the method is POST are given here [optional]
+- `timeout` - number of milliseconds to wait for a request from the API to respond before aborting the request, if this parameters is not provided we use timeout from the config.json file [optional]
+- `isOnCloseRequest` - flag indicating if the item should be called when the connection is droped, used when using web socket facade (default:false) [optional]
+- `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
+- `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
+
+
+### Example batches
+
+#### Single request
 
     {
     	"name": "REQUEST_1",
@@ -104,7 +119,7 @@ An object holding a single request, or array of requests, to be batched in the r
     }
 
 
-#### Batch with array of requests
+#### Array of requests
 
     [
     	{
@@ -121,23 +136,6 @@ An object holding a single request, or array of requests, to be batched in the r
     		"timeout": 1000
     	}
     ]
-
-
-#### request
-
-An object representing a single batch of request. The request must have the following
-
-- `name` - identifier of the item, the name is used as reference. Names must be UNIQUE! [required]
-- `url` - URL that calls the item. Possible GET parameters are also given here [required]
-- `method` - possible values are `GET` or `POST` or whatever methods the called API supports [required]
-- `encoding` - the encoding of the item (default:UTF8) [optional]
-- `retries` - number of retries if the timeout is reach (default:2) [optional]
-- `headers` - the headers that the item uses [optional]
-- `body || data` - the parameters that the item uses when the method is POST are given here [optional]
-- `timeout` - number of milliseconds to wait for a request from the API to respond before aborting the request, if this parameters is not provided we use timeout from the config.json file [optional]
-- `isOnCloseRequest` - flag indicating if the item should be called when the connection is droped, used when using web socket facade (default:false) [optional]
-- `persistent` - flag indicating if the item should be called in persistent way, used when using web socket facade(default:false) [optional]
-- `persistentDelay` - number of delay between persistent items in milliseconds, used when using web socket facade (default:5000) [optional]
 
 
 ## `stop(options)`
