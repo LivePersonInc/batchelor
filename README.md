@@ -234,8 +234,8 @@ EventEmitter API - will emit the following events:
 - batchelor will process the 3 request and will return the response with:
     - regular request - its returned from given URL
     - persistent requests - every `persistentDelay` milliseconds, if there is a change in the response
-    - on-close request - once the connection is dropped from client 
-
+    - on-close request - once the connection is dropped from client
+  
   
 
     var batch = [
