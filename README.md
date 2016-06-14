@@ -228,7 +228,7 @@ EventEmitter API - will emit the following events:
     });
 
 
-## Request - WebSocket Client - sending 3 types of request
+## Request - WebSocket Client - sending 3 types of requests
 
 The following example will send 3 types of requests; regular, persistent, and on-close.
 Batchelor will process these requests and return a response when:
