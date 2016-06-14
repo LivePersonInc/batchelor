@@ -62,7 +62,7 @@ configure the batchelor object.
 - `whiteList` - an array containing a list of allowed hosts for processing the request (default: *, meaning allow all host/urls).
 - `request` - Object containing the default values per request
 
-### options example:
+### Example options
 
     {
         maxConcurrentBatches: 100,
@@ -83,7 +83,7 @@ configure the batchelor object.
 
 ## `execute(batch, callback)`
 
-- `batch` - A single request object or array of single requests [required]
+- `batch` - A single request object or array of single requests (see below) [required]
 - `callback(err, results)` - A callback function to notify the batch processing has finished [required]  
     The callback function gets 2 arguments:
     - `err` - error object, if an error occur, null otherwise
@@ -92,7 +92,7 @@ configure the batchelor object.
 
 ### batch
 
-An object holding a single or array of requests, to be batch in the request
+An object holding a single request, or array of requests, to be batched in the request
 
 #### Batch with single request
 
