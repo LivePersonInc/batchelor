@@ -1,6 +1,6 @@
 {
   "name": "batchelorjs",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Proxy utility to bundle a batch of calls in one request",
   "author": {
     "name": "LivePersonInc",
@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "async": "~1.5.0",
-    "lodash": "~4.11.2",
+    "lodash": "~4.17.10",
     "node-uuid": "~1.4.7",
     "request": "~2.45.0"
   },
@@ -69,7 +69,7 @@
     "test": "grunt default --verbose"
   },
   "engines": {
-    "node": ">=0.12.6",
+    "node": ">=4.0.0",
     "npm": ">=1.4"
   }
 }
